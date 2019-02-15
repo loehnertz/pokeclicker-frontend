@@ -16,4 +16,3 @@ const reducer: Reducer<State> = combineReducers({
 });
 
 export default reducer;
-

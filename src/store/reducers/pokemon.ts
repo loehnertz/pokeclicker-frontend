@@ -12,7 +12,6 @@ const pokemonById: Reducer<PokemonById> = (collection = {}, action: PokemonActio
     return {...collection};
 }
 
-
 const pokemonIds: Reducer<number[]> = (ids = [], action: PokemonAction) => {
     switch(action.type){
         case PokemonActionType.ADD_OR_REPLACE:
@@ -28,9 +27,4 @@ const pokemonIds: Reducer<number[]> = (ids = [], action: PokemonAction) => {
     return ids;
 }
 
-export const pokemonReducer: Reducer<PokemonCollection> = combineReducers({byId: pokemonById, allIds: pokemonIds});
-
-
-
-
-
+export const pokemonsReducer: Reducer<PokemonCollection> = combineReducers({byId: pokemonById, allIds: pokemonIds});

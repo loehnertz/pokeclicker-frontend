@@ -15,5 +15,3 @@ export const userReducer: Reducer<User> = (user = initialUser, action: UserActio
     }
     return {...user};
 }
-
-

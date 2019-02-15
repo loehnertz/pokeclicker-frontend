@@ -1,7 +1,18 @@
-import { createStore } from 'redux';
+import { Reducer, combineReducers } from 'redux'
 
-import reducer from './reducers';
+import { State } from './types'
+import { userReducer } from './reducers/user'
+import { itemsReducer } from './reducers/item'
+import { pokemonsReducer } from './reducers/pokemon'
 
-export const store = createStore(reducer);
+const entitiesReducer = combineReducers({
+    user: userReducer,
+    items: itemsReducer,
+    pokemons: pokemonsReducer
+});
 
-export default store;
+const reducer: Reducer<State> = combineReducers({
+    entities: entitiesReducer
+});
+
+export default reducer;

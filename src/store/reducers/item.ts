@@ -12,7 +12,6 @@ const itemById: Reducer<ItemById> = (collection = {}, action: ItemAction) => {
     return {...collection};
 }
 
-
 const itemIds: Reducer<number[]> = (ids = [], action: ItemAction) => {
     switch(action.type){
         case ItemActionType.ADD_OR_REPLACE:
@@ -28,7 +27,4 @@ const itemIds: Reducer<number[]> = (ids = [], action: ItemAction) => {
     return ids;
 }
 
-export const itemReducer: Reducer<ItemCollection> = combineReducers({byId: itemById, allIds: itemIds});
-
-
-
+export const itemsReducer: Reducer<ItemCollection> = combineReducers({byId: itemById, allIds: itemIds});
