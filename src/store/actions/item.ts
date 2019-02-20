@@ -2,13 +2,13 @@ import { ItemAction, ItemActionType, Item } from '../types';
 
 export function addOrReplaceItem(item: Item): ItemAction {
     return {
-        type: ItemActionType.ADD_OR_REPLACE,
+        type: ItemActionType.ADD_OR_UPDATE,
         item
     };
 }
 
-export function clearItem(): ItemAction {
+export function clearItems(): ItemAction {
     return {
-        type: ItemActionType.CLEAR
+        type: ItemActionType.CLEAR_ALL
     };
 }

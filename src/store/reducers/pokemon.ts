@@ -3,10 +3,10 @@ import { Reducer, combineReducers } from 'redux';
 
 const pokemonById: Reducer<PokemonById> = (collection = {}, action: PokemonAction) => {
     switch(action.type){
-        case PokemonActionType.ADD_OR_REPLACE:
+        case PokemonActionType.ADD_OR_UPDATE:
             return {...collection, [action.pokemon.id]: action.pokemon};
 
-        case PokemonActionType.CLEAR:
+        case PokemonActionType.CLEAR_ALL:
             return {};
     }
     return {...collection};
@@ -14,13 +14,13 @@ const pokemonById: Reducer<PokemonById> = (collection = {}, action: PokemonActio
 
 const pokemonIds: Reducer<number[]> = (ids = [], action: PokemonAction) => {
     switch(action.type){
-        case PokemonActionType.ADD_OR_REPLACE:
+        case PokemonActionType.ADD_OR_UPDATE:
             if(ids.indexOf(action.pokemon.id) < 0) {
                 return ids.concat([action.pokemon.id]);
             }
             break;
 
-        case PokemonActionType.CLEAR:
+        case PokemonActionType.CLEAR_ALL:
             return [];
 
     }

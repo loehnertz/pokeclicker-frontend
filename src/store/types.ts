@@ -61,19 +61,19 @@ export type UserAction
     = { type: UserActionType.SET, user: User };
 
 export enum PokemonActionType {
-    ADD_OR_REPLACE = 'POKEMON_ADD_OR_REPLACE',
-    CLEAR = 'POKEMON_CLEAR',
+    ADD_OR_UPDATE = 'POKEMON_ADD_OR_UPDATE',
+    CLEAR_ALL = 'POKEMON_CLEAR_ALL',
 }
 
 export type PokemonAction
-    = { type: PokemonActionType.ADD_OR_REPLACE, pokemon: Pokemon }
-    | { type: PokemonActionType.CLEAR };
+    = { type: PokemonActionType.ADD_OR_UPDATE, pokemon: Pokemon }
+    | { type: PokemonActionType.CLEAR_ALL };
 
 export enum ItemActionType {
-    ADD_OR_REPLACE = 'ITEM_ADD_OR_REPLACE',
-    CLEAR = 'ITEM_CLEAR',
+    ADD_OR_UPDATE = 'ITEM_ADD_OR_UPDATE',
+    CLEAR_ALL = 'ITEM_CLEAR_ALL',
 }
 
 export type ItemAction
-    = { type: ItemActionType.ADD_OR_REPLACE, item: Item }
-    | { type: ItemActionType.CLEAR };
+    = { type: ItemActionType.ADD_OR_UPDATE, item: Item }
+    | { type: ItemActionType.CLEAR_ALL };
