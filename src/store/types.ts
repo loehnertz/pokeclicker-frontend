@@ -1,28 +1,4 @@
-
-// Just a number, but with a nice name.
-type Reference<T> = number & { __reference__?: T };
-
-export interface User {
-    id: Reference<User>,
-    name: string,
-    avatarUri: string | null,
-    pokeDollars: number
-}
-
-export interface Pokemon {
-    id: Reference<Pokemon>;
-    pokeNumber: number;
-    owner: Reference<User>;
-    xp: number;
-    aquisitionDateTime: Date;
-}
-
-export interface Item {
-    id: Reference<Item>;
-    itemNumber: number;
-    owner: Reference<User>;
-    aquisitionDateTime: Date;
-}
+import {Pokemon, User, Item } from '../models';
 
 interface ById<TValue> {
     [id: number]: TValue;
@@ -77,3 +53,5 @@ export enum ItemActionType {
 export type ItemAction
     = { type: ItemActionType.ADD_OR_UPDATE, item: Item }
     | { type: ItemActionType.CLEAR_ALL };
+
+

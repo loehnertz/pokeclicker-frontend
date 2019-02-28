@@ -1,14 +1,14 @@
 import { combineReducers, Dispatch, Reducer } from 'redux';
 
 import { State } from '../types';
-import { pokemonReducer } from './pokemon';
-import { itemReducer } from './item';
+import { pokemonsReducer } from './pokemon';
+import { itemsReducer } from './item';
 import { userReducer } from './user';
 
 const entitiesReducer = combineReducers({
 	user: userReducer,
-	pokemons: pokemonReducer,
-	items: itemReducer
+	pokemons: pokemonsReducer,
+	items: itemsReducer
 });
 
 const reducer: Reducer<State> = combineReducers({

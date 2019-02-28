@@ -1,4 +1,5 @@
-import { PokemonAction, PokemonActionType, Pokemon } from '../types';
+import { PokemonAction, PokemonActionType } from '../types';
+import { Pokemon } from '../../models';
 
 export function addOrReplacePokemon(pokemon: Pokemon): PokemonAction {
     return {

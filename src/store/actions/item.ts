@@ -1,4 +1,5 @@
-import { ItemAction, ItemActionType, Item } from '../types';
+import { ItemAction, ItemActionType } from '../types';
+import { Item } from '../../models';
 
 export function addOrReplaceItem(item: Item): ItemAction {
     return {
