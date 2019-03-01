@@ -1,14 +1,16 @@
-import { User, UserAction, UserActionType } from '../types';
+import { User } from '../../models';
+import { UserAction, UserActionType } from '../types';
 import { Reducer } from 'redux';
 
-
 const initialUser: User = {
-    id: null,
-    name: null,
+    id: 0,
+    name: "undefined user",
     avatarUri: null,
-    pokeDollars: null,
+    pokeDollars: 0,
 }
-export const userReducer: Reducer<User> = (user = initialUser, action: UserAction) => {
+
+
+export const userReducer: Reducer<User, UserAction> = (user = initialUser, action) => {
     switch(action.type) {
         case UserActionType.SET:
             return {...action.user};
