@@ -1,3 +1,5 @@
+[![Build Status](http://jenkins.uva-se.nl/buildStatus/icon?job=Frontend)](http://jenkins.uva-se.nl/job/Frontend/)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
