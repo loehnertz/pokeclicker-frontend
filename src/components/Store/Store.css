@@ -1,0 +1,15 @@
+
+
+.StoreFront {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.StoreItem {
+    flex-basis: 220px;
+    flex-grow: 1;
+    flex-shrink: 0;
+    margin: 10px;
+    border-radius: 5px;
+    height: 120px;
+}
