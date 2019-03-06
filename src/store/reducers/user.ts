@@ -1,8 +1,6 @@
 import { User } from '../../models';
-import { UserAction, UserActionType, PokemonAction } from '../types';
-import { Reducer, AnyAction } from 'redux';
-import { PokemonResource } from '../../api/api';
-import { addOrReplacePokemon } from '../actions/pokemon';
+import { UserAction, UserActionType } from '../types';
+import { Reducer } from 'redux';
 
 const initialUser: User = {
     id: 0,
@@ -12,15 +10,9 @@ const initialUser: User = {
 }
 
 
-export const userReducer: Reducer<User, UserAction & {asyncDispatch(action: (PokemonAction)): void}> = (user = initialUser, action) => {
+export const userReducer: Reducer<User, UserAction> = (user = initialUser, action) => {
     switch(action.type) {
         case UserActionType.SET:
-            const resource = new PokemonResource();
-            resource.fetchAll().then(pokemons => {
-                for(const pokemon of pokemons){
-                    action.asyncDispatch(addOrReplacePokemon(pokemon));
-                }
-            }).catch(e => console.error(e));
             return {...action.user};
     }
     return {...user};
