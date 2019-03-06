@@ -1,4 +1,4 @@
-import {Pokemon, User, Item } from '../models';
+import {Pokemon, User, Item, Boosterpack } from '../models';
 
 interface ById<TValue> {
     [id: number]: TValue;
@@ -17,11 +17,17 @@ export type ItemById = ById<Item>;
 
 export type ItemCollection = EntityCollection<Item>;
 
+export type BoosterpackById = ById<Boosterpack>;
+
+export type BoosterpackCollection = EntityCollection<Boosterpack>;
+
+
 export interface State {
     entities: {
         user: User;
         items: ItemCollection;
         pokemons: PokemonCollection;
+        boosterpacks: BoosterpackCollection;
     }
 }
 
@@ -53,5 +59,15 @@ export enum ItemActionType {
 export type ItemAction
     = { type: ItemActionType.ADD_OR_UPDATE, item: Item }
     | { type: ItemActionType.CLEAR_ALL };
+
+
+export enum BoosterpackActionType {
+    ADD_OR_UPDATE = 'BOOSTERPACK_ADD_OR_UPDATE',
+    CLEAR_ALL = 'BOOSTERPACK_CLEAR_ALL',
+}
+
+export type BoosterpackAction
+    = { type: BoosterpackActionType.ADD_OR_UPDATE, boosterpack: Boosterpack }
+    | { type: BoosterpackActionType.CLEAR_ALL };
 
 

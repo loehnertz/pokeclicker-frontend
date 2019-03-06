@@ -24,3 +24,10 @@ export interface Item {
     owner: Reference<User>;
     aquisitionDateTime: Date;
 }
+
+export interface Boosterpack {
+    locationAreaId: number,
+    name: string,
+    price: number,
+    hexColor: string;
+}
