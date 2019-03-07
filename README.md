@@ -1,5 +1,7 @@
 [![Build Status](http://jenkins.uva-se.nl/buildStatus/icon?job=Frontend)](http://jenkins.uva-se.nl/job/Frontend/)
 
+This application is running at [http://frontend.uva-se.nl/](http://frontend.uva-se.nl/).
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
