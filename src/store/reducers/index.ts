@@ -5,6 +5,7 @@ import { pokemonsReducer } from './pokemon';
 import { itemsReducer } from './item';
 import { userReducer } from './user';
 import { boosterpacksReducer } from './boosterpack';
+import globalAppStateReducer from './globalappstate';
 
 const entitiesReducer = combineReducers({
 	user: userReducer,
@@ -14,6 +15,7 @@ const entitiesReducer = combineReducers({
 });
 
 const reducer: Reducer<State> = combineReducers({
+	globalAppState: globalAppStateReducer,
 	entities: entitiesReducer
 });
 

@@ -3,6 +3,20 @@
 // Just a number, but with a nice name.
 export type Reference<T> = number & { __reference__?: T };
 
+
+export enum NotificationType {
+    ERROR = 'error',
+    WARNING = 'warning',
+    INFO = 'info',
+    SUCCESS = 'success'
+}
+
+export interface AppNotification {
+    id: number;
+    message: string;
+    notificationType: NotificationType;
+}
+
 export interface User {
     id: Reference<User>,
     name: string,

@@ -1,4 +1,5 @@
-import {Pokemon, User, Item, Boosterpack } from '../models';
+import {Pokemon, User, Item, Boosterpack, AppNotification } from '../models';
+
 
 interface ById<TValue> {
     [id: number]: TValue;
@@ -7,6 +8,14 @@ interface ById<TValue> {
 interface EntityCollection<TValue> {
     byId: ById<TValue>;
     allIds: number[];
+}
+
+
+export type Notifications = AppNotification[];
+
+
+export interface GlobalAppState {
+    notifications: Notifications;
 }
 
 export type PokemonById = ById<Pokemon>;
@@ -23,6 +32,7 @@ export type BoosterpackCollection = EntityCollection<Boosterpack>;
 
 
 export interface State {
+    globalAppState: GlobalAppState;
     entities: {
         user: User;
         items: ItemCollection;
@@ -30,5 +40,6 @@ export interface State {
         boosterpacks: BoosterpackCollection;
     }
 }
+
 
 

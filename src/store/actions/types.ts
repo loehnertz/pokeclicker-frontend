@@ -1,8 +1,21 @@
-import { Pokemon, User, Item, Boosterpack } from '../../models';
+import { Pokemon, User, Item, Boosterpack, AppNotification } from '../../models';
 import { State } from '../types';
 import { ThunkAction } from 'redux-thunk';
-import { AnyAction } from 'redux';
+import { AnyAction, Action } from 'redux';
 
+
+export enum NotificationActionType {
+    NOTIFY = "NOTIFICATION_NOTIFY",
+    WITHDRAW = "NOTIFICATION_WITHDRAW",
+}
+
+export type AppNotificationAction = {
+    type: NotificationActionType.NOTIFY;
+    notification: AppNotification;
+} | {
+    type: NotificationActionType.WITHDRAW;
+    notification: AppNotification;
+};
 
 export enum UserActionType {
     SET = 'USER_SET'

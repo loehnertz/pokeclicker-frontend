@@ -54,4 +54,9 @@ export class BoosterpackResource implements Resource<Boosterpack> {
         const r = await Session.getInstance().safeFetch(url`store/boosterpacks/`);
         return r.json();
     }
+
+    async buy(id: number): Promise<Pokemon[]> {
+        const r = await Session.getInstance().safeFetch(url`store/boosterpacks/buy/${id}`);
+        return r.json();
+    }
 }
