@@ -18,7 +18,7 @@ class App extends Component {
         }
         
         const notifications = this.props.globalAppState.notifications.map(n => 
-            <div className={`notification notification-${n.notificationType}`}>{n.message} ({n.id})</div>
+            <div className={`notification notification-${n.notificationType}`}>{n.message}</div>
         );
 
         return (
