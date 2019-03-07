@@ -1,7 +1,10 @@
-import { BoosterpackById, BoosterpackCollection, BoosterpackAction, BoosterpackActionType } from '../types';
-import { Reducer, combineReducers } from 'redux';
+import { BoosterpackById, BoosterpackCollection } from '../types';
+import { BoosterpackAction, BoosterpackActionType } from "../actions/types";
+import { Reducer, combineReducers, Action } from 'redux';
+import { BoosterpackResource } from '../../api/api';
+import { addOrReplaceBoosterpack } from '../actions/boosterpack';
 
-const boosterpackById: Reducer<BoosterpackById, BoosterpackAction> = (collection = {}, action) => {
+const boosterpackById: Reducer<BoosterpackById, BoosterpackAction | {type: 'APP_INITIALIZE'}> = (collection = {}, action) => {
     switch (action.type) {
         case BoosterpackActionType.ADD_OR_UPDATE:
             return { ...collection, [action.boosterpack.locationAreaId]: action.boosterpack };
@@ -11,6 +14,7 @@ const boosterpackById: Reducer<BoosterpackById, BoosterpackAction> = (collection
     }
     return { ...collection };
 }
+
 
 const boosterpackIds: Reducer<number[], BoosterpackAction> = (ids = [], action) => {
     switch (action.type) {
@@ -22,9 +26,10 @@ const boosterpackIds: Reducer<number[], BoosterpackAction> = (ids = [], action) 
 
         case BoosterpackActionType.CLEAR_ALL:
             return [];
-
     }
     return ids;
 }
 
-export const boosterpacksReducer: Reducer<BoosterpackCollection, BoosterpackAction> = combineReducers({ byId: boosterpackById, allIds: boosterpackIds });
+
+export const boosterpacksReducer: Reducer<BoosterpackCollection, BoosterpackAction> 
+    = combineReducers({ byId: boosterpackById, allIds: boosterpackIds });

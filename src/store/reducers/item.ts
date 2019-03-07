@@ -1,4 +1,5 @@
-import { ItemById, ItemCollection, ItemAction, ItemActionType } from '../types';
+import { ItemById, ItemCollection } from '../types';
+import { ItemAction, ItemActionType } from "../actions/types";
 import { Reducer, combineReducers } from 'redux';
 
 const itemById: Reducer<ItemById, ItemAction> = (collection = {}, action) => {
@@ -27,4 +28,5 @@ const itemIds: Reducer<number[], ItemAction> = (ids = [], action) => {
     return ids;
 }
 
-export const itemsReducer: Reducer<ItemCollection, ItemAction> = combineReducers({byId: itemById, allIds: itemIds});
+export const itemsReducer: Reducer<ItemCollection, ItemAction> 
+    = combineReducers({byId: itemById, allIds: itemIds});

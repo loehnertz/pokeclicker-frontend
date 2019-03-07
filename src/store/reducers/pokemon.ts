@@ -1,4 +1,5 @@
-import { PokemonById, PokemonCollection, PokemonAction, PokemonActionType, ItemAction } from '../types';
+import { PokemonById, PokemonCollection } from '../types';
+import { PokemonAction, PokemonActionType, ItemAction } from "../actions/types";
 import { Reducer, combineReducers } from 'redux';
 
 const pokemonById: Reducer<PokemonById, PokemonAction> = (collection = {}, action) => {
@@ -27,4 +28,5 @@ const pokemonIds: Reducer<number[], PokemonAction> = (ids = [], action) => {
     return ids;
 }
 
-export const pokemonsReducer: Reducer<PokemonCollection, ItemAction> = combineReducers({byId: pokemonById, allIds: pokemonIds});
+export const pokemonsReducer: Reducer<PokemonCollection, ItemAction> 
+    = combineReducers({byId: pokemonById, allIds: pokemonIds});

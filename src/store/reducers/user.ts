@@ -1,5 +1,5 @@
 import { User } from '../../models';
-import { UserAction, UserActionType } from '../types';
+import { UserAction, UserActionType } from "../actions/types";
 import { Reducer } from 'redux';
 
 const initialUser: User = {

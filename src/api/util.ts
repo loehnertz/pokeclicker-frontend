@@ -53,3 +53,14 @@ export class Session {
         return Session.instance;
     }
 }
+
+export function url(parts: TemplateStringsArray, ...params: any[]): string{
+    const result: any[] = [API_ROOT];
+    let i;
+    for(i = 0; i < parts.length; i++){
+        result.push(parts[i]);
+        result.push(params[i]);
+    }
+    result.push(parts[i]);
+    return result.join("");
+}
