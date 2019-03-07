@@ -4,7 +4,7 @@ import { ThunkAction } from 'redux-thunk';
 import { AnyAction, Action } from 'redux';
 
 
-export enum NotificationActionType {
+export enum NotificationActionType{
     NOTIFY = "NOTIFICATION_NOTIFY",
     WITHDRAW = "NOTIFICATION_WITHDRAW",
 }

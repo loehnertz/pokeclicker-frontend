@@ -5,6 +5,7 @@ import { State } from '../../store/types';
 import StoreFront from '../StoreFront/StoreFront';
 import { connect, MapDispatchToPropsNonObject } from 'react-redux';
 import { Dispatch } from 'redux';
+import UserRegistration from '../UserRegistration/UserRegistration';
 
 
 function isState(state: any): state is State {
@@ -21,11 +22,18 @@ class App extends Component {
             <div className={`notification notification-${n.notificationType}`}>{n.message}</div>
         );
 
+        let mode;
+        if(this.props.entities.user === null){
+            mode = <UserRegistration/>
+        }
+        else{
+            mode = <StoreFront />
+        }
         return (
             <div className="App">
                 <div className="Notifications">{notifications}</div>
                 <main>
-                    <StoreFront />
+                    {mode}
                 </main>
             </div>
         );

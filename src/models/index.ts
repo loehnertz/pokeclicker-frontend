@@ -3,6 +3,7 @@
 // Just a number, but with a nice name.
 export type Reference<T> = number & { __reference__?: T };
 
+export type Maybe<T> = T | null;
 
 export enum NotificationType {
     ERROR = 'error',
@@ -17,7 +18,7 @@ export interface AppNotification {
     notificationType: NotificationType;
 }
 
-export interface User {
+export type User = {
     id: Reference<User>,
     name: string,
     avatarUri: string | null,
