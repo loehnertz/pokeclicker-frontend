@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { State } from '../../store/types';
-import StoreFront from '../Store/StoreFront';
+import StoreFront from '../StoreFront/StoreFront';
 import { connect, MapDispatchToPropsNonObject } from 'react-redux';
 import { Dispatch } from 'redux';
 

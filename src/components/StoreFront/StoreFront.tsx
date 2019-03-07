@@ -4,7 +4,7 @@ import { Boosterpack, Reference } from "../../models";
 import chroma from 'chroma-js';
 import React from "react";
 
-import './Store.css';
+import './StoreFront.css';
 import { connect } from "react-redux";
 import { bindActionCreators, Dispatch } from "redux";
 import { buyBoosterpack } from "../../store/actions/boosterpack";
@@ -22,8 +22,12 @@ class StoreFront extends Component<StoreFrontProps & StoreFrontDispatchProps>{
 
     render() {
         const bps = this.props.boosterpacks;
-        const items = bps.allIds.map(id => bps.byId[id]).map(bp => <StoreItem boosterpack={bp} onBoosterpackBuy={this.props.onBoosterpackBuy}></StoreItem>)
-        return <div className="StoreFront">{items}</div>
+        const items = bps.allIds.map(id => bps.byId[id]).map(bp =>
+            <StoreItem
+                boosterpack={bp}
+                onBoosterpackBuy={this.props.onBoosterpackBuy} />
+        );
+        return <div className="StoreFront">{items}</div>;
     }
 }
 

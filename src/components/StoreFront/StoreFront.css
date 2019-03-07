@@ -31,14 +31,18 @@
     margin-bottom: 20px;
 }
 
-.StoreItem .StoreItem-buybutton{
+.StoreItem-buybutton{
     font-size: 1.2rem;
     width: calc(var(--width) / 3 * 2);
     height: 50px;
     background: hsla(0, 0%, 80%, 50%);
     border-width: 5px;
     border-color: #efefef;
-    border-radius: var(--storefront-border-radius)
+    border-radius: var(--storefront-border-radius);
+}
+
+.StoreItem-buybutton:focus {
+    outline-color: hsla(0, 0%, 0%, 20%);
 }
 
 .StoreItem-title {
