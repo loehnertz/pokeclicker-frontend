@@ -11,7 +11,7 @@ interface Resource<T>{
 abstract class SessionResource{
     session: Session;
 
-    constructor(token?: string){
+    constructor(token?: string | null){
         this.session = new Session();
         if(token != null) {
             this.session.setToken(token);
