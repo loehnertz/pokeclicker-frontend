@@ -7,7 +7,7 @@ import { addOrReplaceBoosterpack } from '../actions/boosterpack';
 const boosterpackById: Reducer<BoosterpackById, BoosterpackAction | {type: 'APP_INITIALIZE'}> = (collection = {}, action) => {
     switch (action.type) {
         case BoosterpackActionType.ADD_OR_UPDATE:
-            return { ...collection, [action.boosterpack.locationAreaId]: action.boosterpack };
+            return { ...collection, [action.boosterpack.locationId]: action.boosterpack };
 
         case BoosterpackActionType.CLEAR_ALL:
             return {};
@@ -19,8 +19,8 @@ const boosterpackById: Reducer<BoosterpackById, BoosterpackAction | {type: 'APP_
 const boosterpackIds: Reducer<number[], BoosterpackAction> = (ids = [], action) => {
     switch (action.type) {
         case BoosterpackActionType.ADD_OR_UPDATE:
-            if (ids.indexOf(action.boosterpack.locationAreaId) < 0) {
-                return ids.concat([action.boosterpack.locationAreaId]);
+            if (ids.indexOf(action.boosterpack.locationId) < 0) {
+                return ids.concat([action.boosterpack.locationId]);
             }
             break;
 

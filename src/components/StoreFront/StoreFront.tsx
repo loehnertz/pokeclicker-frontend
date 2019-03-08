@@ -79,7 +79,7 @@ class StoreItem extends Component<StoreItemProps & StoreItemEventProps>{
             <div className="StoreItem-boosterpack">
                 <h3 className="StoreItem-title">{bp.name}</h3>
             </div>
-            <button className="StoreItem-buybutton" onClick={() => this.props.onBoosterpackBuy(this.props.boosterpack.locationAreaId)}>${bp.price}</button>
+            <button className="StoreItem-buybutton" onClick={() => this.props.onBoosterpackBuy(this.props.boosterpack.locationId)}>${bp.price}</button>
         </div>
     }
 }
