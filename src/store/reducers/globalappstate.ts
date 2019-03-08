@@ -1,6 +1,13 @@
 import { Reducer, combineReducers } from "redux";
-import { Notifications, GlobalAppState } from "../types";
-import { AppNotificationAction, NotificationActionType } from "../actions/types";
+import { Notifications, GlobalAppState, AuthenticationState } from "../types";
+import { AppNotificationAction, NotificationActionType, AuthenticationAction, AuthenticationActionType } from "../actions/types";
+
+const authenticationReducer: Reducer<AuthenticationState, AuthenticationAction> = (state = {token: null}, action) => {
+    if(action.type === AuthenticationActionType.TOKEN_RETRIEVED){
+        return {token: action.token};
+    }
+    return {...state};
+}
 
 
 const errorNotificationReducer: Reducer<Notifications, AppNotificationAction> = (notifications = [], action) => {
@@ -14,5 +21,6 @@ const errorNotificationReducer: Reducer<Notifications, AppNotificationAction> = 
 }
 
 export default combineReducers({
+    authentication: authenticationReducer,
     notifications: errorNotificationReducer
 }) as Reducer<GlobalAppState>;

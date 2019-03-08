@@ -1,4 +1,5 @@
-import { Pokemon, User, Item, Boosterpack, AppNotification } from '../../models';
+import { Pokemon, Item, Boosterpack, AppNotification } from '../../models';
+import { User } from "../../models/user";
 import { State } from '../types';
 import { ThunkAction } from 'redux-thunk';
 import { AnyAction, Action } from 'redux';
@@ -17,8 +18,17 @@ export type AppNotificationAction = {
     notification: AppNotification;
 };
 
+export enum AuthenticationActionType {
+    TOKEN_RETRIEVED = "TOKEN_RETRIEVED"
+}
+
+export interface AuthenticationAction {
+    type: AuthenticationActionType.TOKEN_RETRIEVED;
+    token: string;
+}
+
 export enum UserActionType {
-    SET = 'USER_SET'
+    SET = 'USER_SET',
 }
 
 

@@ -1,30 +1,33 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './components/App/App';
-import * as serviceWorker from './serviceWorker';
-import storeReducer from './store';
-import { Store, createStore, applyMiddleware, compose, AnyAction } from 'redux';
-import { State } from './store/types';
-import { Provider } from 'react-redux';
+import React from "react";
+import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
+import { AnyAction, applyMiddleware, compose, createStore, StoreEnhancer } from "redux";
+import App from "./components/App/App";
+import "./index.css";
+import * as serviceWorker from "./serviceWorker";
+import storeReducer from "./store";
+import { State } from "./store/types";
 
-import thunk from 'redux-thunk';
-import { loadAllBoosterpacks } from './store/actions/boosterpack';
+import thunk, { ThunkDispatch } from "redux-thunk";
+import { loadAllBoosterpacks } from "./store/actions/boosterpack";
 
-const reduxtools = (window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__();
+function createEnhancers(): StoreEnhancer<{dispatch: ThunkDispatch<State, undefined, AnyAction>}> {
+    const reduxtools = (window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__();
 
-const middleware = applyMiddleware(
-    thunk,
-);
+    const middleware = applyMiddleware(
+        thunk
+    );
+    return compose(middleware, reduxtools);
+}
 
-const store: Store<State> = createStore(
+const store = createStore(
     storeReducer,
-    middleware
+    createEnhancers()
 );
 
-ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
+ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById("root"));
 
-store.dispatch(loadAllBoosterpacks() as any);
+store.dispatch(loadAllBoosterpacks());
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
