@@ -1,4 +1,4 @@
-[![Build Status](http://jenkins.uva-se.nl/buildStatus/icon?job=Frontend)](http://jenkins.uva-se.nl/job/Frontend/)
+[![Build Status](http://jenkins.uva-se.nl/buildStatus/icon?job=Frontend)](http://jenkins.uva-se.nl/job/Frontend/) [![CodeFactor](https://www.codefactor.io/repository/github/pokeclicker/frontend/badge)](https://www.codefactor.io/repository/github/pokeclicker/frontend)
 
 This application is running at [http://frontend.uva-se.nl/](http://frontend.uva-se.nl/).
 
