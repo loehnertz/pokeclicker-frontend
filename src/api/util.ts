@@ -7,7 +7,7 @@ export class StatusError extends Error {
     statusText: string;
     response: Response;
 
-    constructor(status: number, statusText: string, response: Response){
+    constructor(status: number, statusText: string, response: Response) {
         super(`${status} ${statusText}`);
         this.status = status;
         this.statusText = statusText;
@@ -23,34 +23,34 @@ export class Session {
         this.headers = {};
     }
 
-    async setHeader(name: string, value: string){
+    async setHeader(name: string, value: string) {
         this.headers[name] = value;
     }
 
-    async addHeaders(headers: Record<string, string>){
+    async addHeaders(headers: Record<string, string>) {
         this.headers = {...this.headers};
     }
 
-    async setToken(token: string){
-        this.setHeader("Authorization", `Token ${token}`)
+    async setToken(token: string) {
+        this.setHeader("Authorization", `Token ${token}`);
     }
 
-    async fetch(input: RequestInfo, init?: RequestInit): Promise<Response>{
+    async fetch(input: RequestInfo, init?: RequestInit): Promise<Response> {
         const defaultInit = {
             headers: this.headers
-        }
-        return await fetch(input, mergeInit(defaultInit, init));
+        };
+        return fetch(input, mergeInit(defaultInit, init));
     }
 
     async safeFetch(input: RequestInfo, init?: RequestInit): Promise<Response> {
         const response = await this.fetch(input, init);
-        if(response.status >= 400){
+        if(response.status >= 400) {
             throw new StatusError(response.status, response.statusText, response);
         }
         return response;
     }
 
-    async postJson(input: RequestInfo, body: Record<string, any>, init?: RequestInit): Promise<Response>{
+    async postJson(input: RequestInfo, body: Record<string, any>, init?: RequestInit): Promise<Response> {
         const defaultBody = JSON.stringify(body);
         const defaultInit = {
             method: "POST",
@@ -61,10 +61,10 @@ export class Session {
     }
 }
 
-export function url(parts: TemplateStringsArray, ...params: any[]): string{
+export function url(parts: TemplateStringsArray, ...params: any[]): string {
     const result: any[] = [API_ROOT];
     let i;
-    for(i = 0; i < parts.length; i++){
+    for(i = 0; i < parts.length; i++) {
         result.push(parts[i]);
         result.push(params[i]);
     }
@@ -77,12 +77,12 @@ export function url(parts: TemplateStringsArray, ...params: any[]): string{
  * side with the parameters of the right-hand side, except for the `headers`
  * parameter, which is also merged separately.
  */
-function mergeInit(a?: RequestInit, b?: RequestInit): RequestInit{
+function mergeInit(a?: RequestInit, b?: RequestInit): RequestInit {
     const headers = {};
-    if(a != null){
+    if(a != null) {
         Object.assign(headers, a.headers);
     }
-    if(b != null){
+    if(b != null) {
         Object.assign(headers, b.headers);
     }
     return {...a, ...b, headers};

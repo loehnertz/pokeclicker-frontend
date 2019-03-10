@@ -1,16 +1,16 @@
-import { BoosterpackCollection, State } from "../../store/types";
-import { Component, CSSProperties } from "react";
-import { Boosterpack, Reference } from "../../models";
 import chroma from 'chroma-js';
+import { Component, CSSProperties } from "react";
 import React from "react";
+import { Boosterpack, Reference } from "../../models";
+import { BoosterpackCollection, State } from "../../store/types";
 
-import './StoreFront.css';
 import { connect } from "react-redux";
 import { bindActionCreators, Dispatch } from "redux";
 import { buyBoosterpack } from "../../store/actions/boosterpack";
+import './StoreFront.css';
 
 interface StoreFrontProps {
-    boosterpacks: BoosterpackCollection
+    boosterpacks: BoosterpackCollection;
 }
 
 interface StoreFrontDispatchProps {
@@ -18,11 +18,11 @@ interface StoreFrontDispatchProps {
 }
 
 
-class StoreFront extends Component<StoreFrontProps & StoreFrontDispatchProps>{
+class StoreFront extends Component<StoreFrontProps & StoreFrontDispatchProps> {
 
     render() {
         const bps = this.props.boosterpacks;
-        const items = bps.allIds.map(id => bps.byId[id]).map(bp =>
+        const items = bps.allIds.map((id) => bps.byId[id]).map((bp) =>
             <StoreItem
                 boosterpack={bp}
                 onBoosterpackBuy={this.props.onBoosterpackBuy} />
@@ -30,7 +30,6 @@ class StoreFront extends Component<StoreFrontProps & StoreFrontDispatchProps>{
         return <div className="StoreFront">{items}</div>;
     }
 }
-
 
 
 interface StoreItemProps {
@@ -41,7 +40,7 @@ interface StoreItemEventProps {
     onBoosterpackBuy(id: Reference<Boosterpack>): void;
 }
 
-class StoreItem extends Component<StoreItemProps & StoreItemEventProps>{
+class StoreItem extends Component<StoreItemProps & StoreItemEventProps> {
 
     color(): CSSProperties {
         const color = chroma(this.props.boosterpack.hexColor);
@@ -55,8 +54,7 @@ class StoreItem extends Component<StoreItemProps & StoreItemEventProps>{
         if (chroma.contrast(fg, bg) < 6) {
             if (fg.hex() == "#ffffff") {
                 bg = bg.darken(0.5);
-            }
-            else {
+            } else {
                 bg = bg.brighten(0.5);
             }
         }
@@ -80,7 +78,7 @@ class StoreItem extends Component<StoreItemProps & StoreItemEventProps>{
                 <h3 className="StoreItem-title">{bp.name}</h3>
             </div>
             <button className="StoreItem-buybutton" onClick={() => this.props.onBoosterpackBuy(this.props.boosterpack.locationAreaId)}>${bp.price}</button>
-        </div>
+        </div>;
     }
 }
 
@@ -88,13 +86,13 @@ class StoreItem extends Component<StoreItemProps & StoreItemEventProps>{
 function mapStateToProps(state: State): StoreFrontProps {
     return {
         boosterpacks: state.entities.boosterpacks
-    }
+    };
 }
 
 function mapDispatchToProps(dispatch: Dispatch): StoreFrontDispatchProps {
     return {
         onBoosterpackBuy: bindActionCreators(buyBoosterpack, dispatch)
-    }
+    };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(StoreFront);

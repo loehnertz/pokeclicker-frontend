@@ -1,17 +1,17 @@
 
 import { Boosterpack, Item, Pokemon } from '../models';
-import { User, UserRegistrationRequest, UserAuthenticationResponse } from '../models/user';
+import { User, UserAuthenticationResponse, UserRegistrationRequest } from '../models/user';
 import { Session, url } from './util';
 
-interface Resource<T>{
+interface Resource<T> {
     fetchById?(id: number): Promise<T>;
     fetchAll?(): Promise<T[]>;
 }
 
-abstract class SessionResource{
+abstract class SessionResource {
     session: Session;
 
-    constructor(token?: string | null){
+    constructor(token?: string | null) {
         this.session = new Session();
         if(token != null) {
             this.session.setToken(token);
@@ -25,12 +25,12 @@ export class UserResource extends SessionResource implements Resource<User> {
         return r.json();
     }
 
-    async fetchAll(): Promise<User[]>{
+    async fetchAll(): Promise<User[]> {
         const r = await this.session.safeFetch(url`users/`);
         return r.json();
     }
 
-    async register(registerRequest: UserRegistrationRequest): Promise<UserAuthenticationResponse>{
+    async register(registerRequest: UserRegistrationRequest): Promise<UserAuthenticationResponse> {
         const r = await this.session.postJson(url`users/register/`, registerRequest);
         return r.json();
     }
@@ -42,7 +42,7 @@ export class PokemonResource extends SessionResource implements Resource<Pokemon
         return r.json();
     }
 
-    async fetchAll(): Promise<Pokemon[]>{
+    async fetchAll(): Promise<Pokemon[]> {
         const r = await this.session.safeFetch(url`pokemon/`);
         return r.json();
     }

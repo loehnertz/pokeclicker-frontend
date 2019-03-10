@@ -52,7 +52,7 @@ class UserRegistration extends Component<UserRegistrationProps & UserRegistratio
 function mapStateToProps(state: State): UserRegistrationProps {
     return {
         userResource: new UserResource(state.globalAppState.authentication.token)
-    }
+    };
 }
 
 function mapDispatchToProps(dispatch: Dispatch<AnyAction>, props: any): UserRegistrationDispatchProps {
