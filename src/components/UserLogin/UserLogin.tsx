@@ -34,7 +34,7 @@ class UserLogin extends Component<UserLoginProps & UserLoginDispatchProps> {
     }
 
     render() {
-        return <form className="UserRegistration" onSubmit={(e) => {e.preventDefault(); this.onSubmit(e); }}>
+        return <form className="UserLogin" onSubmit={(e) => {e.preventDefault(); this.onSubmit(e); }}>
         <p>
            <label>Username: <input type="text" name="username" required/></label>
         </p>
