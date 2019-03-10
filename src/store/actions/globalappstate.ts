@@ -43,7 +43,7 @@ export function withdraw(notification: AppNotification): AppNotificationAction {
     };
 }
 
-export function loginSuccess(token: string): AuthenticationAction {
+export function authorizationTokenReceived(token: string): AuthenticationAction {
     return {
         type: AuthenticationActionType.TOKEN_RETRIEVED,
         token
@@ -60,6 +60,6 @@ export function requestRegistration(resource: UserResource, user: UserRegistrati
         }
         const r = response as {ok: true, token: string};
         const token = r.token;
-        dispatch(loginSuccess(token));
+        dispatch(authorizationTokenReceived(token));
     };
 }
