@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import { Provider } from 'react-redux';
+import { AnyAction, applyMiddleware, compose, createStore, Store } from 'redux';
 import App from './components/App/App';
+import './index.css';
 import * as serviceWorker from './serviceWorker';
 import storeReducer from './store';
-import { Store, createStore, applyMiddleware, compose, AnyAction } from 'redux';
 import { State } from './store/types';
-import { Provider } from 'react-redux';
 
 import thunk from 'redux-thunk';
 import { loadAllBoosterpacks } from './store/actions/boosterpack';

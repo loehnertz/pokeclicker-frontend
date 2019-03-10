@@ -1,13 +1,13 @@
+import { Reducer } from 'redux';
 import { User } from '../../models';
 import { UserAction, UserActionType } from "../actions/types";
-import { Reducer } from 'redux';
 
 const initialUser: User = {
     id: 0,
     name: "undefined user",
     avatarUri: null,
     pokeDollars: 0,
-}
+};
 
 
 export const userReducer: Reducer<User, UserAction> = (user = initialUser, action) => {
@@ -16,4 +16,4 @@ export const userReducer: Reducer<User, UserAction> = (user = initialUser, actio
             return {...action.user};
     }
     return {...user};
-}
+};

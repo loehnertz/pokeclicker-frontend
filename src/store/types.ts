@@ -1,4 +1,4 @@
-import {Pokemon, User, Item, Boosterpack, AppNotification } from '../models';
+import { AppNotification, Boosterpack, Item, Pokemon, User } from '../models';
 
 
 interface ById<TValue> {
@@ -38,8 +38,6 @@ export interface State {
         items: ItemCollection;
         pokemons: PokemonCollection;
         boosterpacks: BoosterpackCollection;
-    }
+    };
 }
-
-
 

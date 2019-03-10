@@ -18,10 +18,10 @@ export interface AppNotification {
 }
 
 export interface User {
-    id: Reference<User>,
-    name: string,
-    avatarUri: string | null,
-    pokeDollars: number
+    id: Reference<User>;
+    name: string;
+    avatarUri: string | null;
+    pokeDollars: number;
 }
 
 export interface Pokemon {
@@ -40,8 +40,8 @@ export interface Item {
 }
 
 export interface Boosterpack {
-    locationId: number,
-    name: string,
-    price: number,
+    locationId: number;
+    name: string;
+    price: number;
     hexColor: string;
 }

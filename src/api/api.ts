@@ -1,9 +1,9 @@
 
-import { User, Pokemon, Item, Boosterpack } from '../models';
+import { Boosterpack, Item, Pokemon, User } from '../models';
 import { Session, url } from './util';
 
 
-interface Resource<T>{
+interface Resource<T> {
     fetchById?(id: number): Promise<T>;
     fetchAll?(): Promise<T[]>;
 }
@@ -14,7 +14,7 @@ export class UserResource implements Resource<User> {
         const r = await Session.getInstance().safeFetch(url`users/${id}`);
         return r.json();
     }
-    async fetchAll(): Promise<User[]>{
+    async fetchAll(): Promise<User[]> {
         const r = await Session.getInstance().safeFetch(url`users/`);
         return r.json();
     }
@@ -26,7 +26,7 @@ export class PokemonResource implements Resource<Pokemon> {
         const r = await Session.getInstance().safeFetch(url`pokemon/${id}`);
         return r.json();
     }
-    async fetchAll(): Promise<Pokemon[]>{
+    async fetchAll(): Promise<Pokemon[]> {
         const r = await Session.getInstance().safeFetch(url`pokemon/`);
         return r.json();
     }
