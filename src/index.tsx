@@ -1,26 +1,30 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import { Provider } from 'react-redux';
+import { AnyAction, applyMiddleware, compose, createStore, Store } from 'redux';
 import App from './components/App/App';
+import './index.css';
 import * as serviceWorker from './serviceWorker';
-
 import storeReducer from './store';
-import { Store, createStore } from 'redux';
 import { State } from './store/types';
-import { setUser } from './store/actions/user';
 
-/* eslint-disable no-underscore-dangle */
-const store: Store<State> = createStore(
-    storeReducer, 
-    (window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__() 
+import thunk from 'redux-thunk';
+import { loadAllBoosterpacks } from './store/actions/boosterpack';
+
+const reduxtools = (window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__();
+
+const middleware = applyMiddleware(
+    thunk,
 );
-/* eslint-enable */
 
-console.log(store);
+const store: Store<State> = createStore(
+    storeReducer,
+    middleware
+);
 
-store.dispatch(setUser({name: 'Jakob', id: 0, 'pokeDollars': 30, avatarUri: null}));
+ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
 
-ReactDOM.render(<App state={store.getState()} />, document.getElementById('root'));
+store.dispatch(loadAllBoosterpacks() as any);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

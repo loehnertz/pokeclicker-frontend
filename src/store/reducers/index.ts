@@ -1,20 +1,22 @@
 import { combineReducers, Dispatch, Reducer } from 'redux';
 
 import { State } from '../types';
-import { pokemonsReducer } from './pokemon';
-import { itemsReducer } from './item';
-import { userReducer } from './user';
 import { boosterpacksReducer } from './boosterpack';
+import globalAppStateReducer from './globalappstate';
+import { itemsReducer } from './item';
+import { pokemonsReducer } from './pokemon';
+import { userReducer } from './user';
 
 const entitiesReducer = combineReducers({
-	user: userReducer,
-	pokemons: pokemonsReducer,
-	items: itemsReducer,
-	boosterpacks: boosterpacksReducer
+    user: userReducer,
+    pokemons: pokemonsReducer,
+    items: itemsReducer,
+    boosterpacks: boosterpacksReducer
 });
 
 const reducer: Reducer<State> = combineReducers({
-	entities: entitiesReducer
+    globalAppState: globalAppStateReducer,
+    entities: entitiesReducer
 });
 
 export default reducer;

@@ -1,29 +1,43 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { connect, MapDispatchToPropsNonObject } from 'react-redux';
+import { Dispatch } from 'redux';
 import { State } from '../../store/types';
+import StoreFront from '../StoreFront/StoreFront';
+import './App.css';
+import logo from './logo.svg';
 
-class App extends Component<{state: State}> {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.tsx</code> and save to reload. Bonjour! Je m'appelle {this.props.state.entities.user.name}.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+
+function isState(state: any): state is State {
+    return state instanceof Object && state.hasOwnProperty('entities');
 }
 
-export default App;
+class App extends Component {
+    render() {
+        if (!isState(this.props)) {
+            return <div className="App"><p>Redux state is missing</p></div>;
+        }
+
+        const notifications = this.props.globalAppState.notifications.map((n) =>
+            <div className={`notification notification-${n.notificationType}`}>{n.message}</div>
+        );
+
+        return (
+            <div className="App">
+                <div className="Notifications">{notifications}</div>
+                <main>
+                    <StoreFront />
+                </main>
+            </div>
+        );
+    }
+}
+
+function mapStateToProps(state: State) {
+    return state;
+}
+
+function mapDispatchToProps(dispatch: Dispatch) {
+    return {};
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

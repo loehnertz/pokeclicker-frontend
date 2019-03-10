@@ -1,8 +1,9 @@
-import { PokemonById, PokemonCollection, PokemonAction, PokemonActionType, ItemAction } from '../types';
-import { Reducer, combineReducers } from 'redux';
+import { combineReducers, Reducer } from 'redux';
+import { ItemAction, PokemonAction, PokemonActionType } from "../actions/types";
+import { PokemonById, PokemonCollection } from '../types';
 
 const pokemonById: Reducer<PokemonById, PokemonAction> = (collection = {}, action) => {
-    switch(action.type){
+    switch(action.type) {
         case PokemonActionType.ADD_OR_UPDATE:
             return {...collection, [action.pokemon.id]: action.pokemon};
 
@@ -10,10 +11,10 @@ const pokemonById: Reducer<PokemonById, PokemonAction> = (collection = {}, actio
             return {};
     }
     return {...collection};
-}
+};
 
 const pokemonIds: Reducer<number[], PokemonAction> = (ids = [], action) => {
-    switch(action.type){
+    switch(action.type) {
         case PokemonActionType.ADD_OR_UPDATE:
             if(ids.indexOf(action.pokemon.id) < 0) {
                 return ids.concat([action.pokemon.id]);
@@ -25,6 +26,7 @@ const pokemonIds: Reducer<number[], PokemonAction> = (ids = [], action) => {
 
     }
     return ids;
-}
+};
 
-export const pokemonsReducer: Reducer<PokemonCollection, ItemAction> = combineReducers({byId: pokemonById, allIds: pokemonIds});
+export const pokemonsReducer: Reducer<PokemonCollection, ItemAction>
+    = combineReducers({byId: pokemonById, allIds: pokemonIds});

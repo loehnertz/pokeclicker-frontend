@@ -1,0 +1,51 @@
+
+
+.StoreFront {
+    --storefront-border: 5px solid #222;
+    --storefront-border-radius: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: hsl(0, 0%, 80%);
+}
+
+.StoreItem {
+    --bg-from: #f0f;
+    --bg-to: #f00;
+    --fg: #0f0;
+    --width: 220px;
+    color: var(--fg);
+    flex-basis: var(--width);
+    flex-grow: 0;
+    flex-shrink: 0;
+    margin: 20px;
+    margin-bottom: 30px;
+}
+
+.StoreItem-boosterpack {
+    height: calc(16 * var(--width) / 9);
+    border: var(--storefront-border);
+    border-radius: var(--storefront-border-radius);
+    background: linear-gradient(120deg, var(--bg-from), var(--bg-via), var(--bg-to));
+    background-repeat: no-repeat;
+    background-origin: border-box;
+    margin-bottom: 20px;
+}
+
+.StoreItem-buybutton{
+    font-size: 1.2rem;
+    width: calc(var(--width) / 3 * 2);
+    height: 50px;
+    background: hsla(0, 0%, 80%, 50%);
+    border-width: 5px;
+    border-color: #efefef;
+    border-radius: var(--storefront-border-radius);
+}
+
+.StoreItem-buybutton:focus {
+    outline-color: hsla(0, 0%, 0%, 20%);
+}
+
+.StoreItem-title {
+    margin-top: calc(var(--width) * 16 / 9 * 0.7);
+    padding: 20px;
+}

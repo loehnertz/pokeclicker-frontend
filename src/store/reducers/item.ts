@@ -1,8 +1,9 @@
-import { ItemById, ItemCollection, ItemAction, ItemActionType } from '../types';
-import { Reducer, combineReducers } from 'redux';
+import { combineReducers, Reducer } from 'redux';
+import { ItemAction, ItemActionType } from "../actions/types";
+import { ItemById, ItemCollection } from '../types';
 
 const itemById: Reducer<ItemById, ItemAction> = (collection = {}, action) => {
-    switch(action.type){
+    switch(action.type) {
         case ItemActionType.ADD_OR_UPDATE:
             return {...collection, [action.item.id]: action.item};
 
@@ -10,10 +11,10 @@ const itemById: Reducer<ItemById, ItemAction> = (collection = {}, action) => {
             return {};
     }
     return {...collection};
-}
+};
 
 const itemIds: Reducer<number[], ItemAction> = (ids = [], action) => {
-    switch(action.type){
+    switch(action.type) {
         case ItemActionType.ADD_OR_UPDATE:
             if(ids.indexOf(action.item.id) < 0) {
                 return ids.concat([action.item.id]);
@@ -25,6 +26,7 @@ const itemIds: Reducer<number[], ItemAction> = (ids = [], action) => {
 
     }
     return ids;
-}
+};
 
-export const itemsReducer: Reducer<ItemCollection, ItemAction> = combineReducers({byId: itemById, allIds: itemIds});
+export const itemsReducer: Reducer<ItemCollection, ItemAction>
+    = combineReducers({byId: itemById, allIds: itemIds});

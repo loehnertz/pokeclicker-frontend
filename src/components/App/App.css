@@ -30,3 +30,36 @@
     transform: rotate(360deg);
   }
 }
+
+.Notifications {
+  position: fixed;
+  right: 0;
+  width: 45ch;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.Notifications .notification {
+  --hue: 100;
+  background-color: hsl(var(--hue), 100%, 95%);
+  border-radius: 5px;
+  border: 5px solid hsl(var(--hue), 60%, 50%);
+  margin: 15px;
+  padding: 15px;
+}
+
+.Notifications .notification-error {
+  --hue: 355;
+}
+
+.Notifications .notification-warning {
+  --hue: 45;
+}
+
+.Notifications .notification-info {
+  --hue: 190;
+}
+
+.Notifications .notification-success {
+  --hue: 120;
+}
