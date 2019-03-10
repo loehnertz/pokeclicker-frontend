@@ -38,7 +38,7 @@ export interface Item {
 }
 
 export interface Boosterpack {
-    locationAreaId: number;
+    locationId: number;
     name: string;
     price: number;
     hexColor: string;

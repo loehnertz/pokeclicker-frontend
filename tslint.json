@@ -1,0 +1,18 @@
+{
+    "extends": "tslint:recommended",
+    "rules": {
+        "interface-name": [true, "never-prefix"],
+        "whitespace": [true, "check-decl", "check-operator", "check-module", "check-separator", "check-rest-spread", "check-typecast", "check-type-operator"],
+        "indent": [true, "spaces", 4],
+        "promise-function-async": [true],
+        "no-return-await": [true],
+        "no-consecutive-blank-lines": [true, 2],
+
+        "quotemark": false,
+        "member-access": false,
+        "max-classes-per-file": false,
+        "object-literal-sort-keys": false,
+        "trailing-comma": false,
+        "member-ordering": false
+    }
+}

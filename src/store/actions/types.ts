@@ -1,7 +1,11 @@
 import { Action, AnyAction } from 'redux';
 import { ThunkAction } from 'redux-thunk';
+<<<<<<< HEAD
 import { AppNotification, Boosterpack, Item, Pokemon } from '../../models';
 import { User } from "../../models/user";
+=======
+import { AppNotification, Boosterpack, Item, Pokemon, User } from '../../models';
+>>>>>>> develop
 import { State } from '../types';
 
 

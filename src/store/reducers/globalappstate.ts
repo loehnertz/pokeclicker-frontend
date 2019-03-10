@@ -1,5 +1,10 @@
 import { combineReducers, Reducer } from "redux";
-import { AppNotificationAction, AuthenticationAction, AuthenticationActionType, NotificationActionType } from "../actions/types";
+import {
+    AppNotificationAction,
+    AuthenticationAction,
+    AuthenticationActionType,
+    NotificationActionType
+} from "../actions/types";
 import { AuthenticationState, GlobalAppState, Notifications } from "../types";
 
 const authenticationReducer: Reducer<AuthenticationState, AuthenticationAction> = (state = {token: null}, action) => {
@@ -15,7 +20,7 @@ const errorNotificationReducer: Reducer<Notifications, AppNotificationAction> = 
         case NotificationActionType.NOTIFY:
             return ([] as Notifications).concat(notifications, {...action.notification});
         case NotificationActionType.WITHDRAW:
-            return notifications.filter((n) => n.id != action.notification.id);
+            return notifications.filter((n) => n.id !== action.notification.id);
     }
     return Array.from(notifications);
 };

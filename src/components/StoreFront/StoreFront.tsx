@@ -52,7 +52,7 @@ class StoreItem extends Component<StoreItemProps & StoreItemEventProps> {
         let bg = color;
 
         if (chroma.contrast(fg, bg) < 6) {
-            if (fg.hex() == "#ffffff") {
+            if (fg.hex() === "#ffffff") {
                 bg = bg.darken(0.5);
             } else {
                 bg = bg.brighten(0.5);
@@ -77,7 +77,13 @@ class StoreItem extends Component<StoreItemProps & StoreItemEventProps> {
             <div className="StoreItem-boosterpack">
                 <h3 className="StoreItem-title">{bp.name}</h3>
             </div>
+<<<<<<< HEAD
             <button className="StoreItem-buybutton" onClick={() => this.props.onBoosterpackBuy(this.props.boosterpack.locationAreaId)}>${bp.price}</button>
+=======
+            <button
+                className="StoreItem-buybutton"
+                onClick={() => this.props.onBoosterpackBuy(this.props.boosterpack.locationId)}>${bp.price}</button>
+>>>>>>> develop
         </div>;
     }
 }
