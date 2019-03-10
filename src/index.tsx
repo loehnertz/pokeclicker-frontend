@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
@@ -8,17 +7,6 @@ import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 import storeReducer from "./store";
 import { State } from "./store/types";
-=======
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { AnyAction, applyMiddleware, compose, createStore, Store } from 'redux';
-import App from './components/App/App';
-import './index.css';
-import * as serviceWorker from './serviceWorker';
-import storeReducer from './store';
-import { State } from './store/types';
->>>>>>> develop
 
 import thunk, { ThunkDispatch } from "redux-thunk";
 import { loadAllBoosterpacks } from "./store/actions/boosterpack";

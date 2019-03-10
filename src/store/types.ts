@@ -1,10 +1,5 @@
-<<<<<<< HEAD
 import { AppNotification, Boosterpack, Item, Maybe, Pokemon } from '../models';
 import { User } from "../models/user";
-=======
-import { AppNotification, Boosterpack, Item, Pokemon, User } from '../models';
-
->>>>>>> develop
 
 interface ById<TValue> {
     [id: number]: TValue;
