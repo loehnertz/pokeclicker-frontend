@@ -1,4 +1,3 @@
-import { object } from "prop-types";
 
 const API_ROOT = (process.env.REACT_APP_POKECLICKER_API_ROOT as string).replace(/[\/]*$/, '/');
 
@@ -28,7 +27,7 @@ export class Session {
     }
 
     async addHeaders(headers: Record<string, string>) {
-        this.headers = {...this.headers};
+        this.headers = {...this.headers, ...headers};
     }
 
     async setToken(token: string) {
@@ -36,10 +35,12 @@ export class Session {
     }
 
     async fetch(input: RequestInfo, init?: RequestInit): Promise<Response> {
-        const defaultInit = {
-            headers: this.headers
+        const defaultInit: RequestInit = {
+            headers: this.headers,
+            mode: "cors"
         };
-        return fetch(input, mergeInit(defaultInit, init));
+        const f = await fetch(input, mergeInit(defaultInit, init));
+        return f;
     }
 
     async safeFetch(input: RequestInfo, init?: RequestInit): Promise<Response> {

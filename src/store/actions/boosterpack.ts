@@ -1,4 +1,3 @@
-import { ThunkAction } from "redux-thunk";
 import { BoosterpackResource } from "../../api/api";
 import { Boosterpack, NotificationType } from '../../models';
 import { notifyWithTimeout } from "./globalappstate";
@@ -19,9 +18,9 @@ export function clearBoosterpacks(): BoosterpackAction {
 }
 
 
-export function loadAllBoosterpacks(): BoosterpackThunk  {
+export function loadAllBoosterpacks(resource: BoosterpackResource): BoosterpackThunk  {
     return (dispatch) => {
-        new BoosterpackResource().fetchAll().then((packs) => {
+        resource.fetchAll().then((packs) => {
             for(const pack of packs) {
                 dispatch(addOrReplaceBoosterpack(pack));
             }
@@ -29,9 +28,9 @@ export function loadAllBoosterpacks(): BoosterpackThunk  {
     };
 }
 
-export function buyBoosterpack(id: number): PokemonThunk {
+export function buyBoosterpack(resource: BoosterpackResource, id: number): PokemonThunk {
     return (dispatch) => {
-        new BoosterpackResource().buy(id).then((pokemons) => {
+        resource.buy(id).then((pokemons) => {
             for(const pokemon of pokemons) {
                 dispatch(addOrReplacePokemon(pokemon));
             }

@@ -19,7 +19,7 @@ export type AppNotificationAction = {
 };
 
 export enum AuthenticationActionType {
-    TOKEN_RETRIEVED = "TOKEN_RETRIEVED"
+    TOKEN_RETRIEVED = "AUTHENTICATION_TOKEN_RETRIEVED"
 }
 
 export interface AuthenticationAction {

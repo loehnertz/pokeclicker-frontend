@@ -6,15 +6,17 @@ import { BoosterpackCollection, State } from "../../store/types";
 
 import { connect } from "react-redux";
 import { bindActionCreators, Dispatch } from "redux";
+import { BoosterpackResource } from '../../api/api';
 import { buyBoosterpack } from "../../store/actions/boosterpack";
 import './StoreFront.css';
 
 interface StoreFrontProps {
     boosterpacks: BoosterpackCollection;
+    boosterpackResource: BoosterpackResource;
 }
 
 interface StoreFrontDispatchProps {
-    onBoosterpackBuy(id: Reference<Boosterpack>): void;
+    onBoosterpackBuy(resource: BoosterpackResource, id: Reference<Boosterpack>): void;
 }
 
 
@@ -25,6 +27,7 @@ class StoreFront extends Component<StoreFrontProps & StoreFrontDispatchProps> {
         const items = bps.allIds.map((id) => bps.byId[id]).map((bp) =>
             <StoreItem
                 boosterpack={bp}
+                resource={this.props.boosterpackResource}
                 onBoosterpackBuy={this.props.onBoosterpackBuy} />
         );
         return <div className="StoreFront">{items}</div>;
@@ -34,13 +37,18 @@ class StoreFront extends Component<StoreFrontProps & StoreFrontDispatchProps> {
 
 interface StoreItemProps {
     boosterpack: Boosterpack;
+    resource: BoosterpackResource;
 }
 
 interface StoreItemEventProps {
-    onBoosterpackBuy(id: Reference<Boosterpack>): void;
+    onBoosterpackBuy(resource: BoosterpackResource, id: Reference<Boosterpack>): void;
 }
 
 class StoreItem extends Component<StoreItemProps & StoreItemEventProps> {
+
+    onBuy(): void {
+        this.props.onBoosterpackBuy(this.props.resource, this.props.boosterpack.locationId);
+    }
 
     color(): CSSProperties {
         const color = chroma(this.props.boosterpack.hexColor);
@@ -79,7 +87,7 @@ class StoreItem extends Component<StoreItemProps & StoreItemEventProps> {
             </div>
             <button
                 className="StoreItem-buybutton"
-                onClick={() => this.props.onBoosterpackBuy(this.props.boosterpack.locationId)}>${bp.price}</button>
+                onClick={() => this.onBuy()}>${bp.price}</button>
         </div>;
     }
 }
@@ -87,7 +95,8 @@ class StoreItem extends Component<StoreItemProps & StoreItemEventProps> {
 
 function mapStateToProps(state: State): StoreFrontProps {
     return {
-        boosterpacks: state.entities.boosterpacks
+        boosterpacks: state.entities.boosterpacks,
+        boosterpackResource: new BoosterpackResource(state.globalAppState.authentication.token)
     };
 }
 
