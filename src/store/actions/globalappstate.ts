@@ -42,24 +42,3 @@ export function withdraw(notification: AppNotification): AppNotificationAction {
         notification
     };
 }
-
-export function authorizationTokenReceived(token: string): AuthenticationAction {
-    return {
-        type: AuthenticationActionType.TOKEN_RETRIEVED,
-        token
-    };
-}
-
-export function requestRegistration(resource: UserResource, user: UserRegistrationRequest)
-    : ThunkAction<void, State, void, AuthenticationAction> {
-
-    return async (dispatch) => {
-        const response = await resource.register(user);
-        if(!response.ok) {
-            dispatch(notifyWithTimeout(response.error + "", NotificationType.ERROR, 5000));
-        }
-        const r = response as {ok: true, token: string};
-        const token = r.token;
-        dispatch(authorizationTokenReceived(token));
-    };
-}

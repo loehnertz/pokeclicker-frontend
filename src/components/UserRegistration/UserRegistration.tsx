@@ -5,7 +5,8 @@ import { AnyAction, bindActionCreators } from "redux";
 import { UserResource } from "../../api/api";
 import { NotificationType } from "../../models";
 import { UserRegistrationRequest } from "../../models/user";
-import { notifyWithTimeout, requestRegistration } from "../../store/actions/globalappstate";
+import { requestRegistration } from "../../store/actions/authentication";
+import { notifyWithTimeout } from "../../store/actions/globalappstate";
 import { State } from "../../store/types";
 
 interface UserRegistrationProps {

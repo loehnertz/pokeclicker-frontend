@@ -1,6 +1,6 @@
 
 import { Boosterpack, Item, Pokemon } from '../models';
-import { User, UserAuthenticationResponse, UserRegistrationRequest } from '../models/user';
+import { User, UserAuthenticationResponse, UserLoginRequest, UserRegistrationRequest } from '../models/user';
 import { Session, url } from './util';
 
 interface Resource<T> {
@@ -32,6 +32,11 @@ export class UserResource extends SessionResource implements Resource<User> {
 
     async register(registerRequest: UserRegistrationRequest): Promise<UserAuthenticationResponse> {
         const r = await this.session.postJson(url`users/register/`, registerRequest);
+        return r.json();
+    }
+
+    async login(loginRequest: UserLoginRequest): Promise<UserAuthenticationResponse> {
+        const r = await this.session.postJson(url`users/login/`, loginRequest);
         return r.json();
     }
 }
@@ -75,3 +80,4 @@ export class BoosterpackResource extends SessionResource implements Resource<Boo
         return r.json();
     }
 }
+
