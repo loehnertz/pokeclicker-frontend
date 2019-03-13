@@ -1,14 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators, Dispatch } from "redux";
-import { BoosterpackResource } from "../../api/api";
-import { Boosterpack, Reference } from "../../models";
 import { User } from "../../models/user";
 import { sendClick } from "../../store/actions/sockets";
 import { State } from "../../store/types";
 import './Clicking.css';
 import pokeballImage from './pokeball.png';
-import './pokeball.png';
 
 interface ClickingProps {
     user: User | null;
@@ -31,7 +28,7 @@ class Clicking extends Component<ClickingProps & ClickingDispatchProps> {
 
 class Pokeball extends Component<{onPokeballClick(): void}> {
     render() {
-        return <div><img src={pokeballImage} alt="" onClick={(e) => { this.props.onPokeballClick(); } }/></div>;
+        return <div><img src={pokeballImage} alt="" onClick={() => { this.props.onPokeballClick(); } }/></div>;
     }
 }
 
