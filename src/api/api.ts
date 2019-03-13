@@ -1,62 +1,83 @@
 
-import { Boosterpack, Item, Pokemon, User } from '../models';
+import { Boosterpack, Item, Pokemon } from '../models';
+import { User, UserAuthenticationResponse, UserLoginRequest, UserRegistrationRequest } from '../models/user';
 import { Session, url } from './util';
-
 
 interface Resource<T> {
     fetchById?(id: number): Promise<T>;
     fetchAll?(): Promise<T[]>;
 }
 
+abstract class SessionResource {
+    session: Session;
 
-export class UserResource implements Resource<User> {
+    constructor(token?: string | null) {
+        this.session = new Session();
+        if(token != null) {
+            this.session.setToken(token);
+        }
+    }
+}
+
+export class UserResource extends SessionResource implements Resource<User> {
     async fetchById(id: number): Promise<User> {
-        const r = await Session.getInstance().safeFetch(url`users/${id}`);
+        const r = await this.session.safeFetch(url`users/${id}`);
         return r.json();
     }
+
     async fetchAll(): Promise<User[]> {
-        const r = await Session.getInstance().safeFetch(url`users/`);
+        const r = await this.session.safeFetch(url`users/`);
+        return r.json();
+    }
+
+    async register(registerRequest: UserRegistrationRequest): Promise<UserAuthenticationResponse> {
+        const r = await this.session.postJson(url`users/register/`, registerRequest);
+        return r.json();
+    }
+
+    async login(loginRequest: UserLoginRequest): Promise<UserAuthenticationResponse> {
+        const r = await this.session.postJson(url`users/login/`, loginRequest);
         return r.json();
     }
 }
 
-
-export class PokemonResource implements Resource<Pokemon> {
+export class PokemonResource extends SessionResource implements Resource<Pokemon> {
     async fetchById(id: number): Promise<Pokemon> {
-        const r = await Session.getInstance().safeFetch(url`pokemon/${id}`);
+        const r = await this.session.safeFetch(url`pokemon/${id}`);
         return r.json();
     }
+
     async fetchAll(): Promise<Pokemon[]> {
-        const r = await Session.getInstance().safeFetch(url`pokemon/`);
+        const r = await this.session.safeFetch(url`pokemon/`);
         return r.json();
     }
 }
 
-
-export class ItemResource implements Resource<Item> {
+export class ItemResource extends SessionResource implements Resource<Item> {
     async fetchById(id: number): Promise<Item> {
-        const r = await Session.getInstance().safeFetch(url`items/${id}`);
+        const r = await this.session.safeFetch(url`items/${id}`);
         return r.json();
     }
+
     async fetchAll(): Promise<Item[]> {
-        const r = await Session.getInstance().safeFetch(url`items/`);
+        const r = await this.session.safeFetch(url`items/`);
         return r.json();
     }
 }
 
-
-export class BoosterpackResource implements Resource<Boosterpack> {
+export class BoosterpackResource extends SessionResource implements Resource<Boosterpack> {
     async fetchById(id: number): Promise<Boosterpack> {
-        const r = await Session.getInstance().safeFetch(url`store/boosterpacks/${id}`);
+        const r = await this.session.safeFetch(url`store/boosterpacks/${id}`);
         return r.json();
     }
     async fetchAll(): Promise<Boosterpack[]> {
-        const r = await Session.getInstance().safeFetch(url`store/boosterpacks/`);
+        const r = await this.session.safeFetch(url`store/boosterpacks/`);
         return r.json();
     }
 
     async buy(id: number): Promise<Pokemon[]> {
-        const r = await Session.getInstance().safeFetch(url`store/boosterpacks/buy/${id}`);
+        const r = await this.session.safeFetch(url`store/boosterpacks/buy/${id}`);
         return r.json();
     }
 }
+

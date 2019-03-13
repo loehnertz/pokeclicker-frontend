@@ -1,4 +1,4 @@
-import { User } from '../../models';
+import { User } from "../../models/user";
 import { UserAction, UserActionType } from "./types";
 
 export function setUser(user: User): UserAction {
