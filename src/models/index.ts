@@ -1,14 +1,13 @@
-
+import { User } from "./user";
 
 // Just a number, but with a nice name.
 export type Reference<T> = number & { __reference__?: T };
 
-
 export enum NotificationType {
-    ERROR = 'error',
-    WARNING = 'warning',
-    INFO = 'info',
-    SUCCESS = 'success'
+    ERROR = "error",
+    WARNING = "warning",
+    INFO = "info",
+    SUCCESS = "success"
 }
 
 export interface AppNotification {
@@ -17,11 +16,8 @@ export interface AppNotification {
     notificationType: NotificationType;
 }
 
-export interface User {
-    id: Reference<User>;
-    name: string;
-    avatarUri: string | null;
-    pokeDollars: number;
+export interface Session {
+    token: string | null;
 }
 
 export interface Pokemon {
