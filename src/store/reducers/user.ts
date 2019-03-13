@@ -16,6 +16,7 @@ export const userReducer: Reducer<User | null, UserAction | WebSocketAction> = (
             if(action.name === "balance") {
                 return {...user, pokeDollars: parseInt(action.message, 10)};
             }
+            break;
     }
 
     return {...user};

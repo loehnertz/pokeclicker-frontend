@@ -7,7 +7,8 @@ import { User } from "../../models/user";
 import { sendClick } from "../../store/actions/sockets";
 import { State } from "../../store/types";
 import './Clicking.css';
-import pokeballImage from './Pokeball.png';
+import pokeballImage from './pokeball.png';
+import './pokeball.png';
 
 interface ClickingProps {
     user: User | null;
@@ -39,12 +40,12 @@ class PokeDollars extends Component<{amount: number | null, rate: number}> {
     dead?: boolean;
     t0?: number;
 
-    estDollars(): number | null {
+    estimatedDollars(): number | null {
         if(this.t0 == null || this.props.amount == null || this.props.rate == null) {
             return null;
         }
-        const dt = (Date.now() - this.t0) * 0.001;
-        return Math.round(this.props.amount + this.props.rate * dt);
+        const deltaTime = (Date.now() - this.t0) * (1 / 1000);
+        return Math.round(this.props.amount + this.props.rate * deltaTime);
     }
 
     render() {
@@ -55,7 +56,8 @@ class PokeDollars extends Component<{amount: number | null, rate: number}> {
             if(this.$dollars == null || this.props.amount == null || this.t0 == null) {
                 return;
             }
-            this.$dollars.innerText = "" + this.estDollars();
+            const est = this.estimatedDollars();
+            this.$dollars.innerText = est == null ? "" : est.toString();
         };
         animate();
         return (

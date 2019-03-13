@@ -61,8 +61,7 @@ function handleWebSocketAction(next: Dispatch<WebSocketAction>, action: WebSocke
             break;
         case WebSocketActionType.SEND:
             sendWebSocketMessage(action.name, action.message);
-        default:
-            // Take care, action might not be WebSocketAction.
+            break;
     }
     return next(action);
 }
