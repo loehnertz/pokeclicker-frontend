@@ -1,25 +1,30 @@
 import React, {Component} from "react";
-import {Boosterpack, Reference} from "../../models";
 import {BoosterpackCollection, State} from "../../store/types";
 
 import {connect} from "react-redux";
-import {bindActionCreators, Dispatch} from "redux";
-import {buyBoosterpack} from "../../store/actions/boosterpack";
+import {Dispatch} from "redux";
 import './Clicking.css';
 import pokeballImage from './Pokeball.png';
+import {User} from "../../models/user";
+import {BoosterpackResource} from "../../api/api";
+import {Boosterpack, Reference} from "../../models";
 
-interface StoreFrontProps {
-    boosterpacks: BoosterpackCollection;
+interface ClickingProps {
+    user: User;
 }
 
-interface StoreFrontDispatchProps {
-    onBoosterpackBuy(id: Reference<Boosterpack>): void;
+interface ClickingDispatchProps {
+    onPokeballClick(resource: BoosterpackResource, id: Reference<Boosterpack>): void;
 }
 
-class Clicking extends Component<StoreFrontProps & StoreFrontDispatchProps> {
+class Clicking extends Component<ClickingProps & ClickingDispatchProps> {
     render() {
-        const bps = this.props.boosterpacks;
-        return <Pokeball/>;
+        return (
+            <div className="Clicking">
+                <Pokeball/>
+                <PokeDollars amount={this.props.user.pokeDollars}/>
+            </div>
+        );
     }
 }
 
@@ -29,26 +34,24 @@ class Pokeball extends Component {
     }
 }
 
-class PokeDollars extends Component {
+class PokeDollars extends Component<{amount: number}> {
     render() {
         return (
-            <div>
-                <img src={pokeballImage} alt=""/>
+            <div className="PokeDollars">
+                <p>{this.props.amount}</p>
             </div>
         );
     }
 }
 
-function mapStateToProps(state: State): StoreFrontProps {
+function mapStateToProps(state: State): ClickingProps {
     return {
-        boosterpacks: state.entities.boosterpacks
+        user: (state.entities.user as User)
     };
 }
 
-function mapDispatchToProps(dispatch: Dispatch): StoreFrontDispatchProps {
-    return {
-        onBoosterpackBuy: bindActionCreators(buyBoosterpack, dispatch)
-    };
+function mapDispatchToProps(dispatch: Dispatch): ClickingDispatchProps {
+    return {};
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Clicking);

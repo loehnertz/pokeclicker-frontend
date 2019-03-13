@@ -1,11 +1,11 @@
-
-
 .StoreFront {
     --storefront-border: 5px solid #222;
     --storefront-border-radius: 5px;
     display: flex;
     flex-wrap: wrap;
     background-color: hsl(0, 0%, 80%);
+    max-height: 100vh;
+    overflow-y: scroll;
 }
 
 .StoreItem {
@@ -15,23 +15,22 @@
     --width: 220px;
     color: var(--fg);
     flex-basis: var(--width);
-    flex-grow: 0;
+    flex-grow: 1;
     flex-shrink: 0;
-    margin: 20px;
-    margin-bottom: 30px;
+    margin: 20px 20px 30px;
 }
 
 .StoreItem-boosterpack {
     height: calc(16 * var(--width) / 9);
+    max-width: var(--width);
     border: var(--storefront-border);
     border-radius: var(--storefront-border-radius);
-    background: linear-gradient(120deg, var(--bg-from), var(--bg-via), var(--bg-to));
-    background-repeat: no-repeat;
+    background: linear-gradient(120deg, var(--bg-from), var(--bg-via), var(--bg-to)) no-repeat;
     background-origin: border-box;
     margin-bottom: 20px;
 }
 
-.StoreItem-buybutton{
+.StoreItem-buybutton {
     font-size: 1.2rem;
     width: calc(var(--width) / 3 * 2);
     height: 50px;

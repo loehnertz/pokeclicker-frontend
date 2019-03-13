@@ -1,0 +1,15 @@
+.Clicking {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 32px;
+}
+
+.PokeDollars {
+    font-size: 1.55rem;
+    text-align: center;
+}
+
+.PokeDollars > p {
+    margin: 1.55em;
+}

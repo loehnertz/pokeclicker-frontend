@@ -1,11 +1,10 @@
-import { Component } from "react";
-import React from "react";
-import { connect } from "react-redux";
-import { bindActionCreators, Dispatch } from 'redux';
-import { UserResource } from "../../api/api";
-import { UserLoginRequest } from "../../models/user";
-import { requestLogin } from "../../store/actions/authentication";
-import { State } from "../../store/types";
+import React, {Component} from "react";
+import {connect} from "react-redux";
+import {bindActionCreators, Dispatch} from 'redux';
+import {UserResource} from "../../api/api";
+import {UserLoginRequest} from "../../models/user";
+import {requestLogin} from "../../store/actions/authentication";
+import {State} from "../../store/types";
 
 
 interface UserLoginProps {
@@ -22,7 +21,7 @@ class UserLogin extends Component<UserLoginProps & UserLoginDispatchProps> {
     onSubmit(e: React.FormEvent<HTMLFormElement>): void {
         e.preventDefault();
         const form = e.target as HTMLFormElement;
-        if(!form.reportValidity()) {
+        if (!form.reportValidity()) {
             return;
         }
         const formData = new FormData(form);
@@ -34,16 +33,19 @@ class UserLogin extends Component<UserLoginProps & UserLoginDispatchProps> {
     }
 
     render() {
-        return <form className="UserLogin" onSubmit={(e) => {e.preventDefault(); this.onSubmit(e); }}>
-        <p>
-           <label>Username: <input type="text" name="username" required/></label>
-        </p>
-        <p>
-            <label>Password: <input type="password" name="password" required/></label>
-        </p>
-        <p>
-            <button type="submit">Login</button>
-        </p>
+        return <form className="UserLogin" onSubmit={(e) => {
+            e.preventDefault();
+            this.onSubmit(e);
+        }}>
+            <p>
+                <label>Username: <input type="text" name="username" required/></label>
+            </p>
+            <p>
+                <label>Password: <input type="password" name="password" required/></label>
+            </p>
+            <p>
+                <button type="submit">Login</button>
+            </p>
         </form>;
     }
 }
