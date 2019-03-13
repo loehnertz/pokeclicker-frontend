@@ -71,6 +71,13 @@ export enum BoosterpackActionType {
     CLEAR_ALL = 'BOOSTERPACK_CLEAR_ALL',
 }
 
+export enum WebSocketActionType {
+    OPEN = 'WEBSOCKET_OPEN',
+    SEND = 'WEBSOCKET_SEND',
+    RECEIVE = 'WEBSOCKET_RECEIVE',
+    CLOSED = 'WEBSOCKET_CLOSED'
+}
+
 
 export type BoosterpackAction = {
     type: BoosterpackActionType.ADD_OR_UPDATE;
@@ -79,9 +86,30 @@ export type BoosterpackAction = {
     type: BoosterpackActionType.CLEAR_ALL;
 };
 
+export type WebSocketAction = {
+    type: WebSocketActionType.OPEN;
+    name: string;
+    endpoint: string;
+    token: string;
+} | {
+    type: WebSocketActionType.SEND;
+    name: string;
+    message: string;
+} | {
+    type: WebSocketActionType.RECEIVE;
+    name: string;
+    message: string;
+    event: MessageEvent;
+} | {
+    type: WebSocketActionType.CLOSED;
+    name: string;
+    event: CloseEvent;
+};
+
 type ThunkActionBase<A extends AnyAction> = ThunkAction<void, State, void, A>;
 
 export type BoosterpackThunk = ThunkActionBase<BoosterpackAction>;
 export type ItemThunk = ThunkActionBase<ItemAction>;
 export type UserThunk = ThunkActionBase<UserAction>;
 export type PokemonThunk = ThunkActionBase<PokemonAction>;
+export type WebSocketThunk = ThunkActionBase<WebSocketAction>;

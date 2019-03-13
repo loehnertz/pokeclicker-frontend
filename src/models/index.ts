@@ -40,4 +40,10 @@ export interface Boosterpack {
     name: string;
     price: number;
     hexColor: string;
+    pokemons?: Array<{
+        id: number;
+        name: string;
+        sprite: string;
+        xp: number;
+    }>;
 }

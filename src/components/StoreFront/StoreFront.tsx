@@ -1,6 +1,5 @@
 import chroma from 'chroma-js';
-import { Component, CSSProperties } from "react";
-import React from "react";
+import React, { Component, CSSProperties } from "react";
 import { Boosterpack, Reference } from "../../models";
 import { BoosterpackCollection, State } from "../../store/types";
 
@@ -28,7 +27,7 @@ class StoreFront extends Component<StoreFrontProps & StoreFrontDispatchProps> {
             <StoreItem
                 boosterpack={bp}
                 resource={this.props.boosterpackResource}
-                onBoosterpackBuy={this.props.onBoosterpackBuy} />
+                onBoosterpackBuy={this.props.onBoosterpackBuy}/>
         );
         return <div className="StoreFront">{items}</div>;
     }
@@ -81,7 +80,7 @@ class StoreItem extends Component<StoreItemProps & StoreItemEventProps> {
     render() {
         const bp = this.props.boosterpack;
         const colorProps = this.color();
-        return <div className="StoreItem" style={{ ...colorProps }}>
+        return <div className="StoreItem" style={{...colorProps}}>
             <div className="StoreItem-boosterpack">
                 <h3 className="StoreItem-title">{bp.name}</h3>
             </div>

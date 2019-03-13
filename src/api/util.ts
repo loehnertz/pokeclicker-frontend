@@ -1,5 +1,5 @@
 
-const API_ROOT = (process.env.REACT_APP_POKECLICKER_API_ROOT as string).replace(/[\/]*$/, '/');
+export const API_ROOT = (process.env.REACT_APP_POKECLICKER_API_ROOT as string).replace(/[\/]*$/, '/');
 
 export class StatusError extends Error {
     status: number;
@@ -22,15 +22,15 @@ export class Session {
         this.headers = {};
     }
 
-    async setHeader(name: string, value: string) {
+    setHeader(name: string, value: string) {
         this.headers[name] = value;
     }
 
-    async addHeaders(headers: Record<string, string>) {
+    addHeaders(headers: Record<string, string>) {
         this.headers = {...this.headers, ...headers};
     }
 
-    async setToken(token: string) {
+    setToken(token: string) {
         this.setHeader("Authorization", `Token ${token}`);
     }
 
