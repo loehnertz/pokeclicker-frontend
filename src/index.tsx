@@ -11,13 +11,22 @@ import storeReducer from "./store";
 import { loadAllBoosterpacks } from "./store/actions/boosterpack";
 import { State } from "./store/types";
 
-function createEnhancers(): StoreEnhancer<{dispatch: ThunkDispatch<State, undefined, AnyAction>}> {
-    const reduxtools = (window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__();
 
+function windowHasReduxTools(window: Window)
+    : window is Window & {__REDUX_DEVTOOLS_EXTENSION__: (...args: any[]) => any} {
+
+    return typeof (window as any).__REDUX_DEVTOOLS_EXTENSION__ === "function";
+}
+
+function createEnhancers(): StoreEnhancer<{dispatch: ThunkDispatch<State, undefined, AnyAction>}> {
     const middleware = applyMiddleware(
         thunk
     );
-    return compose(middleware, reduxtools);
+    if(windowHasReduxTools(window)) {
+        const reduxtools = window.__REDUX_DEVTOOLS_EXTENSION__();
+        return compose(middleware, reduxtools);
+    }
+    return middleware;
 }
 
 const store = createStore(
