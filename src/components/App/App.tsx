@@ -1,12 +1,12 @@
-import React, {Component} from "react";
-import {connect} from "react-redux";
-import {Dispatch} from "redux";
-import {State} from "../../store/types";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Dispatch } from "redux";
+import { State } from "../../store/types";
+import Clicking from "../Clicking/Clicking";
 import StoreFront from "../StoreFront/StoreFront";
 import UserLogin from "../UserLogin/UserLogin";
 import UserRegistration from "../UserRegistration/UserRegistration";
 import "./App.css";
-import Clicking from "../Clicking/Clicking";
 
 
 class App extends Component<State | null> {

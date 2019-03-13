@@ -1,10 +1,10 @@
-import React, {Component} from "react";
-import {connect} from "react-redux";
-import {bindActionCreators, Dispatch} from 'redux';
-import {UserResource} from "../../api/api";
-import {UserLoginRequest} from "../../models/user";
-import {requestLogin} from "../../store/actions/authentication";
-import {State} from "../../store/types";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { bindActionCreators, Dispatch } from 'redux';
+import { UserResource } from "../../api/api";
+import { UserLoginRequest } from "../../models/user";
+import { requestLogin } from "../../store/actions/authentication";
+import { State } from "../../store/types";
 
 
 interface UserLoginProps {

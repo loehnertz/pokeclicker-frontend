@@ -1,12 +1,12 @@
 import chroma from 'chroma-js';
-import React, {Component, CSSProperties} from "react";
-import {Boosterpack, Reference} from "../../models";
-import {BoosterpackCollection, State} from "../../store/types";
+import React, { Component, CSSProperties } from "react";
+import { Boosterpack, Reference } from "../../models";
+import { BoosterpackCollection, State } from "../../store/types";
 
-import {connect} from "react-redux";
-import {bindActionCreators, Dispatch} from "redux";
-import {BoosterpackResource} from '../../api/api';
-import {buyBoosterpack} from "../../store/actions/boosterpack";
+import { connect } from "react-redux";
+import { bindActionCreators, Dispatch } from "redux";
+import { BoosterpackResource } from '../../api/api';
+import { buyBoosterpack } from "../../store/actions/boosterpack";
 import './StoreFront.css';
 
 interface StoreFrontProps {

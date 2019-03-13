@@ -1,12 +1,12 @@
-import React, {Component, Dispatch, FormEvent} from "react";
-import {connect} from "react-redux";
-import {AnyAction, bindActionCreators} from "redux";
-import {UserResource} from "../../api/api";
-import {NotificationType} from "../../models";
-import {UserRegistrationRequest} from "../../models/user";
-import {requestRegistration} from "../../store/actions/authentication";
-import {notifyWithTimeout} from "../../store/actions/globalappstate";
-import {State} from "../../store/types";
+import React, { Component, Dispatch, FormEvent } from "react";
+import { connect } from "react-redux";
+import { AnyAction, bindActionCreators } from "redux";
+import { UserResource } from "../../api/api";
+import { NotificationType } from "../../models";
+import { UserRegistrationRequest } from "../../models/user";
+import { requestRegistration } from "../../store/actions/authentication";
+import { notifyWithTimeout } from "../../store/actions/globalappstate";
+import { State } from "../../store/types";
 
 interface UserRegistrationProps {
     userResource: UserResource;
