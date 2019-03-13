@@ -1,10 +1,7 @@
-import { Action } from "redux";
 import { ThunkAction } from "redux-thunk";
-import { UserResource } from "../../api/api";
 import { AppNotification, NotificationType } from "../../models";
-import { UserRegistrationRequest } from "../../models/user";
 import { State } from "../types";
-import { AppNotificationAction, AuthenticationAction, AuthenticationActionType, NotificationActionType } from './types';
+import { AppNotificationAction, NotificationActionType } from './types';
 
 let autoincrement = 0;
 

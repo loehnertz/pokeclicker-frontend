@@ -10,7 +10,7 @@ import * as serviceWorker from "./serviceWorker";
 import storeReducer from "./store";
 import { loadAllBoosterpacks } from "./store/actions/boosterpack";
 import { State } from "./store/types";
-
+import webSocketMiddleware from "./websocketmiddleware";
 
 function windowHasReduxTools(window: Window)
     : window is Window & {__REDUX_DEVTOOLS_EXTENSION__: (...args: any[]) => any} {
@@ -20,7 +20,8 @@ function windowHasReduxTools(window: Window)
 
 function createEnhancers(): StoreEnhancer<{dispatch: ThunkDispatch<State, undefined, AnyAction>}> {
     const middleware = applyMiddleware(
-        thunk
+        thunk,
+        webSocketMiddleware
     );
     if(windowHasReduxTools(window)) {
         const reduxtools = window.__REDUX_DEVTOOLS_EXTENSION__();

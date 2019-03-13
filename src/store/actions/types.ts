@@ -74,6 +74,8 @@ export enum BoosterpackActionType {
 export enum WebSocketActionType {
     OPEN = 'WEBSOCKET_OPEN',
     SEND = 'WEBSOCKET_SEND',
+    RECEIVE = 'WEBSOCKET_RECEIVE',
+    CLOSED = 'WEBSOCKET_CLOSED'
 }
 
 
@@ -86,10 +88,22 @@ export type BoosterpackAction = {
 
 export type WebSocketAction = {
     type: WebSocketActionType.OPEN;
+    name: string;
+    endpoint: string;
     token: string;
 } | {
     type: WebSocketActionType.SEND;
+    name: string;
     message: string;
+} | {
+    type: WebSocketActionType.RECEIVE;
+    name: string;
+    message: string;
+    event: MessageEvent;
+} | {
+    type: WebSocketActionType.CLOSED;
+    name: string;
+    event: CloseEvent;
 };
 
 type ThunkActionBase<A extends AnyAction> = ThunkAction<void, State, void, A>;

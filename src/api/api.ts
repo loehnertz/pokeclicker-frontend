@@ -20,6 +20,11 @@ abstract class SessionResource {
 }
 
 export class UserResource extends SessionResource implements Resource<User> {
+    async fetchCurrentUser(): Promise<User> {
+        const r = await this.session.safeFetch(url`users/`);
+        return r.json();
+    }
+
     async fetchById(id: number): Promise<User> {
         const r = await this.session.safeFetch(url`users/${id}`);
         return r.json();

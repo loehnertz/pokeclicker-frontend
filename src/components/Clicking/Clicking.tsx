@@ -1,57 +1,88 @@
-import React, {Component} from "react";
-import {BoosterpackCollection, State} from "../../store/types";
-
-import {connect} from "react-redux";
-import {Dispatch} from "redux";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { bindActionCreators, Dispatch } from "redux";
+import { BoosterpackResource } from "../../api/api";
+import { Boosterpack, Reference } from "../../models";
+import { User } from "../../models/user";
+import { sendClick } from "../../store/actions/sockets";
+import { State } from "../../store/types";
 import './Clicking.css';
 import pokeballImage from './Pokeball.png';
-import {User} from "../../models/user";
-import {BoosterpackResource} from "../../api/api";
-import {Boosterpack, Reference} from "../../models";
 
 interface ClickingProps {
-    user: User;
+    user: User | null;
 }
 
 interface ClickingDispatchProps {
-    onPokeballClick(resource: BoosterpackResource, id: Reference<Boosterpack>): void;
+    onPokeballClick(): void;
 }
 
 class Clicking extends Component<ClickingProps & ClickingDispatchProps> {
     render() {
         return (
             <div className="Clicking">
-                <Pokeball/>
-                <PokeDollars amount={this.props.user.pokeDollars}/>
+                <Pokeball onPokeballClick={this.props.onPokeballClick}/>
+                <PokeDollars amount={this.props.user && this.props.user.pokeDollars} rate={500}/>
             </div>
         );
     }
 }
 
-class Pokeball extends Component {
+class Pokeball extends Component<{onPokeballClick(): void}> {
     render() {
-        return <div><img src={pokeballImage} alt=""/></div>;
+        return <div><img src={pokeballImage} alt="" onClick={(e) => { this.props.onPokeballClick(); } }/></div>;
     }
 }
 
-class PokeDollars extends Component<{amount: number}> {
+class PokeDollars extends Component<{amount: number | null, rate: number}> {
+    $dollars?: HTMLSpanElement | null;
+    dead?: boolean;
+    t0?: number;
+
+    estDollars(): number | null {
+        if(this.t0 == null || this.props.amount == null || this.props.rate == null) {
+            return null;
+        }
+        const dt = (Date.now() - this.t0) * 0.001;
+        return Math.round(this.props.amount + this.props.rate * dt);
+    }
+
     render() {
+        const animate = () => {
+            if(!this.dead) {
+                window.requestAnimationFrame(animate);
+            }
+            if(this.$dollars == null || this.props.amount == null || this.t0 == null) {
+                return;
+            }
+            this.$dollars.innerText = "" + this.estDollars();
+        };
+        animate();
         return (
             <div className="PokeDollars">
-                <p>{this.props.amount}</p>
+                <p>₽<span ref={(e) => this.$dollars = e}>{this.props.amount}</span> (+{this.props.rate} / s)</p>
             </div>
         );
+    }
+
+    componentWillReceiveProps() {
+        this.t0 = Date.now();
+    }
+    componentWillUnmount() {
+        this.dead = true;
     }
 }
 
 function mapStateToProps(state: State): ClickingProps {
     return {
-        user: (state.entities.user as User)
+        user: state.entities.user
     };
 }
 
 function mapDispatchToProps(dispatch: Dispatch): ClickingDispatchProps {
-    return {};
+    return {
+        onPokeballClick: bindActionCreators(sendClick, dispatch)
+    };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Clicking);
