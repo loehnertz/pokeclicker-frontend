@@ -20,7 +20,8 @@ class Clicking extends Component<ClickingProps & ClickingDispatchProps> {
         return (
             <div className="Clicking">
                 <Pokeball onPokeballClick={this.props.onPokeballClick}/>
-                <PokeDollars amount={this.props.user && this.props.user.pokeDollars} rate={500}/>
+                <PokeDollars amount={this.props.user && this.props.user.pokeDollars}
+                             rate={this.props.user && this.props.user.pokeDollarRate}/>
             </div>
         );
     }
@@ -55,7 +56,7 @@ class Pokeball extends Component<{onPokeballClick(): void}> {
     }
 }
 
-class PokeDollars extends Component<{amount: number | null, rate: number}> {
+class PokeDollars extends Component<{amount: number | null, rate: number | null}> {
     $dollars?: HTMLSpanElement | null;
     dead?: boolean;
     t0?: number;
@@ -82,7 +83,9 @@ class PokeDollars extends Component<{amount: number | null, rate: number}> {
         animate();
         return (
             <div className="PokeDollars">
-                <p>₽<span ref={(e) => this.$dollars = e}>{this.props.amount}</span> (+{this.props.rate} / s)</p>
+                <p>₽<span ref={(e) => this.$dollars = e}>{this.props.amount}</span>
+                <br />
+                <span className="PokeDollars-rate">(+{this.props.rate} / s)</span></p>
             </div>
         );
     }

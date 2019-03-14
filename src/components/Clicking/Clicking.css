@@ -19,6 +19,11 @@
     margin: 0;
 }
 
+.PokeDollars-rate {
+    font-size: 0.7em;
+}
+
+
 @keyframes shake {
   0% { transform: translate(2px, 2px) rotate(0deg); }
   20% { transform: translate(-2px, -4px) rotate(-2deg); }
@@ -35,5 +40,5 @@
 
 .ShakingBall {
 	animation: shake 0.5s;
-	animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
 }
