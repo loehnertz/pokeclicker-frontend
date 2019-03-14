@@ -28,7 +28,7 @@ class Clicking extends Component<ClickingProps & ClickingDispatchProps> {
 
 class Pokeball extends Component<{onPokeballClick(): void}> {
     $pokeball?: HTMLImageElement | null;
-    shakeTimeout?: NodeJS.Timer | null;
+    shakeTimeout?: number | null;
 
     shakePokeball() {
         if(this.$pokeball == null) {
@@ -38,7 +38,7 @@ class Pokeball extends Component<{onPokeballClick(): void}> {
             clearTimeout(this.shakeTimeout);
         }
         this.$pokeball.classList.add("ShakingBall");
-        this.shakeTimeout = setTimeout(() => this.stopShaking(), 400);
+        this.shakeTimeout = window.setTimeout(() => this.stopShaking(), 400);
     }
 
     stopShaking() {
