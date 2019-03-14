@@ -18,7 +18,6 @@ export function notifyWithTimeout(
     notificationType: NotificationType,
     timeout: number
 ): ThunkAction<void, State, void, AppNotificationAction> {
-
     return (dispatch) => {
         const notification = createNotification(message, notificationType);
         dispatch(notify(notification));
