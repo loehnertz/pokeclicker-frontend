@@ -18,3 +18,22 @@
 .PokeDollars > p {
     margin: 0;
 }
+
+@keyframes shake {
+  0% { transform: translate(2px, 2px) rotate(0deg); }
+  20% { transform: translate(-2px, -4px) rotate(-2deg); }
+  40% { transform: translate(-6px, 0px) rotate(2deg); }
+  60% { transform: translate(6px, 4px) rotate(0deg); }
+  40% { transform: translate(2px, -2px) rotate(2deg); }
+  50% { transform: translate(-2px, 4px) rotate(-2deg); }
+  60% { transform: translate(-6px, 2px) rotate(0deg); }
+  70% { transform: translate(6px, 2px) rotate(-2deg); }
+  80% { transform: translate(-2px, -2px) rotate(2deg); }
+  90% { transform: translate(2px, 4px) rotate(0deg); }
+  200% { transform: translate(2px, -4px) rotate(-2deg); }
+}
+
+.ShakingBall {
+	animation: shake 0.5s;
+	animation-iteration-count: infinite;
+}
