@@ -27,8 +27,31 @@ class Clicking extends Component<ClickingProps & ClickingDispatchProps> {
 }
 
 class Pokeball extends Component<{onPokeballClick(): void}> {
+    $pokeball?: HTMLImageElement | null;
+    shakeTimeout?: number | null;
+
+    shakePokeball() {
+        if(this.$pokeball == null) {
+            return;
+        }
+        if(this.shakeTimeout != null) {
+            clearTimeout(this.shakeTimeout);
+        }
+        this.$pokeball.classList.add("ShakingBall");
+        this.shakeTimeout = window.setTimeout(() => this.stopShaking(), 400);
+    }
+
+    stopShaking() {
+        if(this.$pokeball == null) {
+            return;
+        }
+        this.$pokeball.classList.remove("ShakingBall");
+        this.shakeTimeout = null;
+    }
+
     render() {
-        return <div><img src={pokeballImage} alt="" onClick={() => { this.props.onPokeballClick(); } }/></div>;
+        return <div><img src={pokeballImage} alt="" ref={(el) => { this.$pokeball = el; }}
+               onClick={() => { this.props.onPokeballClick(); this.shakePokeball(); } }/></div>;
     }
 }
 
