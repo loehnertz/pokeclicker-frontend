@@ -39,13 +39,13 @@ class UserRegistration extends Component<UserRegistrationProps & UserRegistratio
             this.onSubmit(e);
         }}>
             <p>
-                <label>Username: <input type="text" name="username" required/></label>
+                <label>Username: <input type="text" name="username" required minLength={3}/></label>
             </p>
             <p>
                 <label>Email: <input type="email" name="email" required/></label>
             </p>
             <p>
-                <label>Password: <input type="password" name="password" required/></label>
+                <label>Password: <input type="password" name="password" required  minLength={8}/></label>
             </p>
             <p>
                 <button type="submit">Register</button>
