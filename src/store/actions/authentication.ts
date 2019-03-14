@@ -1,14 +1,39 @@
+import { Dispatch } from "react";
 import { AnyAction } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { UserResource } from "../../api/api";
 import { NotificationType } from "../../models";
-import { UserLoginRequest, UserRegistrationRequest } from "../../models/user";
+import { User, UserLoginRequest, UserRegistrationRequest } from "../../models/user";
 import { State } from "../types";
 import { notifyWithTimeout } from "./globalappstate";
 import { openBalanceSocket, openClickingSocket } from "./sockets";
 import { AuthenticationAction, AuthenticationActionType } from "./types";
 import { requestUserDetails } from "./user";
 
+const COOKIE = 'pkclkr_creds';
+
+function getTokenCookie(): string | null {
+    const kvs = document.cookie
+        .split(';')
+        .map((s) => s.trim().match(/^([^=]+)=(.*)$/) as RegExpMatchArray)
+        .map((match) => [match[1], match[2]] as [string, string]);
+    const map = new Map<string, string>(kvs);
+    const cookie = map.get(COOKIE);
+    return cookie == null ? null : cookie;
+}
+
+function setTokenCookie(token: string): void {
+    document.cookie = `${COOKIE}=${token}`;
+}
+
+
+function notifyLoginSuccess(dispatch: Dispatch<AnyAction | ThunkAction<void, State, void, AnyAction>>, token: string) {
+    setTokenCookie(token);
+    dispatch(requestUserDetails(token));
+    dispatch(authorizationTokenReceived(token));
+    dispatch(openClickingSocket(token));
+    dispatch(openBalanceSocket(token));
+}
 
 export function requestLogin(userResource: UserResource, userCredentials: UserLoginRequest)
 : ThunkAction<void, State, void, AnyAction> {
@@ -18,11 +43,7 @@ export function requestLogin(userResource: UserResource, userCredentials: UserLo
             dispatch(notifyWithTimeout(response.error + "", NotificationType.ERROR, 5000));
             return;
         }
-        const token = response.token;
-        dispatch(requestUserDetails(token));
-        dispatch(authorizationTokenReceived(token));
-        dispatch(openClickingSocket(token));
-        dispatch(openBalanceSocket(token));
+        notifyLoginSuccess(dispatch, response.token);
     };
 }
 
@@ -35,11 +56,23 @@ export function requestRegistration(resource: UserResource, user: UserRegistrati
             dispatch(notifyWithTimeout(response.error + "", NotificationType.ERROR, 5000));
             return;
         }
-        const token = response.token;
-        dispatch(requestUserDetails(token));
-        dispatch(authorizationTokenReceived(token));
-        dispatch(openClickingSocket(token));
-        dispatch(openBalanceSocket(token));
+        notifyLoginSuccess(dispatch, response.token);
+    };
+}
+
+export function authorizeFromCookie(): ThunkAction<void, State, void, AnyAction> {
+    return async (dispatch) => {
+        const token = getTokenCookie();
+        if(token == null) {
+            return;
+        }
+        const resource = new UserResource(token);
+        try {
+            await resource.fetchCurrentUser();
+        } catch(e) {
+            // noop
+        }
+        notifyLoginSuccess(dispatch, token);
     };
 }
 
@@ -49,3 +82,4 @@ export function authorizationTokenReceived(token: string): AuthenticationAction 
         token
     };
 }
+
