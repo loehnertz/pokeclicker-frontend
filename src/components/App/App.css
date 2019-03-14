@@ -1,11 +1,16 @@
+@import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
+
+* {
+    font-family: 'Press Start 2P', cursive;
+}
+
 .App {
     text-align: center;
-    background: url('./backdrop.png');
-    background-size: cover;
     overflow: auto;
     width: 100vw;
     height: 100vh;
-    background-position: bottom;
+    background: url('./backdrop.png') bottom;
+    background-size: cover;
 }
 
 .App-logo {

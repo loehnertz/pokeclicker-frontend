@@ -6,6 +6,7 @@
     background-color: hsl(0, 0%, 80%, 0.5);
     max-height: 100vh;
     overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 .StoreFront:before {
@@ -37,14 +38,16 @@
     background: linear-gradient(120deg, var(--bg-from), var(--bg-via), var(--bg-to)) no-repeat;
     background-origin: border-box;
     margin-bottom: 20px;
+    padding: .55em 0;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
 }
 
 .StoreItem-buybutton {
     font-size: 1.2rem;
-    width: calc(var(--width) / 3 * 2);
+    width: var(--width);
     height: 50px;
     background: hsla(0, 0%, 80%, 50%);
     border-width: 5px;
@@ -61,8 +64,16 @@
 }
 
 .StoreItem-sprite {
-    width: 140%;
+    width: 100%;
+    transform: scale(1.55);
     image-rendering: pixelated;
     image-rendering: crisp-edges;
-    object-fit: cover;
+    object-fit: contain;
+}
+
+.StoreItem-logo {
+    width: 100%;
+    transform: scale(1.15);
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
 }
