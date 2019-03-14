@@ -82,11 +82,12 @@ class StoreItem extends Component<StoreItemProps & StoreItemEventProps> {
         const colorProps = this.color();
         return <div className="StoreItem" style={{...colorProps}}>
             <div className="StoreItem-boosterpack">
+                <img className="StoreItem-sprite" src={bp.pokemons && bp.pokemons[bp.pokemons.length - 1].sprite} />
                 <h3 className="StoreItem-title">{bp.name}</h3>
             </div>
             <button
                 className="StoreItem-buybutton"
-                onClick={() => this.onBuy()}>${bp.price}</button>
+                onClick={() => this.onBuy()}>₽{bp.price}</button>
         </div>;
     }
 }

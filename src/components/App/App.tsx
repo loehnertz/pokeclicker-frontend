@@ -17,7 +17,7 @@ class App extends Component<State | null> {
 
         let mode;
         if (this.props.globalAppState.authentication.token === null) {
-            mode = <div><UserRegistration/><UserLogin/></div>;
+            mode = <div className="App-welcome"><UserRegistration/><UserLogin/></div>;
         } else {
             mode = (
                 <div className="Game">
