@@ -16,6 +16,10 @@ interface ClickingDispatchProps {
 }
 
 class Clicking extends Component<ClickingProps & ClickingDispatchProps> {
+    componentDidMount(){
+        document.title = "Game - PokéClicker"
+    }
+	
     render() {
         return (
             <div className="Clicking">
