@@ -69,10 +69,10 @@ export function authorizeFromCookie(): ThunkAction<void, State, void, AnyAction>
         const resource = new UserResource(token);
         try {
             await resource.fetchCurrentUser();
+            notifyLoginSuccess(dispatch, token);
         } catch(e) {
             // noop
         }
-        notifyLoginSuccess(dispatch, token);
     };
 }
 
