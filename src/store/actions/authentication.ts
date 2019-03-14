@@ -15,7 +15,7 @@ const COOKIE = 'pkclkr_creds';
 function getTokenCookie(): string | null {
     const kvs = document.cookie
         .split(';')
-        .map((s) => s.trim().match(/^([^=]+)=(.*)$/) as RegExpMatchArray)
+        .map((s) => s.trim().match(/^([^=]+)=(.*)$/) || ['null', 'null'])
         .map((match) => [match[1], match[2]] as [string, string]);
     const map = new Map<string, string>(kvs);
     const cookie = map.get(COOKIE);
