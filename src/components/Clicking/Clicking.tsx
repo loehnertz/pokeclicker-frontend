@@ -37,8 +37,8 @@ class Pokeball extends Component<{onPokeballClick(): void}> {
         if(this.shakeTimeout != null) {
             clearTimeout(this.shakeTimeout);
         }
-  	    this.$pokeball.classList.add("ShakingBall");
-  	    this.shakeTimeout = setTimeout(() => this.stopShaking(), 400);
+        this.$pokeball.classList.add("ShakingBall");
+        this.shakeTimeout = setTimeout(() => this.stopShaking(), 400);
     }
 
     stopShaking() {
@@ -50,7 +50,8 @@ class Pokeball extends Component<{onPokeballClick(): void}> {
     }
 
     render() {
-        return <div><img src={pokeballImage} alt="" ref={(el) => { this.$pokeball = el; }} onClick={() => { this.props.onPokeballClick(); this.shakePokeball(); } }/></div>;
+        return <div><img src={pokeballImage} alt="" ref={(el) => { this.$pokeball = el; }} 
+               onClick={() => { this.props.onPokeballClick(); this.shakePokeball(); } }/></div>;
     }
 }
 
