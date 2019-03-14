@@ -10,6 +10,10 @@ import "./App.css";
 
 
 class App extends Component<State | null> {
+    componentDidMount(){
+        document.title = "Login - PokéClicker"
+    }
+	
     public render() {
         const notifications = this.props.globalAppState.notifications.map((n) =>
             <div className={`notification notification-${n.notificationType}`}>{n.message}</div>
