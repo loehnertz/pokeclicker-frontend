@@ -7,8 +7,8 @@ import { connect } from "react-redux";
 import { bindActionCreators, Dispatch } from "redux";
 import { BoosterpackResource } from '../../api/api';
 import { buyBoosterpack } from "../../store/actions/boosterpack";
-import './StoreFront.css';
 import pokemonLogo from './pokemon-logo.png';
+import './StoreFront.css';
 
 interface StoreFrontProps {
     boosterpacks: BoosterpackCollection;
