@@ -9,7 +9,6 @@ import pokeballImage from './pokeball.png';
 
 interface ClickingProps {
     user: User | null;
-	shakeTimeout: number | null;
 }
 
 interface ClickingDispatchProps {
@@ -28,19 +27,27 @@ class Clicking extends Component<ClickingProps & ClickingDispatchProps> {
 }
 
 class Pokeball extends Component<{onPokeballClick(): void}> {
+	$pokeball?: HTMLImageElement | null;
+	shakeTimeout?: NodeJS.Timer | null;
 	
 	shakePokeball(){
-		if(curTimeOut != null)
-    		clearTimeout(curTimeOut);
-   	 	document.getElementById("pokeball").classList.add("ShakingBall");
-    	curTimeOut = setTimeout(function () {
-    		document.getElementById("pokeball").classList.remove("ShakingBall");
-    		curTimeOut = null;
-    	}, 500);
+		if(this.$pokeball == null)
+			return;
+		if(this.shakeTimeout != null)
+    		clearTimeout(this.shakeTimeout);
+   	 	this.$pokeball.classList.add("ShakingBall");
+    	this.shakeTimeout = setTimeout(() => this.stopShaking(), 400);
+	}
+	
+	stopShaking(){
+		if(this.$pokeball == null) 
+			return;
+		this.$pokeball.classList.remove("ShakingBall");
+    	this.shakeTimeout = null;
 	}
 
     render() {
-        return <div><img src={pokeballImage} alt="" onClick={() => { this.props.onPokeballClick(); this.shakePokeball();} }/></div>;
+        return <div><img src={pokeballImage} alt="" ref={(el) => { this.$pokeball = el;}} onClick={() => { this.props.onPokeballClick(); this.shakePokeball();} }/></div>;
     }
 }
 
