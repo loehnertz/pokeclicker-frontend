@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import { bindActionCreators, Dispatch } from "redux";
 import { BoosterpackResource } from '../../api/api';
 import { buyBoosterpack } from "../../store/actions/boosterpack";
+import pokemonLogo from './pokemon-logo.png';
 import './StoreFront.css';
 
 interface StoreFrontProps {
@@ -80,15 +81,21 @@ class StoreItem extends Component<StoreItemProps & StoreItemEventProps> {
     render() {
         const bp = this.props.boosterpack;
         const colorProps = this.color();
-        return <div className="StoreItem" style={{...colorProps}}>
-            <div className="StoreItem-boosterpack">
-                <img className="StoreItem-sprite" src={bp.pokemons && bp.pokemons[bp.pokemons.length - 1].sprite} />
-                <h3 className="StoreItem-title">{bp.name}</h3>
+        return (
+            <div className="StoreItem" style={{...colorProps}}>
+                <div className="StoreItem-boosterpack">
+                    <img className="StoreItem-logo" src={pokemonLogo}/>
+                    <img className="StoreItem-sprite" src={bp.pokemons && bp.pokemons[bp.pokemons.length - 1].sprite} />
+                    <h3 className="StoreItem-title">{bp.name}</h3>
+                </div>
+                <button
+                    className="StoreItem-buybutton"
+                    onClick={() => this.onBuy()}
+                >
+                    ₽{bp.price}
+                </button>
             </div>
-            <button
-                className="StoreItem-buybutton"
-                onClick={() => this.onBuy()}>₽{bp.price}</button>
-        </div>;
+        );
     }
 }
 
