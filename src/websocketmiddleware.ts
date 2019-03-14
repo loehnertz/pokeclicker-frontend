@@ -21,6 +21,7 @@ function openWebSocket(dispatch: Dispatch<WebSocketAction>, action: WebSocketAct
     }
 
     const socket = new WebSocket(`${SOCKET_ROOT}${action.endpoint}?token=${action.token}`);
+
     socket.addEventListener('open', () => {
         registeredSockets[action.name] = socket;
     });

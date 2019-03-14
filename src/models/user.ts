@@ -5,6 +5,7 @@ export interface User {
     name: string;
     avatarUri: string | null;
     pokeDollars: number;
+    pokeDollarRate: number;
 }
 
 export interface UserRegistrationRequest {

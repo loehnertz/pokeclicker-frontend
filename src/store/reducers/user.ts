@@ -14,7 +14,10 @@ export const userReducer: Reducer<User | null, UserAction | WebSocketAction> = (
     switch(action.type) {
         case WebSocketActionType.RECEIVE:
             if(action.name === "balance") {
-                return {...user, pokeDollars: parseInt(action.message, 10)};
+                const [msgBalance, msgRate] = action.message.split(",");
+                const balance = parseInt(msgBalance, 10);
+                const rate = parseInt(msgRate, 10);
+                return {...user, pokeDollars: balance, pokeDollarRate: rate};
             }
             break;
     }
