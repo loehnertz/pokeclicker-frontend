@@ -50,7 +50,7 @@ class Pokeball extends Component<{onPokeballClick(): void}> {
     }
 
     render() {
-        return <div><img src={pokeballImage} alt="" ref={(el) => { this.$pokeball = el; }} 
+        return <div><img src={pokeballImage} alt="" ref={(el) => { this.$pokeball = el; }}
                onClick={() => { this.props.onPokeballClick(); this.shakePokeball(); } }/></div>;
     }
 }
