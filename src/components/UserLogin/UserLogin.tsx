@@ -16,8 +16,6 @@ interface UserLoginDispatchProps {
 }
 
 class UserLogin extends Component<UserLoginProps & UserLoginDispatchProps> {
-
-
     onSubmit(e: React.FormEvent<HTMLFormElement>): void {
         e.preventDefault();
         const form = e.target as HTMLFormElement;

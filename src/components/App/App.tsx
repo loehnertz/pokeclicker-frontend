@@ -29,6 +29,10 @@ class App extends Component<State | null> {
         }
         return Mode.online;
     }
+  
+    componentDidMount() {
+        document.title = "Login - PokéClicker";
+    }
 
     public render() {
         const notifications = this.props.globalAppState.notifications.map((n) =>
