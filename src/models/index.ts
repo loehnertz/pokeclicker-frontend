@@ -26,6 +26,12 @@ export interface Pokemon {
     owner: Reference<User>;
     xp: number;
     aquisitionDateTime: Date;
+    thinApiInfo?: {
+        id: number,
+        name: string,
+        xp: number,
+        sprite: string
+    };
 }
 
 export interface Item {

@@ -6,7 +6,9 @@ const pokemonById: Reducer<PokemonById, PokemonAction> = (collection = {}, actio
     switch(action.type) {
         case PokemonActionType.ADD_OR_UPDATE:
             return {...collection, [action.pokemon.id]: action.pokemon};
-
+        case PokemonActionType.SET_ALL:
+            const kvs = action.pokemons.map((pkmn) => ({[pkmn.id]: pkmn}));
+            return Object.assign({}, ...kvs);
         case PokemonActionType.CLEAR_ALL:
             return {};
     }
@@ -20,7 +22,8 @@ const pokemonIds: Reducer<number[], PokemonAction> = (ids = [], action) => {
                 return ids.concat([action.pokemon.id]);
             }
             break;
-
+        case PokemonActionType.SET_ALL:
+            return action.pokemons.map((pkmn) => pkmn.id);
         case PokemonActionType.CLEAR_ALL:
             return [];
 

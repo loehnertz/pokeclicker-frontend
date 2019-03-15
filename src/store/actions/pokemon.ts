@@ -8,6 +8,13 @@ export function addOrReplacePokemon(pokemon: Pokemon): PokemonAction {
     };
 }
 
+export function setAllPokemons(pokemons: Pokemon[]): PokemonAction {
+    return {
+        type: PokemonActionType.SET_ALL,
+        pokemons
+    };
+}
+
 export function clearPokemons(): PokemonAction {
     return {
         type: PokemonActionType.CLEAR_ALL

@@ -14,6 +14,8 @@ export class StatusError extends Error {
     }
 }
 
+export class ApiError extends Error { }
+
 export class Session {
     static instance: Session;
     headers: Record<string, string>;
@@ -46,7 +48,17 @@ export class Session {
     async safeFetch(input: RequestInfo, init?: RequestInit): Promise<Response> {
         const response = await this.fetch(input, init);
         if(response.status >= 400) {
-            throw new StatusError(response.status, response.statusText, response);
+            try {
+                const json = await response.json();
+
+                if(typeof json.message === "string") {
+                    throw new ApiError(json.message);
+                }
+
+                throw new StatusError(response.status, response.statusText, response);
+            } catch(e) {
+                throw new StatusError(response.status, response.statusText, response);
+            }
         }
         return response;
     }
