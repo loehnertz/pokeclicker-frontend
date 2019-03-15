@@ -22,9 +22,6 @@ class App extends Component<State | null> {
 
     private currentMode(): Mode {
         if (this.props.globalAppState.authentication.token === null) {
-            if(this.props.globalAppState.openSockets.length > 0) {
-                return Mode.closing;
-            }
             return Mode.login;
         }
         if(this.props.entities.user === null) {
@@ -49,14 +46,13 @@ class App extends Component<State | null> {
             case Mode.disconnected:
                 contents = (
                     <div className="App-welcome">
-                    <UserMenu/>
                     <p>Connection to the server was lost. Do you have another tab open?</p>
                 </div>);
                 break;
             case Mode.online:
                 contents = (
                 <div className="Game">
-                        <Pokemon/>
+                    <Pokemon/>
                     <Clicking/>
                     <StoreFront/>
                     </div>);
