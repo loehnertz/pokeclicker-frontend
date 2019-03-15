@@ -1,0 +1,20 @@
+.UserMenu {
+    position: absolute;
+    right: 0;
+    transform: translate(calc(100% - 30px));
+    display: flex;
+    padding: 5px 30px;
+    z-index: 999999;
+    background-color: rgba(127, 127, 127, 0.5);
+    transition: transform 100ms;
+}
+
+.UserMenu:hover{
+    transform: translate(0);
+}
+
+.UserMenu-avatar {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+}

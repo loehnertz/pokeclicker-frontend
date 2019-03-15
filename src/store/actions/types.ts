@@ -19,23 +19,29 @@ export type AppNotificationAction = {
 };
 
 export enum AuthenticationActionType {
-    TOKEN_RETRIEVED = "AUTHENTICATION_TOKEN_RETRIEVED"
+    TOKEN_RETRIEVED = "AUTHENTICATION_TOKEN_RETRIEVED",
+    TOKEN_DESTROY = "AUTHENTICATION_TOKEN_DESTROY"
 }
 
-export interface AuthenticationAction {
+export type AuthenticationAction = {
     type: AuthenticationActionType.TOKEN_RETRIEVED;
     token: string;
-}
+} | {
+    type: AuthenticationActionType.TOKEN_DESTROY;
+};
 
 export enum UserActionType {
     SET = 'USER_SET',
+    UNSET = 'USER_UNSET'
 }
 
 
-export interface UserAction {
+export type UserAction = {
     type: UserActionType.SET;
     user: User;
-}
+} | {
+    type: UserActionType.UNSET;
+};
 
 
 export enum PokemonActionType {
@@ -78,10 +84,14 @@ export enum BoosterpackActionType {
 export enum WebSocketActionType {
     OPEN = 'WEBSOCKET_OPEN',
     SEND = 'WEBSOCKET_SEND',
+    CLOSE = 'WEBSOCKET_CLOSE',
+
     RECEIVE = 'WEBSOCKET_RECEIVE',
+    CLOSING = 'WEBSOCKET_CLOSING',
     CLOSED = 'WEBSOCKET_CLOSED'
 }
 
+export type WebSocketName = "clicking" | "balance";
 
 export type BoosterpackAction = {
     type: BoosterpackActionType.ADD_OR_UPDATE;
@@ -92,21 +102,28 @@ export type BoosterpackAction = {
 
 export type WebSocketAction = {
     type: WebSocketActionType.OPEN;
-    name: string;
+    name: WebSocketName;
     endpoint: string;
     token: string;
 } | {
     type: WebSocketActionType.SEND;
-    name: string;
+    name: WebSocketName;
     message: string;
 } | {
+    type: WebSocketActionType.CLOSE;
+    name: WebSocketName;
+} | {
     type: WebSocketActionType.RECEIVE;
-    name: string;
+    name: WebSocketName;
     message: string;
     event: MessageEvent;
 } | {
+    type: WebSocketActionType.CLOSING;
+    name: WebSocketName;
+    event: CloseEvent;
+} | {
     type: WebSocketActionType.CLOSED;
-    name: string;
+    name: WebSocketName;
     event: CloseEvent;
 };
 

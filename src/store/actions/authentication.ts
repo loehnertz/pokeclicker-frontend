@@ -6,9 +6,9 @@ import { NotificationType } from "../../models";
 import { User, UserLoginRequest, UserRegistrationRequest } from "../../models/user";
 import { State } from "../types";
 import { notifyWithTimeout } from "./globalappstate";
-import { openBalanceSocket, openClickingSocket } from "./sockets";
+import { closeBalanceSocket, closeClickingSocket, openBalanceSocket, openClickingSocket } from "./sockets";
 import { AuthenticationAction, AuthenticationActionType } from "./types";
-import { requestUserDetails } from "./user";
+import { requestUserDetails, setUser } from "./user";
 
 const COOKIE = 'pkclkr_creds';
 
@@ -76,6 +76,17 @@ export function authorizeFromCookie(): ThunkAction<void, State, void, AnyAction>
     };
 }
 
+
+export function logout(): ThunkAction<void, State, void, AnyAction> {
+    return (dispatch) => {
+        setTokenCookie('');
+        dispatch(closeBalanceSocket());
+        dispatch(closeClickingSocket());
+        dispatch(authorizationTokenDestroy());
+    };
+}
+
+
 export function authorizationTokenReceived(token: string): AuthenticationAction {
     return {
         type: AuthenticationActionType.TOKEN_RETRIEVED,
@@ -83,3 +94,8 @@ export function authorizationTokenReceived(token: string): AuthenticationAction 
     };
 }
 
+export function authorizationTokenDestroy(): AuthenticationAction {
+    return {
+        type: AuthenticationActionType.TOKEN_DESTROY,
+    };
+}

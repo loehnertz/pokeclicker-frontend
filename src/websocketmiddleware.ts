@@ -55,6 +55,14 @@ function sendWebSocketMessage(name: string, message: string) {
     socket.send(message);
 }
 
+function closeWebSocket(name: string) {
+    const socket = registeredSockets[name];
+    if(socket == null) {
+        return;
+    }
+    socket.close(1000, "User requested close");
+}
+
 function handleWebSocketAction(next: Dispatch<WebSocketAction>, action: WebSocketAction) {
     switch(action.type) {
         case WebSocketActionType.OPEN:
@@ -62,6 +70,9 @@ function handleWebSocketAction(next: Dispatch<WebSocketAction>, action: WebSocke
             break;
         case WebSocketActionType.SEND:
             sendWebSocketMessage(action.name, action.message);
+            break;
+        case WebSocketActionType.CLOSE:
+            closeWebSocket(action.name);
             break;
     }
     return next(action);

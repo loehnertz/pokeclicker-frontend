@@ -20,6 +20,8 @@ export const userReducer: Reducer<User | null, UserAction | WebSocketAction> = (
                 return {...user, pokeDollars: balance, pokeDollarRate: rate};
             }
             break;
+        case WebSocketActionType.CLOSED:
+            return null;
     }
 
     return {...user};

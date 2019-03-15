@@ -9,6 +9,14 @@ export function openClickingSocket(token: string): WebSocketAction {
     };
 }
 
+export function closeClickingSocket(): WebSocketAction {
+    return {
+        type: WebSocketActionType.CLOSE,
+        name: "clicking"
+    };
+}
+
+
 export function sendClick(): WebSocketAction {
     return {
         type: WebSocketActionType.SEND,
@@ -23,5 +31,12 @@ export function openBalanceSocket(token: string): WebSocketAction {
         name: "balance",
         endpoint: "users/balance",
         token
+    };
+}
+
+export function closeBalanceSocket(): WebSocketAction {
+    return {
+        type: WebSocketActionType.CLOSE,
+        name: "balance"
     };
 }

@@ -6,6 +6,7 @@ import Clicking from "../Clicking/Clicking";
 import Pokemon from "../Pokemon/Pokemon";
 import StoreFront from "../StoreFront/StoreFront";
 import UserLogin from "../UserLogin/UserLogin";
+import UserMenu from "../UserMenu/UserMenu";
 import UserRegistration from "../UserRegistration/UserRegistration";
 import "./App.css";
 
@@ -20,6 +21,9 @@ class App extends Component<State | null> {
 
     private currentMode(): Mode {
         if (this.props.globalAppState.authentication.token === null) {
+            if(this.props.globalAppState.openSockets.length > 0) {
+                return Mode.closing;
+            }
             return Mode.login;
         }
         if(this.props.entities.user === null) {
@@ -48,15 +52,17 @@ class App extends Component<State | null> {
             case Mode.disconnected:
                 contents = (
                     <div className="App-welcome">
+                    <UserMenu/>
                     <p>Connection to the server was lost. Do you have another tab open?</p>
                 </div>);
                 break;
             case Mode.online:
                 contents = (
-                <div className="Game">
-                    <Pokemon/>
-                    <Clicking/>
-                    <StoreFront/>
+                    <div className="Game">
+                        <UserMenu/>
+                        <Pokemon/>
+                        <Clicking/>
+                        <StoreFront/>
                     </div>);
                 break;
         }
