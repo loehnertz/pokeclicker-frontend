@@ -3,13 +3,18 @@ import {
     AppNotificationAction,
     AuthenticationAction,
     AuthenticationActionType,
-    NotificationActionType
+    NotificationActionType,
+    WebSocketAction,
+    WebSocketActionType
 } from "../actions/types";
 import { AuthenticationState, GlobalAppState, Notifications } from "../types";
 
 const authenticationReducer: Reducer<AuthenticationState, AuthenticationAction> = (state = {token: null}, action) => {
-    if(action.type === AuthenticationActionType.TOKEN_RETRIEVED) {
-        return {token: action.token};
+    switch(action.type) {
+        case AuthenticationActionType.TOKEN_RETRIEVED:
+            return {token: action.token};
+        case AuthenticationActionType.TOKEN_DESTROY:
+            return {token: null};
     }
     return {...state};
 };
@@ -25,7 +30,19 @@ const errorNotificationReducer: Reducer<Notifications, AppNotificationAction> = 
     return Array.from(notifications);
 };
 
+const openSocketsReducer: Reducer<string[], WebSocketAction> = (openSockets = [], action) => {
+    switch(action.type) {
+        case WebSocketActionType.OPEN:
+            return openSockets.concat([action.name]);
+        case WebSocketActionType.CLOSED:
+            return openSockets.filter((socket) => socket !== action.name);
+    }
+    return [...openSockets];
+};
+
+
 export default combineReducers({
     authentication: authenticationReducer,
-    notifications: errorNotificationReducer
+    notifications: errorNotificationReducer,
+    openSockets: openSocketsReducer
 }) as Reducer<GlobalAppState>;

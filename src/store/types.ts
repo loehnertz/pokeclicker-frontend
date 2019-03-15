@@ -19,6 +19,7 @@ export type Notifications = AppNotification[];
 export interface GlobalAppState {
     authentication: AuthenticationState;
     notifications: Notifications;
+    openSockets: string[];
 }
 
 export type PokemonById = ById<Pokemon>;
