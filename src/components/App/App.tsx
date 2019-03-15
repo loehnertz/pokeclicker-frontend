@@ -9,14 +9,12 @@ import UserLogin from "../UserLogin/UserLogin";
 import UserRegistration from "../UserRegistration/UserRegistration";
 import "./App.css";
 
-
 enum Mode {
     login = "login",
     closing = "closing",
     disconnected = "disconnected",
     online = "online"
 }
-
 
 class App extends Component<State | null> {
 
@@ -29,7 +27,7 @@ class App extends Component<State | null> {
         }
         return Mode.online;
     }
-  
+
     componentDidMount() {
         document.title = "Login - PokéClicker";
     }
