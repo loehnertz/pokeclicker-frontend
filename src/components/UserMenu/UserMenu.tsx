@@ -15,25 +15,40 @@ interface UserMenuDispatchProps {
     onLogout(): void;
 }
 
-class UserMenu extends Component<UserMenuProps & UserMenuDispatchProps> {
+interface ClosedState {
+    closed: boolean;
+}
 
+class UserMenu extends Component<UserMenuProps & UserMenuDispatchProps, ClosedState> {
     public avatar(): string {
         const defaultAvatar = "https://en.wikipedia.org/w/skins/Vector/images/user-avatar.png?59494";
         return (this.props.user && this.props.user.avatarUri) || defaultAvatar;
     }
 
+    public toggleMenu() {
+        this.setState((state) => ({closed: !state.closed}));
+    }
+
 
     public render() {
         const username = this.props.user && this.props.user.name;
+        const closed = this.state ? this.state.closed : true;
         return (
-            <div className="UserMenu">
-                <img className="UserMenu-avatar" src={this.avatar()} />
-                <p className="UserMenu-username">
-                    {username} <button onClick={() => this.props.onLogout()}>Logout</button>
+            <div className={`UserMenu  ${closed ? "closed" : ""}`}>
+                <p className="UserMenu-userdetails"
+                    onClick={() => this.toggleMenu()}>
+                    <img className="UserMenu-avatar" src={this.avatar()} />
+                    {username}
                 </p>
+                <ul className="UserMenu-actions">
+                    <li onClick={() => this.props.onLogout()}>Logout</li>
+                </ul>
             </div>);
     }
 
+    public componentDidMount() {
+        this.setState(() => ({closed: true}));
+    }
 }
 
 function mapStateToProps(state: State): UserMenuProps {
