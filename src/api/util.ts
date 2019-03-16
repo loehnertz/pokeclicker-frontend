@@ -54,11 +54,8 @@ export class Session {
                 if(typeof json.message === "string") {
                     throw new ApiError(json.message);
                 }
-
-                throw new StatusError(response.status, response.statusText, response);
-            } catch(e) {
-                throw new StatusError(response.status, response.statusText, response);
-            }
+            } catch(e) { /* Error handled underneath catch block*/ }
+            throw new StatusError(response.status, response.statusText, response);
         }
         return response;
     }
