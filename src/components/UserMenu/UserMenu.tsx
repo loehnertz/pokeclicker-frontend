@@ -35,14 +35,16 @@ class UserMenu extends Component<UserMenuProps & UserMenuDispatchProps, ClosedSt
         const closed = this.state ? this.state.closed : true;
         return (
             <div className={`UserMenu  ${closed ? "closed" : ""}`}>
-                <p className="UserMenu-userdetails"
-                    onClick={() => this.toggleMenu()}>
-                    <img className="UserMenu-avatar" src={this.avatar()} />
-                    {username}
-                </p>
-                <ul className="UserMenu-actions">
-                    <li onClick={() => this.props.onLogout()}>Logout</li>
-                </ul>
+                <div className="UserMenu-dropdown">
+                    <p className="UserMenu-userdetails"
+                        onClick={() => this.toggleMenu()}>
+                        <img className="UserMenu-avatar" src={this.avatar()} />
+                        {username}
+                    </p>
+                    <ul className="UserMenu-actions">
+                        <li onClick={() => this.props.onLogout()}>Logout</li>
+                    </ul>
+                </div>
             </div>);
     }
 

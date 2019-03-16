@@ -52,23 +52,22 @@ class App extends Component<State | null> {
             case Mode.disconnected:
                 contents = (
                     <div className="App-welcome">
-                    <UserMenu/>
                     <p>Connection to the server was lost. Do you have another tab open?</p>
                 </div>);
                 break;
             case Mode.online:
                 contents = (
-                    <div className="Game">
-                        <UserMenu/>
-                        <Pokemon/>
-                        <Clicking/>
-                        <StoreFront/>
-                    </div>);
+                        <div className="Game">
+                            <Pokemon/>
+                            <Clicking/>
+                            <StoreFront/>
+                        </div>);
                 break;
         }
         return (
             <div className="App">
                 <div className="Notifications">{notifications}</div>
+                <UserMenu/>
                 <main>
                     {contents}
                 </main>

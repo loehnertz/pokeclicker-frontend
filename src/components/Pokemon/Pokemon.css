@@ -1,6 +1,6 @@
 
 .PokemonStorage {
-    height: 100vh;
+    height: 100%;
     display: flex;
     flex-wrap: wrap;
     background-color: hsla(0, 0%, 80%, 0.5);

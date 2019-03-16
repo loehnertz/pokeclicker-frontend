@@ -50,11 +50,14 @@ export class Session {
         if(response.status >= 400) {
             try {
                 const json = await response.json();
-
-                if(typeof json.message === "string") {
-                    throw new ApiError(json.message);
+                if(typeof json.error === "string") {
+                    throw new ApiError(json.error);
                 }
-            } catch(e) { /* Error handled underneath catch block*/ }
+            } catch(e) {
+                if(e instanceof ApiError) {
+                    throw e;
+                }
+            }
             throw new StatusError(response.status, response.statusText, response);
         }
         return response;
