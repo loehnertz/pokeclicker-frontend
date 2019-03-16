@@ -48,12 +48,12 @@ export class UserResource extends SessionResource implements Resource<User> {
 
 export class PokemonResource extends SessionResource implements Resource<Pokemon> {
     async fetchById(id: number): Promise<Pokemon> {
-        const r = await this.session.safeFetch(url`pokemon/${id}`);
+        const r = await this.session.safeFetch(url`users/pokemon/${id}`);
         return r.json();
     }
 
     async fetchAll(): Promise<Pokemon[]> {
-        const r = await this.session.safeFetch(url`pokemon/`);
+        const r = await this.session.safeFetch(url`users/pokemon/`);
         return r.json();
     }
 }

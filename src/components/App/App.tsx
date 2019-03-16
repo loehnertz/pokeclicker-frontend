@@ -3,13 +3,31 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { State } from "../../store/types";
 import Clicking from "../Clicking/Clicking";
+import Pokemon from "../Pokemon/Pokemon";
 import StoreFront from "../StoreFront/StoreFront";
 import UserLogin from "../UserLogin/UserLogin";
 import UserRegistration from "../UserRegistration/UserRegistration";
 import "./App.css";
 
+enum Mode {
+    login = "login",
+    closing = "closing",
+    disconnected = "disconnected",
+    online = "online"
+}
 
 class App extends Component<State | null> {
+
+    private currentMode(): Mode {
+        if (this.props.globalAppState.authentication.token === null) {
+            return Mode.login;
+        }
+        if(this.props.entities.user === null) {
+            return Mode.disconnected;
+        }
+        return Mode.online;
+    }
+
     componentDidMount() {
         document.title = "Login - PokéClicker";
     }
@@ -19,22 +37,34 @@ class App extends Component<State | null> {
             <div className={`notification notification-${n.notificationType}`}>{n.message}</div>
         );
 
-        let mode;
-        if (this.props.globalAppState.authentication.token === null) {
-            mode = <div className="App-welcome"><UserRegistration/><UserLogin/></div>;
-        } else {
-            mode = (
+        let contents;
+        switch(this.currentMode()) {
+            case Mode.login:
+                contents = <div className="App-welcome"><UserRegistration/><UserLogin/></div>;
+                break;
+            case Mode.closing:
+                contents = <div className="App-welcome"><p>Closing connection...</p></div>;
+                break;
+            case Mode.disconnected:
+                contents = (
+                    <div className="App-welcome">
+                    <p>Connection to the server was lost. Do you have another tab open?</p>
+                </div>);
+                break;
+            case Mode.online:
+                contents = (
                 <div className="Game">
+                    <Pokemon/>
                     <Clicking/>
                     <StoreFront/>
-                </div>
-            );
+                    </div>);
+                break;
         }
         return (
             <div className="App">
                 <div className="Notifications">{notifications}</div>
                 <main>
-                    {mode}
+                    {contents}
                 </main>
             </div>
         );

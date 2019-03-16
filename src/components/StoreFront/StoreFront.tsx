@@ -27,6 +27,7 @@ class StoreFront extends Component<StoreFrontProps & StoreFrontDispatchProps> {
         const items = bps.allIds.map((id) => bps.byId[id]).map((bp) =>
             <StoreItem
                 boosterpack={bp}
+                key={bp.locationId}
                 resource={this.props.boosterpackResource}
                 onBoosterpackBuy={this.props.onBoosterpackBuy}/>
         );

@@ -1,0 +1,76 @@
+
+.PokemonStorage {
+    height: 100vh;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: hsla(0, 0%, 80%, 0.5);
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+.PokemonSprite-thumbnail {
+    width: 64px;
+    height: 64px;
+    transform: scale(1.5);
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+    display: block;
+}
+
+.PokemonSprite:after {
+    content: '';
+    width: 20px;
+    height: 20px;
+    display: block;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 9999px;
+    -webkit-filter: blur(5px);
+    filter: blur(5px);
+    -webkit-transform: scaleY(0.5);
+    transform: scaleY(0.5);
+    margin-bottom: -10px;
+    margin-top: -10px;
+    margin-left: calc(50% - 10px);
+}
+
+.PokemonSprite-popup {
+    display: none;
+    background-color: white;
+    z-index: 1;
+    width: 220px;
+    height: calc(16 * 220px / 9);
+    margin-right: -220px;
+    margin-bottom: calc(-16 * 220px / 9 - 20px);
+    border: 5px solid black;
+    border-radius: 5px;
+    position: relative;
+}
+
+.PokemonSprite-pokemon {
+    background-image: var(--sprite);
+    background-size: contain;
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-origin: border-box;
+    height: 100%;
+}
+
+.PokemonSprite-popup::before {
+    content: '';
+    display: block;
+    width: 100%;
+    background-color: white;
+    height: 100%;
+    position: absolute;
+    background-image: var(--sprite);
+    z-index: -1;
+    background-position: center;
+    filter: blur(28px);
+    opacity: 0.5;
+    background-size: cover;
+}
+
+.PokemonSprite:hover .PokemonSprite-popup {
+    display: block;
+}
