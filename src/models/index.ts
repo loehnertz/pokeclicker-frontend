@@ -23,9 +23,9 @@ export interface Session {
 export interface Pokemon {
     id: Reference<Pokemon>;
     pokeNumber: number;
-    owner: Reference<User>;
+    owner: {};
     xp: number;
-    aquisitionDateTime: Date;
+    aquisitionDateTime: {millis: number};
     thinApiInfo?: {
         id: number,
         name: string,

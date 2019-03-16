@@ -2,18 +2,35 @@
 .PokemonStorage {
     height: 100vh;
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
     background-color: hsla(0, 0%, 80%, 0.5);
-    overflow-y: scroll;
-    overflow-x: hidden;
+    box-sizing: border-box;
+    flex-grow: 0;
 }
-.PokemonSprite-thumbnail {
-    width: 64px;
-    height: 64px;
-    transform: scale(1.5);
-    image-rendering: crisp-edges;
-    image-rendering: pixelated;
-    display: block;
+
+.PokemonStorage-pageselect {
+    margin: 20px 0 10px 0;
+    display: flex;
+    align-items: center;
+}
+
+.PokemonStorage-pageselect > button{
+    margin: 0 10px;
+    padding: 5px;
+    border-radius: 5px;
+    border-width: 5px;
+}
+
+.PokemonStorage-page {
+    display: grid;
+    grid-template-columns: 64px 64px 64px 64px 64px 64px 64px 64px;
+    grid-template-rows: 64px 64px 64px 64px 64px 64px 64px 64px;
+    padding: 20px;
+    box-sizing: content-box;
+    flex-grow: 0;
+    min-width: 220px;
+    width: calc(64px * 8);
 }
 
 .PokemonSprite:after {
@@ -21,25 +38,33 @@
     width: 20px;
     height: 20px;
     display: block;
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(40, 40, 40, 0.3);
     border-radius: 9999px;
-    -webkit-filter: blur(5px);
-    filter: blur(5px);
-    -webkit-transform: scaleY(0.5);
-    transform: scaleY(0.5);
-    margin-bottom: -10px;
-    margin-top: -10px;
+    filter: blur(1px);
+    transform: scaleY(0.7) scaleX(1.5);
+    margin-bottom: -7px;
+    margin-top: -13px;
     margin-left: calc(50% - 10px);
+}
+
+.PokemonSprite-thumbnail {
+    width: 64px;
+    height: 64px;
+    transform: scale(1.5);
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+    display: block;
+    margin: 0;
 }
 
 .PokemonSprite-popup {
     display: none;
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.9);
     z-index: 1;
     width: 220px;
     height: calc(16 * 220px / 9);
     margin-right: -220px;
-    margin-bottom: calc(-16 * 220px / 9 - 20px);
+    margin-bottom: calc(-16 * 220px / 9 - 21px);
     border: 5px solid black;
     border-radius: 5px;
     position: relative;
