@@ -40,6 +40,7 @@ export interface UserAction {
 
 export enum PokemonActionType {
     ADD_OR_UPDATE = 'POKEMON_ADD_OR_UPDATE',
+    SET_ALL = 'POKEMON_SET_ALL',
     CLEAR_ALL = 'POKEMON_CLEAR_ALL'
 }
 
@@ -47,6 +48,9 @@ export enum PokemonActionType {
 export type PokemonAction = {
     type: PokemonActionType.ADD_OR_UPDATE;
     pokemon: Pokemon;
+} | {
+    type: PokemonActionType.SET_ALL;
+    pokemons: Pokemon[];
 } | {
     type: PokemonActionType.CLEAR_ALL;
 };
