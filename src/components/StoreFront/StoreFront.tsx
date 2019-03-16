@@ -46,6 +46,8 @@ interface StoreItemEventProps {
 }
 
 class StoreItem extends Component<StoreItemProps & StoreItemEventProps> {
+    $boosterpack?: HTMLDivElement | null;
+    timeout?: number;
 
     onBuy(): void {
         this.props.onBoosterpackBuy(this.props.resource, this.props.boosterpack.locationId);
@@ -84,19 +86,32 @@ class StoreItem extends Component<StoreItemProps & StoreItemEventProps> {
         const colorProps = this.color();
         return (
             <div className="StoreItem" style={{...colorProps}}>
-                <div className="StoreItem-boosterpack">
+                <div
+                    className="StoreItem-boosterpack"
+                    id={`Boosterpack-${bp.locationId}`}
+                    ref={(el) => this.$boosterpack = el} >
                     <img className="StoreItem-logo" src={pokemonLogo}/>
                     <img className="StoreItem-sprite" src={bp.pokemons && bp.pokemons[bp.pokemons.length - 1].sprite} />
                     <h3 className="StoreItem-title">{bp.name}</h3>
                 </div>
                 <button
                     className="StoreItem-buybutton"
-                    onClick={() => this.onBuy()}
+                    onClick={() => {this.onBuy(); this.animate(); }}
                 >
                     ₽{bp.price}
                 </button>
             </div>
         );
+    }
+
+    animate() {
+        if(!this.$boosterpack) {
+            return;
+        }
+        const bp = this.$boosterpack;
+        bp.style.boxShadow = "0 0 10px 10px rgba(255, 255, 255, 0.7)";
+        window.clearTimeout(this.timeout);
+        this.timeout = window.setTimeout(() => bp.style.boxShadow = "", 2500);
     }
 }
 

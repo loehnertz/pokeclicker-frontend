@@ -44,6 +44,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    box-shadow: 0 0 10px -10px white;
+    transition: box-shadow 500ms;
 }
 
 .StoreItem-buybutton {

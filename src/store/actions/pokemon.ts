@@ -1,5 +1,6 @@
 import { Pokemon } from '../../models';
-import { PokemonAction, PokemonActionType } from "./types";
+import { PokemonAction, PokemonActionType, PokemonThunk } from "./types";
+
 
 export function addOrReplacePokemon(pokemon: Pokemon): PokemonAction {
     return {
@@ -18,5 +19,20 @@ export function setAllPokemons(pokemons: Pokemon[]): PokemonAction {
 export function clearPokemons(): PokemonAction {
     return {
         type: PokemonActionType.CLEAR_ALL
+    };
+}
+
+export function showcaseAddPokemon(pokemon: Pokemon, packId: number): PokemonAction {
+    return {
+        type: PokemonActionType.SHOWCASE,
+        pokemon,
+        packId
+    };
+}
+
+export function showcaseRemovePokemon(pokemon: Pokemon): PokemonAction {
+    return {
+        type: PokemonActionType.UNSHOWCASE,
+        pokemon
     };
 }

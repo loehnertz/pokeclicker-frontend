@@ -99,3 +99,37 @@
 .PokemonSprite:hover .PokemonSprite-popup {
     display: block;
 }
+
+
+.PokemonShowcase-sprite {
+    --startx: 120%;
+    --starty: 120%;
+    --targetx: 200px;
+    --targety: 50px;
+    position: fixed;
+    left: var(--x);
+    top: var(--y);
+    animation: weee 2s ease-in-out 1 forwards;
+    animation-delay: var(--delay);
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    z-index: 1;
+}
+
+@keyframes weee {
+    0% {
+        left: var(--startx);
+        top: var(--starty);
+        transform: scale(1);
+    }
+    50% {
+        left: var(--midx);
+        top: var(--midy);
+        transform: scale(3);
+    }
+    100% {
+        left: var(--targetx);
+        top: var(--targety);
+        transform: scale(1);
+    }
+}
