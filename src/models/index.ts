@@ -25,7 +25,7 @@ export interface Pokemon {
     pokeNumber: number;
     owner: {};
     xp: number;
-    aquisitionDateTime: {millis: number};
+    aquisitionDateTime: {millis: number} | number;
     thinApiInfo?: {
         id: number,
         name: string,
