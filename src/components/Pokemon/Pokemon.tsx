@@ -78,7 +78,13 @@ class PokemonSprite extends Component<PokemonSpriteProps> {
     render() {
         const pkmn = this.props.pokemon;
         const pokeInfo = this.props.pokemon.thinApiInfo;
-        const aquisitionDateTime = new Date(pkmn.aquisitionDateTime.millis).toLocaleString();
+        let millis: number;
+        if(typeof pkmn.aquisitionDateTime === "number") {
+            millis = pkmn.aquisitionDateTime;
+        } else {
+            millis = pkmn.aquisitionDateTime.millis;
+        }
+        const aquisitionDateTime = new Date(millis).toLocaleString();
         const sprite = (pokeInfo && pokeInfo.sprite) || missingno;
         const name = (pokeInfo && pokeInfo.sprite && pokeInfo.name) || "MissingNo.";
         return (
