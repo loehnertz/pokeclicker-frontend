@@ -14,6 +14,11 @@ export function setUser(user: User): UserAction {
     };
 }
 
+export function unsetUser(): UserAction {
+    return {
+        type: UserActionType.UNSET
+    };
+}
 
 export function requestUserDetails(token: string): ThunkAction<void, State, void, UserAction | PokemonAction> {
     return async (dispatch) => {
