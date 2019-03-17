@@ -1,9 +1,12 @@
 import { combineReducers, Reducer } from "redux";
+import { Pokemon } from "../../models";
 import {
     AppNotificationAction,
     AuthenticationAction,
     AuthenticationActionType,
     NotificationActionType,
+    PokemonAction,
+    PokemonActionType,
     WebSocketAction,
     WebSocketActionType
 } from "../actions/types";
@@ -41,8 +44,21 @@ const openSocketsReducer: Reducer<string[], WebSocketAction> = (openSockets = []
 };
 
 
+const showcaseReducer: Reducer<Array<[Pokemon, number]>, PokemonAction> = (pokemon = [], action) => {
+    switch(action.type) {
+        case PokemonActionType.SHOWCASE:
+            return [...pokemon, [action.pokemon, action.packId]];
+
+        case PokemonActionType.UNSHOWCASE:
+            return pokemon.filter(([pkmn]) => pkmn.id !== action.pokemon.id);
+    }
+
+    return pokemon;
+};
+
 export default combineReducers({
     authentication: authenticationReducer,
     notifications: errorNotificationReducer,
-    openSockets: openSocketsReducer
+    openSockets: openSocketsReducer,
+    showcase: showcaseReducer
 }) as Reducer<GlobalAppState>;

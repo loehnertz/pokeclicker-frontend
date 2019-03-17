@@ -20,6 +20,7 @@ export interface GlobalAppState {
     authentication: AuthenticationState;
     notifications: Notifications;
     openSockets: string[];
+    showcase: Array<[Pokemon, number]>;
 }
 
 export type PokemonById = ById<Pokemon>;

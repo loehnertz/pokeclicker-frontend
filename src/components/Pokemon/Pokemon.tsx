@@ -10,6 +10,7 @@ import './Pokemon.css';
 
 interface PokemonStorageProps {
     pokemons: PokemonCollection;
+    showcase: Array<[Pokemon, number]>;
     pokemonResource: PokemonResource;
 }
 
@@ -46,21 +47,24 @@ class PokemonStorage extends Component<PokemonStorageProps> {
                 pokemon={pkmn}
                 key={pkmn.id}/>
         );
-        return <div className="PokemonStorage">
-            <div className="PokemonStorage-pageselect">
-                <button
-                    className="PokemonStorage-nextpage"
-                    onClick={(e) => this.decrPage()}
-                    >&lt;</button>
-                <div className="PokemonStorage-currentpage">
-                    Box {this.currentPage + 1}
+        return (
+            <div className="PokemonStorage">
+                <div className="PokemonStorage-pageselect">
+                    <button
+                        className="PokemonStorage-nextpage"
+                        onClick={(e) => this.decrPage()}
+                        >&lt;</button>
+                    <div className="PokemonStorage-currentpage">
+                        Box {this.currentPage + 1}
+                    </div>
+                    <button
+                        className="PokemonStorage-nextpage"
+                        onClick={(e) => this.incrPage()}>></button>
                 </div>
-                <button
-                    className="PokemonStorage-nextpage"
-                    onClick={(e) => this.incrPage()}>></button>
-            </div>
-            <div className="PokemonStorage-page">{items}
-            </div></div>;
+                <div className="PokemonStorage-page">{items}
+                </div>
+                <Showcase showcase={this.props.showcase} />
+            </div>);
     }
 }
 
@@ -92,12 +96,64 @@ class PokemonSprite extends Component<PokemonSpriteProps> {
     }
 }
 
+class Showcase extends Component<{showcase: Array<[Pokemon, number]>}> {
+    render() {
+        const items = this.props.showcase.map(([pkmn, packId]) =>
+            <ShowcaseSprite key={pkmn.id} pokemon={pkmn} packId={packId} />
+            );
+        return <div className="PokemonShowcase">{items}</div>;
+    }
+}
+
+class ShowcaseSprite extends Component<{pokemon: Pokemon, packId: number}, {animationProps: CSSProperties}> {
+    constructor(props: {pokemon: Pokemon, packId: number}, ctx: any) {
+        super(props, ctx);
+        this.state = {
+            animationProps: this.animationProps()
+        };
+    }
+
+    animationProps(): CSSProperties {
+        const maxSpread = 500;
+        const x = Math.round(Math.random() * maxSpread - maxSpread / 2);
+        const y = Math.round(Math.random() * maxSpread - maxSpread / 2);
+        const bpProps: any = {};
+        const bp = document.getElementById(`Boosterpack-${this.props.packId}`);
+        if(bp != null) {
+            const rect = bp.getClientRects()[0];
+            const spriteWidth = 95;
+            const bpy = rect.top + 0.5 * rect.height - spriteWidth / 2;
+            const bpx = rect.left + 0.5 * rect.width - spriteWidth / 2;
+            bpProps['--startx'] = `${bpx}px`;
+            bpProps['--starty'] = `${bpy}px`;
+        }
+        return {
+            '--midx': `calc(50% + ${x}px)`,
+            '--midy': `calc(50% + ${y}px)`,
+            ...bpProps
+        } as CSSProperties;
+    }
+
+    render() {
+        const sprite = this.props.pokemon.thinApiInfo && this.props.pokemon.thinApiInfo.sprite;
+        const style = this.state.animationProps;
+        return <img style={style} className="PokemonShowcase-sprite" src={sprite}></img>;
+    }
+}
+
 
 function mapStateToProps(state: State): PokemonStorageProps {
     return {
         pokemons: state.entities.pokemons,
+        showcase: state.globalAppState.showcase,
         pokemonResource: new PokemonResource(state.globalAppState.authentication.token)
     };
 }
 
-export default connect(mapStateToProps)(PokemonStorage);
+function mapDispatchToProps(dispatch: Dispatch): {} {
+    return {
+
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PokemonStorage);

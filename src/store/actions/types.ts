@@ -47,7 +47,9 @@ export type UserAction = {
 export enum PokemonActionType {
     ADD_OR_UPDATE = 'POKEMON_ADD_OR_UPDATE',
     SET_ALL = 'POKEMON_SET_ALL',
-    CLEAR_ALL = 'POKEMON_CLEAR_ALL'
+    CLEAR_ALL = 'POKEMON_CLEAR_ALL',
+    SHOWCASE = "POKEMON_SHOWCASE",
+    UNSHOWCASE = "POKEMON_UNSHOWCASE"
 }
 
 
@@ -59,6 +61,13 @@ export type PokemonAction = {
     pokemons: Pokemon[];
 } | {
     type: PokemonActionType.CLEAR_ALL;
+} | {
+    type: PokemonActionType.SHOWCASE;
+    pokemon: Pokemon;
+    packId: number;
+} | {
+    type: PokemonActionType.UNSHOWCASE;
+    pokemon: Pokemon;
 };
 
 
