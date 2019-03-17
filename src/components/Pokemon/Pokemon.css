@@ -109,20 +109,30 @@
     position: fixed;
     left: var(--x);
     top: var(--y);
-    animation: weee 2s ease-in-out 1 forwards;
+    animation: PokemonShowcase-weee 2s ease-in-out 1 forwards;
     animation-delay: var(--delay);
     image-rendering: pixelated;
     image-rendering: crisp-edges;
     z-index: 1;
 }
 
-@keyframes weee {
+@keyframes PokemonShowcase-weee {
     0% {
         left: var(--startx);
         top: var(--starty);
         transform: scale(1);
     }
+    35% {
+        left: var(--midx);
+        top: var(--midy);
+        transform: scale(3);
+    }
     50% {
+        left: var(--midx);
+        top: var(--midy);
+        transform: scale(3.5);
+    }
+    65% {
         left: var(--midx);
         top: var(--midy);
         transform: scale(3);

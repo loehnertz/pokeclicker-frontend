@@ -17,7 +17,6 @@ interface PokemonStorageProps {
 class PokemonStorage extends Component<PokemonStorageProps> {
     currentPage: number;
     pageSize: number;
-    $sparkleTarget?: HTMLElement | null;
 
     constructor(props: PokemonStorageProps, context?: any) {
         super(props, context);
@@ -55,7 +54,7 @@ class PokemonStorage extends Component<PokemonStorageProps> {
                         className="PokemonStorage-nextpage"
                         onClick={(e) => this.decrPage()}
                         >&lt;</button>
-                    <div className="PokemonStorage-currentpage" ref={(el) => this.$sparkleTarget = el}>
+                    <div className="PokemonStorage-currentpage">
                         Box {this.currentPage + 1}
                     </div>
                     <button
