@@ -22,8 +22,16 @@ export function abbreviate (x : number | null, decPlaces : number) : string {
               x = 1
               i++
             }
-            
-            abbreviatedNumber = x + units[i]
+			
+			var abbStr = x.toString();
+			var indexOfDot = abbStr.indexOf(".");
+			if(indexOfDot == -1)
+				abbStr += ".000";
+			  else if (indexOfDot == abbStr.length-2)
+				  abbStr += "00";
+			  else if (indexOfDot == abbStr.length-3)
+				  abbStr += "0";
+            abbreviatedNumber = abbStr + units[i]
 
             break
           }
