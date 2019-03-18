@@ -6,15 +6,15 @@ export function abbreviate(x: number | null, decPlaces: number): string {
            return "0";
        }
 
-             let units = ['k', 'm', 'b', 't'];
-       let isNegative = x < 0;
+       const units = ['k', 'm', 'b', 't'];
+       const isNegative = x < 0;
        let abbreviatedNumber = x.toString();
        decPlaces = Math.pow(10, decPlaces);
 
 
        for (let i = units.length - 1; i >= 0; i--) {
 
-          let size = Math.pow(10, (i + 1) * 3);
+          const size = Math.pow(10, (i + 1) * 3);
 
           if (size <= x) {
             x = Math.round(x * decPlaces / size) / decPlaces;
@@ -24,15 +24,13 @@ export function abbreviate(x: number | null, decPlaces: number): string {
               i++;
             }
 
-                     let abbStr = x.toString();
-                     let indexOfDot = abbStr.indexOf(".");
-                     if(indexOfDot == -1) {
+            let abbStr = x.toString();
+            const indexOfDot = abbStr.indexOf(".");
+            if(indexOfDot == -1) {
                 abbStr += ".000";
-                     }
-              else if (indexOfDot == abbStr.length - 2) {
+                     } else if (indexOfDot == abbStr.length - 2) {
                   abbStr += "00";
- }
-              else if (indexOfDot == abbStr.length - 3) {
+ } else if (indexOfDot == abbStr.length - 3) {
                   abbStr += "0";
  }
             abbreviatedNumber = abbStr + units[i];
