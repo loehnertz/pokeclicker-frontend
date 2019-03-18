@@ -4,6 +4,7 @@ import { bindActionCreators, Dispatch } from "redux";
 import { User } from "../../models/user";
 import { sendClick } from "../../store/actions/sockets";
 import { State } from "../../store/types";
+import { abbreviate } from "../../utils";
 import './Clicking.css';
 import pokeballImage from './pokeball.png';
 
@@ -82,14 +83,14 @@ class PokeDollars extends Component<{amount: number | null, rate: number | null}
                 return;
             }
             const est = this.estimatedDollars();
-            this.$dollars.innerText = est == null ? "" : est.toString();
+            this.$dollars.innerText = est == null ? "" : abbreviate(est, 3);
         };
         animate();
         return (
             <div className="PokeDollars">
-                <p>₽<span ref={(e) => this.$dollars = e}>{this.props.amount}</span>
+                <p>₽<span ref={(e) => this.$dollars = e}>{abbreviate(this.props.amount, 3)}</span>
                 <br />
-                <span className="PokeDollars-rate">(+{this.props.rate} / s)</span></p>
+                <span className="PokeDollars-rate">(+{abbreviate(this.props.rate, 3)} / s)</span></p>
             </div>
         );
     }
