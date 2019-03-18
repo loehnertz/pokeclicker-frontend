@@ -26,11 +26,11 @@ export function abbreviate(x: number | null, decPlaces: number): string {
 
             let abbStr = x.toString();
             const indexOfDot = abbStr.indexOf(".");
-            if(indexOfDot == -1) {
+            if(indexOfDot === -1) {
                 abbStr += ".000";
-                     } else if (indexOfDot == abbStr.length - 2) {
+                     } else if (indexOfDot === abbStr.length - 2) {
                   abbStr += "00";
- } else if (indexOfDot == abbStr.length - 3) {
+ } else if (indexOfDot === abbStr.length - 3) {
                   abbStr += "0";
  }
             abbreviatedNumber = abbStr + units[i];
