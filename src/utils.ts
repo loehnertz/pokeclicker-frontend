@@ -1,8 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-export function abbreviate (x : number, decPlaces : number) : string {
-        var units = ['k', 'm', 'b', 't'];
+export function abbreviate (x : number | null, decPlaces : number) : string {
+       if(x == null)
+		   return "0";
+	
+		var units = ['k', 'm', 'b', 't'];
         var isNegative = x < 0
         var abbreviatedNumber = x.toString();
         decPlaces = Math.pow(10, decPlaces)
