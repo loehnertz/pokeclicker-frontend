@@ -9,6 +9,7 @@ import { BoosterpackResource } from '../../api/api';
 import { buyBoosterpack } from "../../store/actions/boosterpack";
 import pokemonLogo from './pokemon-logo.png';
 import './StoreFront.css';
+import {abbreviate} from "../../utils"
 
 interface StoreFrontProps {
     boosterpacks: BoosterpackCollection;
@@ -98,7 +99,7 @@ class StoreItem extends Component<StoreItemProps & StoreItemEventProps> {
                     className="StoreItem-buybutton"
                     onClick={() => {this.onBuy(); this.animate(); }}
                 >
-                    ₽{bp.price}
+                    ₽{abbreviate(bp.price, 3)}
                 </button>
             </div>
         );
