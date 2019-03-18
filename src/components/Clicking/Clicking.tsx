@@ -88,9 +88,9 @@ class PokeDollars extends Component<{amount: number | null, rate: number | null}
         animate();
         return (
             <div className="PokeDollars">
-                <p>₽<span ref={(e) => this.$dollars = e}>{this.props.amount}</span>
+                <p>₽<span ref={(e) => this.$dollars = e}>{abbreviate(this.props.amount, 3)}</span>
                 <br />
-                <span className="PokeDollars-rate">(+{this.props.rate} / s)</span></p>
+                <span className="PokeDollars-rate">(+{abbreviate(this.props.rate, 3)} / s)</span></p>
             </div>
         );
     }
