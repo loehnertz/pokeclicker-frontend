@@ -4,9 +4,9 @@ import { bindActionCreators, Dispatch } from "redux";
 import { User } from "../../models/user";
 import { sendClick } from "../../store/actions/sockets";
 import { State } from "../../store/types";
+import { abbreviate } from "../../utils";
 import './Clicking.css';
 import pokeballImage from './pokeball.png';
-import {abbreviate} from "../../utils"
 
 interface ClickingProps {
     user: User | null;
