@@ -82,7 +82,7 @@ class PokeDollars extends Component<{amount: number | null, rate: number | null}
                 return;
             }
             const est = this.estimatedDollars();
-            this.$dollars.innerText = est == null ? "" : est.toString();
+            this.$dollars.innerText = est == null ? "" : this.abbreviate(est, 3);
         };
         animate();
         return (
@@ -99,6 +99,33 @@ class PokeDollars extends Component<{amount: number | null, rate: number | null}
     }
     componentWillUnmount() {
         this.dead = true;
+    }
+    
+    abbreviate (x : number, decPlaces : number) : string {
+        var units = ['k', 'm', 'b', 't'];
+        var isNegative = x < 0
+        var abbreviatedNumber = "";
+        decPlaces = Math.pow(10, decPlaces)
+
+        for (var i = units.length - 1; i >= 0; i--) {
+
+          var size = Math.pow(10, (i + 1) * 3)
+
+          if (size <= x) {
+            x = Math.round(x * decPlaces / size) / decPlaces
+
+            if ((x === 1000) && (i < units.length - 1)) {
+              x = 1
+              i++
+            }
+
+            abbreviatedNumber = x + units[i]
+
+            break
+          }
+        }
+
+        return isNegative ? '-' + abbreviatedNumber : abbreviatedNumber;
     }
 }
 
