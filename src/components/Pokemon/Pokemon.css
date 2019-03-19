@@ -30,7 +30,7 @@
     padding: 20px;
     box-sizing: content-box;
     flex-grow: 0;
-    min-width: 220px;
+    min-width: calc(100vw / 3);
 }
 
 .PokemonStorage-toggle {
@@ -88,7 +88,7 @@
     margin-bottom: calc(-16 * 220px / 9 - 21px);
     border: 5px solid black;
     border-radius: 5px;
-    position: relative;
+    position: absolute;
 }
 
 .PokemonSprite-pokemon {

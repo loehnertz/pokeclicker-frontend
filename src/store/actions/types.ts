@@ -30,6 +30,21 @@ export type AuthenticationAction = {
     type: AuthenticationActionType.TOKEN_DESTROY;
 };
 
+
+export enum StoragePageActionType {
+    INCR = "STORAGE_PAGE_INCR",
+    DECR = "STORAGE_PAGE_DECR",
+    SET = "STORAGE_PAGE_SET"
+}
+
+export type StoragePageAction = {
+    type: StoragePageActionType.INCR | StoragePageActionType.DECR;
+} | {
+    type: StoragePageActionType.SET;
+    page: number
+};
+
+
 export enum UserActionType {
     SET = 'USER_SET',
     UNSET = 'USER_UNSET'

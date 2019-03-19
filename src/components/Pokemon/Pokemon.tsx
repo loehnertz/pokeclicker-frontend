@@ -1,9 +1,9 @@
-import chroma from "chroma-js";
 import React, { Component, CSSProperties } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators, Dispatch } from "redux";
 import { PokemonResource } from '../../api/api';
 import { Pokemon, Reference } from "../../models";
+import { decrPage, incrPage } from "../../store/actions/globalappstate";
 import { PokemonCollection, State } from "../../store/types";
 import { abbreviate } from "../../utils";
 import missingno from './missingno.png';
@@ -13,31 +13,32 @@ interface PokemonStorageProps {
     pokemons: PokemonCollection;
     showcase: Array<[Pokemon, number]>;
     pokemonResource: PokemonResource;
-}
-
-class PokemonStorage extends Component<PokemonStorageProps> {
     currentPage: number;
+}
+interface PokemonStorageDispatchProps {
+    incrPage(): void;
+    decrPage(): void;
+}
+class PokemonStorage extends Component<PokemonStorageProps & PokemonStorageDispatchProps> {
     pageSize: number;
-
-    constructor(props: PokemonStorageProps, context?: any) {
+    gridCols: number;
+    constructor(props: PokemonStorageProps & PokemonStorageDispatchProps, context?: any) {
         super(props, context);
-        this.currentPage = 0;
         this.pageSize = 64;
+        this.gridCols = 8;
     }
 
     page(): number[] {
         const ids = this.props.pokemons.allIds;
-        return ids.slice(this.pageSize * this.currentPage, this.pageSize * (this.currentPage + 1));
+        return ids.slice(this.pageSize * this.props.currentPage, this.pageSize * (this.props.currentPage + 1));
     }
 
     incrPage() {
-        this.currentPage++;
-        this.forceUpdate();
+        this.props.incrPage();
 
     }
     decrPage() {
-        this.currentPage = Math.max(0, this.currentPage - 1);
-        this.forceUpdate();
+        this.props.decrPage();
     }
 
     render() {
@@ -58,7 +59,7 @@ class PokemonStorage extends Component<PokemonStorageProps> {
                     >&lt;
                     </button>
                     <div className="PokemonStorage-currentpage">
-                        Box {this.currentPage + 1}
+                        Box {this.props.currentPage + 1}
                     </div>
                     <button
                         className="PokemonStorage-nextpage"
@@ -66,7 +67,8 @@ class PokemonStorage extends Component<PokemonStorageProps> {
                     >&gt;
                     </button>
                 </div>
-                <div className="PokemonStorage-page">{items}
+                <div className="PokemonStorage-page">
+                    {items}
                 </div>
                 <Showcase showcase={this.props.showcase} />
             </div>);
@@ -157,13 +159,15 @@ function mapStateToProps(state: State): PokemonStorageProps {
     return {
         pokemons: state.entities.pokemons,
         showcase: state.globalAppState.showcase,
-        pokemonResource: new PokemonResource(state.globalAppState.authentication.token)
+        pokemonResource: new PokemonResource(state.globalAppState.authentication.token),
+        currentPage: state.globalAppState.pokemonStoragePage
     };
 }
 
-function mapDispatchToProps(dispatch: Dispatch): {} {
+function mapDispatchToProps(dispatch: Dispatch): PokemonStorageDispatchProps {
     return {
-
+        incrPage: bindActionCreators(incrPage, dispatch),
+        decrPage: bindActionCreators(decrPage, dispatch)
     };
 }
 

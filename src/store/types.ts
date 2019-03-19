@@ -21,6 +21,7 @@ export interface GlobalAppState {
     notifications: Notifications;
     openSockets: string[];
     showcase: Array<[Pokemon, number]>;
+    pokemonStoragePage: number;
 }
 
 export type PokemonById = ById<Pokemon>;

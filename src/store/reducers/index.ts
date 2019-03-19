@@ -1,5 +1,6 @@
 import { combineReducers, Dispatch, Reducer } from 'redux';
 
+import { number } from 'prop-types';
 import { State } from '../types';
 import { boosterpacksReducer } from './boosterpack';
 import globalAppStateReducer from './globalappstate';
@@ -11,7 +12,7 @@ const entitiesReducer = combineReducers({
     user: userReducer,
     pokemons: pokemonsReducer,
     items: itemsReducer,
-    boosterpacks: boosterpacksReducer
+    boosterpacks: boosterpacksReducer,
 });
 
 const reducer: Reducer<State> = combineReducers({
