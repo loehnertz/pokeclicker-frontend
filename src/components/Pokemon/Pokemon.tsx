@@ -5,6 +5,7 @@ import { bindActionCreators, Dispatch } from "redux";
 import { PokemonResource } from '../../api/api';
 import { Pokemon, Reference } from "../../models";
 import { PokemonCollection, State } from "../../store/types";
+import { abbreviate } from "../../utils";
 import missingno from './missingno.png';
 import './Pokemon.css';
 
@@ -93,7 +94,7 @@ class PokemonSprite extends Component<PokemonSpriteProps> {
             <div className="PokemonSprite-popup">
                 <div className="PokemonSprite-pokemon" id={`pokemon-${pkmn.id}`}>
                     <h3 className="PokemonSprite-title">{name}</h3>
-                    <p className="PokemonSprite-details">{pkmn.xp} xp</p>
+                    <p className="PokemonSprite-details">{abbreviate(pkmn.xp, 2)} xp</p>
                     <p className="PokemonSprite-details">{aquisitionDateTime}</p>
                 </div>
             </div>
