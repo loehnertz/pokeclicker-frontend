@@ -42,7 +42,7 @@ function handleKeyValuePair(user: User | null, message: KeyValuePair): User | nu
     const intValue = parseInt(message.value, 10);
     switch(message.key) {
         case "balance":
-            return {...user, pokeDollars: intValue};
+            return {...user, pokeDollars: intValue, lastBalanceTimestamp: Date.now()};
         case "rate":
             return {...user, pokeDollarRate: intValue };
     }
