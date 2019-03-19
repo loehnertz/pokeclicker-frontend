@@ -136,6 +136,11 @@
     image-rendering: crisp-edges;
     z-index: 1;
 }
+@media (max-width: 720px){
+    .PokemonShowcase-sprite {
+        --targety: -100px;
+    }
+}
 
 @keyframes PokemonShowcase-weee {
     0% {
