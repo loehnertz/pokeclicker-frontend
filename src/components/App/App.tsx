@@ -37,9 +37,9 @@ class App extends Component<State | null> {
     }
 
     public render() {
-        const notifications = this.props.globalAppState.notifications.map((n) =>
+        const notifications = this.props.globalAppState.notifications.map((n) => (
             <div className={`notification notification-${n.notificationType}`}>{n.message}</div>
-        );
+        ));
 
         let contents;
         switch(this.currentMode()) {

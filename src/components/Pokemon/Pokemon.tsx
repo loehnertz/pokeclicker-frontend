@@ -43,24 +43,28 @@ class PokemonStorage extends Component<PokemonStorageProps> {
     render() {
         const pkmns = this.props.pokemons;
         const ids = this.page();
-        const items = ids.map((id) => pkmns.byId[id]).map((pkmn) =>
+        const items = ids.map((id) => pkmns.byId[id]).map((pkmn) => (
             <PokemonSprite
                 pokemon={pkmn}
-                key={pkmn.id}/>
-        );
+                key={pkmn.id}
+            />
+        ));
         return (
             <div className="PokemonStorage">
                 <div className="PokemonStorage-pageselect">
                     <button
                         className="PokemonStorage-nextpage"
                         onClick={(e) => this.decrPage()}
-                        >&lt;</button>
+                    >&lt;
+                    </button>
                     <div className="PokemonStorage-currentpage">
                         Box {this.currentPage + 1}
                     </div>
                     <button
                         className="PokemonStorage-nextpage"
-                        onClick={(e) => this.incrPage()}>></button>
+                        onClick={(e) => this.incrPage()}
+                    >&gt;
+                    </button>
                 </div>
                 <div className="PokemonStorage-page">{items}
                 </div>
@@ -144,7 +148,7 @@ class ShowcaseSprite extends Component<{pokemon: Pokemon, packId: number}, {anim
     render() {
         const sprite = this.props.pokemon.thinApiInfo && this.props.pokemon.thinApiInfo.sprite;
         const style = this.state.animationProps;
-        return <img style={style} className="PokemonShowcase-sprite" src={sprite}></img>;
+        return <img style={style} className="PokemonShowcase-sprite" src={sprite} />;
     }
 }
 

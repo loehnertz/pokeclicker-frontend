@@ -21,6 +21,7 @@ interface UserRegistrationDispatchProps {
 class UserRegistration extends Component<UserRegistrationProps & UserRegistrationDispatchProps> {
 
     public onSubmit(e: FormEvent<HTMLFormElement>) {
+        e.preventDefault();
         const form = e.target as HTMLFormElement;
         const valid = form.reportValidity();
         if (!valid) {
@@ -34,23 +35,22 @@ class UserRegistration extends Component<UserRegistrationProps & UserRegistratio
     }
 
     public render() {
-        return <form className="UserRegistration" onSubmit={(e) => {
-            e.preventDefault();
-            this.onSubmit(e);
-        }}>
-            <p>
-                <label>Username: <input type="text" name="username" required minLength={3}/></label>
-            </p>
-            <p>
-                <label>Email: <input type="email" name="email" required/></label>
-            </p>
-            <p>
-                <label>Password: <input type="password" name="password" required  minLength={8}/></label>
-            </p>
-            <p>
-                <button type="submit">Register</button>
-            </p>
-        </form>;
+        return (
+            <form className="UserRegistration" onSubmit={(e) => this.onSubmit(e)}>
+                <p>
+                    <label>Username: <input type="text" name="username" required={true} minLength={3}/></label>
+                </p>
+                <p>
+                    <label>Email: <input type="email" name="email" required={true}/></label>
+                </p>
+                <p>
+                    <label>Password: <input type="password" name="password" required={true}  minLength={8}/></label>
+                </p>
+                <p>
+                    <button type="submit">Register</button>
+                </p>
+            </form>
+        );
     }
 
 }

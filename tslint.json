@@ -1,5 +1,5 @@
 {
-    "extends": "tslint:recommended",
+    "extends": ["tslint:recommended", "tslint-react"],
     "rules": {
         "interface-name": [true, "never-prefix"],
         "whitespace": [true, "check-decl", "check-operator", "check-module", "check-separator", "check-rest-spread", "check-typecast", "check-type-operator"],
@@ -13,6 +13,7 @@
         "max-classes-per-file": false,
         "object-literal-sort-keys": false,
         "trailing-comma": false,
-        "member-ordering": false
+        "member-ordering": false,
+        "jsx-no-lambda": false
     }
 }

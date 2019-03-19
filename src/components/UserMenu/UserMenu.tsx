@@ -36,8 +36,7 @@ class UserMenu extends Component<UserMenuProps & UserMenuDispatchProps, ClosedSt
         return (
             <div className={`UserMenu  ${closed ? "closed" : ""}`}>
                 <div className="UserMenu-dropdown">
-                    <p className="UserMenu-userdetails"
-                        onClick={() => this.toggleMenu()}>
+                    <p className="UserMenu-userdetails" onClick={() => this.toggleMenu()}>
                         <img className="UserMenu-avatar" src={this.avatar()} />
                         {username}
                     </p>
