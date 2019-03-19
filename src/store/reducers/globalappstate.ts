@@ -7,6 +7,8 @@ import {
     NotificationActionType,
     PokemonAction,
     PokemonActionType,
+    StoragePageAction,
+    StoragePageActionType,
     WebSocketAction,
     WebSocketActionType
 } from "../actions/types";
@@ -56,9 +58,22 @@ const showcaseReducer: Reducer<Array<[Pokemon, number]>, PokemonAction> = (pokem
     return pokemon;
 };
 
+const pokemonStoragePageReducer: Reducer<number, StoragePageAction> = (state = 0, action) => {
+    switch(action.type) {
+        case StoragePageActionType.INCR:
+            return state + 1;
+        case StoragePageActionType.DECR:
+            return state - 1;
+        case StoragePageActionType.SET:
+            return action.page;
+    }
+    return state;
+};
+
 export default combineReducers({
     authentication: authenticationReducer,
     notifications: errorNotificationReducer,
     openSockets: openSocketsReducer,
-    showcase: showcaseReducer
+    showcase: showcaseReducer,
+    pokemonStoragePage: pokemonStoragePageReducer,
 }) as Reducer<GlobalAppState>;

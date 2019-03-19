@@ -1,9 +1,11 @@
 import { Dispatch } from "redux";
+import { ThunkAction } from "redux-thunk";
 import { BoosterpackResource } from "../../api/api";
 import { Boosterpack, NotificationType, Pokemon } from '../../models';
-import { notifyWithTimeout } from "./globalappstate";
+import { State } from "../types";
+import { notifyWithTimeout, setPage } from "./globalappstate";
 import { addOrReplacePokemon, showcaseAddPokemon, showcaseRemovePokemon } from "./pokemon";
-import { BoosterpackAction, BoosterpackActionType, BoosterpackThunk, PokemonThunk } from "./types";
+import { BoosterpackAction, BoosterpackActionType, BoosterpackThunk, PokemonAction, StoragePageAction } from "./types";
 
 const SHOWCASE_DURATION = 2000;
 const SHOWCASE_BUILDUP = 500;
@@ -32,8 +34,10 @@ export function loadAllBoosterpacks(resource: BoosterpackResource): BoosterpackT
     };
 }
 
-export function buyBoosterpack(resource: BoosterpackResource, id: number): PokemonThunk {
-    return async (dispatch) => {
+export function buyBoosterpack(resource: BoosterpackResource, id: number)
+    : ThunkAction<void, State, void, PokemonAction | StoragePageAction> {
+
+    return async (dispatch, getState) => {
         try {
             const buildup = sleep(SHOWCASE_BUILDUP);
             const pokemons = await resource.buy(id);
@@ -42,6 +46,7 @@ export function buyBoosterpack(resource: BoosterpackResource, id: number): Pokem
 
             const addAnimations = pokemons.map(async (pokemon, i) => {
                 await pokemonAddAnimation(dispatch, pokemon, id, i);
+                dispatch(setPage(Math.floor(getState().entities.pokemons.allIds.length / 64)));
             });
 
             await Promise.all(addAnimations);

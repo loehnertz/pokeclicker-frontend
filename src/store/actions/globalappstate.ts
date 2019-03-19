@@ -1,7 +1,7 @@
 import { ThunkAction } from "redux-thunk";
 import { AppNotification, NotificationType } from "../../models";
 import { State } from "../types";
-import { AppNotificationAction, NotificationActionType } from './types';
+import { AppNotificationAction, NotificationActionType, StoragePageAction, StoragePageActionType } from './types';
 
 let autoincrement = 0;
 
@@ -36,5 +36,24 @@ export function withdraw(notification: AppNotification): AppNotificationAction {
     return {
         type: NotificationActionType.WITHDRAW,
         notification
+    };
+}
+
+export function incrPage(): StoragePageAction {
+    return {
+        type: StoragePageActionType.INCR
+    };
+}
+
+export function decrPage(): StoragePageAction {
+    return {
+        type: StoragePageActionType.DECR
+    };
+}
+
+export function setPage(page: number): StoragePageAction {
+    return {
+        type: StoragePageActionType.SET,
+        page
     };
 }
