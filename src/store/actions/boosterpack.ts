@@ -2,6 +2,7 @@ import { Dispatch } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { BoosterpackResource } from "../../api/api";
 import { Boosterpack, NotificationType, Pokemon } from '../../models';
+import { sleep } from "../../util/async";
 import { State } from "../types";
 import { notifyWithTimeout, setPage } from "./globalappstate";
 import { addOrReplacePokemon, showcaseAddPokemon, showcaseRemovePokemon } from "./pokemon";
@@ -64,8 +65,4 @@ async function pokemonAddAnimation(dispatch: Dispatch, pokemon: Pokemon, packId:
     await sleep(SHOWCASE_DURATION);
     dispatch(showcaseRemovePokemon(pokemon));
     dispatch(addOrReplacePokemon(pokemon));
-}
-
-async function sleep(n: number): Promise<void> {
-    return new Promise((resolve) => setTimeout(resolve, n));
 }
