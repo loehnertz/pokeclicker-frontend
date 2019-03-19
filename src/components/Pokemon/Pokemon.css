@@ -6,7 +6,7 @@
     align-items: center;
     background-color: hsla(0, 0%, 80%, 0.5);
     box-sizing: border-box;
-    flex-grow: 0;
+    flex-grow: 1;
 }
 
 .PokemonStorage-pageselect {
@@ -23,14 +23,26 @@
 }
 
 .PokemonStorage-page {
+    --cell-size: 64px;
     display: grid;
-    grid-template-columns: 64px 64px 64px 64px 64px 64px 64px 64px;
-    grid-template-rows: 64px 64px 64px 64px 64px 64px 64px 64px;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     padding: 20px;
     box-sizing: content-box;
     flex-grow: 0;
     min-width: 220px;
-    width: calc(64px * 8);
+}
+
+.PokemonStorage-toggle {
+    font-size: 2rem;
+    padding: 1em 0 0;
+    display: none;
+}
+
+@media (max-width: 720px) {
+    .PokemonStorage {
+        height: unset;
+    }
 }
 
 .PokemonSprite:after {
@@ -50,11 +62,20 @@
 .PokemonSprite-thumbnail {
     width: 64px;
     height: 64px;
+    max-width: calc(100vw / 8 / 3);
+    max-height: calc(100vw / 8 / 3);
     transform: scale(1.5);
     image-rendering: crisp-edges;
     image-rendering: pixelated;
     display: block;
     margin: 0;
+}
+
+@media (max-width: 720px) {
+    .PokemonSprite-thumbnail {
+        max-width: calc((100vw - 60px) / 8);
+        max-height: calc((100vw - 60px) / 8);
+    }
 }
 
 .PokemonSprite-popup {

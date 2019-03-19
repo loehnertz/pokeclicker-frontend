@@ -102,3 +102,9 @@
     display: flex;
     height: calc(100vh - 30px);
 }
+
+@media (max-width: 720px) {
+    .Game {
+        flex-wrap: wrap;
+    }
+}
