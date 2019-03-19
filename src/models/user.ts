@@ -6,6 +6,7 @@ export interface User {
     avatarUri: string | null;
     pokeDollars: number;
     pokeDollarRate: number;
+    lastBalanceTimestamp: number;
 }
 
 export interface UserRegistrationRequest {

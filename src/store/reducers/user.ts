@@ -17,7 +17,7 @@ export const userReducer: Reducer<User | null, UserAction | WebSocketAction> = (
                 const [msgBalance, msgRate] = action.message.split(",");
                 const balance = parseInt(msgBalance, 10);
                 const rate = parseInt(msgRate, 10);
-                return {...user, pokeDollars: balance, pokeDollarRate: rate};
+                return {...user, pokeDollars: balance, pokeDollarRate: rate, lastBalanceTimestamp: Date.now()};
             }
             break;
         case WebSocketActionType.CLOSED:

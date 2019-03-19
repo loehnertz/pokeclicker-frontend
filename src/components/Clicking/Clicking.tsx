@@ -25,8 +25,11 @@ class Clicking extends Component<ClickingProps & ClickingDispatchProps> {
         return (
             <div className="Clicking">
                 <Pokeball onPokeballClick={this.props.onPokeballClick}/>
-                <PokeDollars amount={this.props.user && this.props.user.pokeDollars}
-                             rate={this.props.user && this.props.user.pokeDollarRate}/>
+                <PokeDollars
+                    amount={this.props.user ? this.props.user.pokeDollars : 0}
+                    rate={this.props.user && this.props.user.pokeDollarRate}
+                    lastBalanceTimestamp={this.props.user && this.props.user.lastBalanceTimestamp}
+                />
             </div>
         );
     }
@@ -56,36 +59,59 @@ class Pokeball extends Component<{onPokeballClick(): void}> {
     }
 
     render() {
-        return <div><img src={pokeballImage} alt="" ref={(el) => { this.$pokeball = el; }}
-               onClick={() => { this.props.onPokeballClick(); this.shakePokeball(); } }/></div>;
+        return (
+            <div>
+                <img
+                    src={pokeballImage}
+                    alt=""
+                    ref={(el) => { this.$pokeball = el; }}
+                    onClick={() => { this.props.onPokeballClick(); this.shakePokeball(); }}
+                />
+            </div>
+        );
     }
 }
 
-class PokeDollars extends Component<{amount: number | null, rate: number | null}> {
-    $dollars?: HTMLSpanElement | null;
-    dead?: boolean;
-    t0?: number;
+interface PokeDollarsProps {
+    amount: number;
+    rate: number | null;
+    lastBalanceTimestamp: number | null;
+}
 
+interface PokeDollarsState {
+    alive: boolean;
+}
+
+class PokeDollars extends Component<PokeDollarsProps, PokeDollarsState> {
+    $dollars?: HTMLSpanElement | null;
+
+    constructor(props: PokeDollarsProps, ctx: any) {
+        super(props, ctx);
+        this.state = {
+            alive: true
+        };
+    }
     estimatedDollars(): number | null {
-        if(this.t0 == null || this.props.amount == null || this.props.rate == null) {
+        if(this.props.rate == null || this.props.lastBalanceTimestamp == null) {
             return null;
         }
-        const deltaTime = (Date.now() - this.t0) * (1 / 1000);
+        const deltaTime = (Date.now() - this.props.lastBalanceTimestamp) * (1 / 1000);
         return Math.round(this.props.amount + this.props.rate * deltaTime);
     }
 
-    render() {
-        const animate = () => {
-            if(!this.dead) {
-                window.requestAnimationFrame(animate);
-            }
-            if(this.$dollars == null || this.props.amount == null || this.t0 == null) {
-                return;
+    async animate() {
+        while(this.state.alive) {
+            await animationFrame();
+            if(this.$dollars == null) {
+                continue;
             }
             const est = this.estimatedDollars();
-            this.$dollars.innerText = est == null ? "" : abbreviate(est, 3);
-        };
-        animate();
+            this.$dollars.innerText = abbreviate(est == null ? this.props.amount : est, 3);
+        }
+    }
+
+    render() {
+        this.animate();
         return (
             <div className="PokeDollars">
                 <p>₽<span ref={(e) => this.$dollars = e}>{abbreviate(this.props.amount, 3)}</span>
@@ -95,11 +121,8 @@ class PokeDollars extends Component<{amount: number | null, rate: number | null}
         );
     }
 
-    componentWillReceiveProps() {
-        this.t0 = Date.now();
-    }
     componentWillUnmount() {
-        this.dead = true;
+        this.setState((state) => ({...state, alive: false}));
     }
 }
 
@@ -116,3 +139,8 @@ function mapDispatchToProps(dispatch: Dispatch): ClickingDispatchProps {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Clicking);
+
+
+async function animationFrame(): Promise<number> {
+    return new Promise((resolve) => window.requestAnimationFrame(resolve));
+}

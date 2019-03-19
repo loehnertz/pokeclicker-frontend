@@ -14,6 +14,7 @@ import './StoreFront.css';
 interface StoreFrontProps {
     boosterpacks: BoosterpackCollection;
     boosterpackResource: BoosterpackResource;
+    userPokedollars: number;
 }
 
 interface StoreFrontDispatchProps {
@@ -25,13 +26,15 @@ class StoreFront extends Component<StoreFrontProps & StoreFrontDispatchProps> {
 
     render() {
         const bps = this.props.boosterpacks;
-        const items = bps.allIds.map((id) => bps.byId[id]).map((bp) =>
+        const items = bps.allIds.map((id) => bps.byId[id]).map((bp) => (
             <StoreItem
                 boosterpack={bp}
                 key={bp.locationId}
                 resource={this.props.boosterpackResource}
-                onBoosterpackBuy={this.props.onBoosterpackBuy}/>
-        );
+                onBoosterpackBuy={this.props.onBoosterpackBuy}
+                available={this.props.userPokedollars >= bp.price}
+            />
+        ));
         return <div className="StoreFront">{items}</div>;
     }
 }
@@ -40,6 +43,7 @@ class StoreFront extends Component<StoreFrontProps & StoreFrontDispatchProps> {
 interface StoreItemProps {
     boosterpack: Boosterpack;
     resource: BoosterpackResource;
+    available: boolean;
 }
 
 interface StoreItemEventProps {
@@ -90,7 +94,8 @@ class StoreItem extends Component<StoreItemProps & StoreItemEventProps> {
                 <div
                     className="StoreItem-boosterpack"
                     id={`Boosterpack-${bp.locationId}`}
-                    ref={(el) => this.$boosterpack = el} >
+                    ref={(el) => this.$boosterpack = el}
+                >
                     <img className="StoreItem-logo" src={pokemonLogo}/>
                     <img className="StoreItem-sprite" src={bp.pokemons && bp.pokemons[bp.pokemons.length - 1].sprite} />
                     <h3 className="StoreItem-title">{bp.name}</h3>
@@ -98,6 +103,7 @@ class StoreItem extends Component<StoreItemProps & StoreItemEventProps> {
                 <button
                     className="StoreItem-buybutton"
                     onClick={() => {this.onBuy(); this.animate(); }}
+                    disabled={!this.props.available}
                 >
                     ₽{abbreviate(bp.price, 3)}
                 </button>
@@ -120,7 +126,8 @@ class StoreItem extends Component<StoreItemProps & StoreItemEventProps> {
 function mapStateToProps(state: State): StoreFrontProps {
     return {
         boosterpacks: state.entities.boosterpacks,
-        boosterpackResource: new BoosterpackResource(state.globalAppState.authentication.token)
+        boosterpackResource: new BoosterpackResource(state.globalAppState.authentication.token),
+        userPokedollars: state.entities.user == null ? 0 : state.entities.user.pokeDollars
     };
 }
 
