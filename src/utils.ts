@@ -1,12 +1,26 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
+const units = ['K' /*thousand*/, 
+				  'M' /*million*/, 
+				  'B' /*billion*/, 
+				  't' /*trillion*/,
+				  'q' /*quadrillion*/,
+				  'Q' /*Quintillion*/,
+				  's' /*sextillion*/,
+				  'S' /*Septillion*/,
+				  'o' /*octillion*/,
+				  'n' /*nonillion*/,
+				  'd' /*decillion*/,
+				  'U' /*Undecillion*/,
+				  'D' /*duodecillion*/,
+				  'T' /*Tredecillion*/];
+
 export function abbreviate(x: number | null, decPlaces: number): string {
        if(x == null) {
            return "0";
        }
 
-       const units = ['k', 'm', 'b', 't'];
        const isNegative = x < 0;
        let abbreviatedNumber = x.toString();
        decPlaces = Math.pow(10, decPlaces);
