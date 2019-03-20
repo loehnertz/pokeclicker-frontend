@@ -65,7 +65,7 @@ const pokemonStoragePageReducer: Reducer<number, StoragePageAction> = (state = 0
         case StoragePageActionType.INCR:
             return state + 1;
         case StoragePageActionType.DECR:
-            return state - 1;
+            return Math.max(0, state - 1);
         case StoragePageActionType.SET:
             return action.page;
     }
