@@ -38,12 +38,16 @@ function notifyLoginSuccess(dispatch: Dispatch<AnyAction | ThunkAction<void, Sta
 export function requestLogin(userResource: UserResource, userCredentials: UserLoginRequest)
 : ThunkAction<void, State, void, AnyAction> {
     return async (dispatch) => {
-        const response = await userResource.login(userCredentials);
-        if(!response.ok) {
-            dispatch(notifyWithTimeout(response.error + "", NotificationType.ERROR, 5000));
-            return;
+        try {
+            const response = await userResource.login(userCredentials);
+            if(!response.ok) {
+                dispatch(notifyWithTimeout(response.error + "", NotificationType.ERROR, 5000));
+                return;
+            }
+            notifyLoginSuccess(dispatch, response.token);
+        } catch(e) {
+            dispatch(notifyWithTimeout(e + "", NotificationType.ERROR, 5000));
         }
-        notifyLoginSuccess(dispatch, response.token);
     };
 }
 
@@ -51,12 +55,16 @@ export function requestRegistration(resource: UserResource, user: UserRegistrati
     : ThunkAction<void, State, void, AnyAction> {
 
     return async (dispatch) => {
-        const response = await resource.register(user);
-        if(!response.ok) {
-            dispatch(notifyWithTimeout(response.error + "", NotificationType.ERROR, 5000));
-            return;
+        try {
+            const response = await resource.register(user);
+            if(!response.ok) {
+                dispatch(notifyWithTimeout(response.error + "", NotificationType.ERROR, 5000));
+                return;
+            }
+            notifyLoginSuccess(dispatch, response.token);
+        } catch(e) {
+            dispatch(notifyWithTimeout(e + "", NotificationType.ERROR, 5000));
         }
-        notifyLoginSuccess(dispatch, response.token);
     };
 }
 

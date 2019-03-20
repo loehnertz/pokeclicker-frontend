@@ -14,6 +14,7 @@ import "./App.css";
 enum Mode {
     login = "login",
     closing = "closing",
+    connecting = "connecting",
     disconnected = "disconnected",
     online = "online"
 }
@@ -21,6 +22,9 @@ enum Mode {
 class App extends Component<State | null> {
 
     private currentMode(): Mode {
+        if (this.props.entities.boosterpacks.allIds.length === 0) {
+            return Mode.connecting;
+        }
         if (this.props.globalAppState.authentication.token === null) {
             if(this.props.globalAppState.openSockets.length > 0) {
                 return Mode.closing;
@@ -38,12 +42,15 @@ class App extends Component<State | null> {
     }
 
     public render() {
-        const notifications = this.props.globalAppState.notifications.map((n) => (
-            <div className={`notification notification-${n.notificationType}`}>{n.message}</div>
+        const notifications = this.props.globalAppState.notifications.map((n, i) => (
+            <div key={i} className={`notification notification-${n.notificationType}`}>{n.message}</div>
         ));
 
         let contents;
         switch(this.currentMode()) {
+            case Mode.connecting:
+                contents = <div className="App-welcome"><p>Connecting to server...</p></div>
+                break;
             case Mode.login:
                 contents = <div className="App-welcome"><UserRegistration/><UserLogin/></div>;
                 break;
