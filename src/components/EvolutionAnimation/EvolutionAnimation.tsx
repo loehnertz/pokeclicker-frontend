@@ -1,6 +1,6 @@
 import React, { Component, CSSProperties } from "react";
 import { connect } from "react-redux";
-import { EvolutionState, State } from "../../store/types";
+import { EvolutionState, State, EvolutionStatus } from "../../store/types";
 
 import { waitForAnimationFrame } from "../../util/async";
 import "./EvolutionAnimation.css";
@@ -8,7 +8,7 @@ import "./EvolutionAnimation.css";
 const ANIMATION_MILLISECONDS = 6 * 1000;
 
 interface EvolutionAnimationProps {
-    evolutionState: EvolutionState | null;
+    evolutionState: EvolutionState;
 }
 
 interface EvolutionAnimationState {
@@ -31,8 +31,8 @@ class EvolutionAnimation extends Component<EvolutionAnimationProps, EvolutionAni
     async animate() {
         while(this.mounted) {
             const evolutionState = this.props.evolutionState;
-            if(evolutionState != null) {
-                const deltatime = (Date.now() - evolutionState.evolutionStartTimestamp) % 20000;
+            if(evolutionState.status === EvolutionStatus.EVOLVING) {
+                const deltatime = (Date.now() - evolutionState.data.evolutionStartTimestamp) % 20000;
                 let progress = deltatime ** 2 / 1000;
                 if(10000 / (2 * deltatime) < 1) {
                     progress = Math.round(progress / 1000) * 1000;
@@ -59,10 +59,11 @@ class EvolutionAnimation extends Component<EvolutionAnimationProps, EvolutionAni
 
     render() {
         const evolutionState = this.props.evolutionState;
-        if(evolutionState == null) {
+        if(evolutionState.status !== EvolutionStatus.EVOLVING) {
             return <div/>;
         }
-        if(!evolutionState.pokemonOrigin.thinApiInfo || !evolutionState.pokemonEvolution.thinApiInfo) {
+        const data = evolutionState.data;
+        if(!data.pokemonOrigin.thinApiInfo || !data.pokemonEvolution.thinApiInfo) {
             return <div/>;
         }
         return (
@@ -70,8 +71,8 @@ class EvolutionAnimation extends Component<EvolutionAnimationProps, EvolutionAni
                 className={["EvolutionAnimation", `EvolutionAnimation-${this.state.animationState}`].join(" ")}
                 style={{"--animation-progress": `${this.state.animationProgress / 1000}s`} as CSSProperties}
             >
-                <img className="EvolutionAnimation-origin" src={evolutionState.pokemonOrigin.thinApiInfo.sprite}/>
-                <img className="EvolutionAnimation-evolution" src={evolutionState.pokemonEvolution.thinApiInfo.sprite}/>
+                <img className="EvolutionAnimation-origin" src={data.pokemonOrigin.thinApiInfo.sprite}/>
+                <img className="EvolutionAnimation-evolution" src={data.pokemonEvolution.thinApiInfo.sprite}/>
             </div>
         );
     }
@@ -88,7 +89,7 @@ class EvolutionAnimation extends Component<EvolutionAnimationProps, EvolutionAni
 
 function mapStateToProps(state: State): EvolutionAnimationProps {
     return {
-        evolutionState: state.globalAppState.evolutionState
+        evolutionState: state.globalAppState.evolutionState,
     };
 }
 

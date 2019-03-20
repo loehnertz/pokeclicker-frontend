@@ -6,7 +6,7 @@ import { PokemonResource } from '../../api/api';
 import { Pokemon, Reference } from "../../models";
 import { requestPokemonMerge } from "../../store/actions/evolution";
 import { decrPage, incrPage } from "../../store/actions/globalappstate";
-import { PokemonCollection, State } from "../../store/types";
+import { PokemonCollection, State, EvolutionState, EvolutionStatus } from "../../store/types";
 import { abbreviate } from "../../utils";
 import missingno from './missingno.png';
 import './Pokemon.css';
@@ -16,6 +16,7 @@ interface PokemonStorageProps {
     showcase: Array<[Pokemon, number]>;
     pokemonResource: PokemonResource;
     currentPage: number;
+    evolutionState: EvolutionState;
 }
 interface PokemonStorageDispatchProps {
     incrPage(): void;
@@ -88,7 +89,7 @@ class PokemonStorage extends Component<PokemonStorageProps & PokemonStorageDispa
             />
         ));
         const selected = this.state.selection.map((id) => this.props.pokemons.byId[id]);
-        const canEvolve = this.isValidSelection(selected);
+        const canEvolve = this.isValidSelection(selected) && this.props.evolutionState.status === EvolutionStatus.NONE;
         return (
             <div className="PokemonStorage">
                 <div className="PokemonStorage-pageselect">
@@ -211,7 +212,8 @@ function mapStateToProps(state: State): PokemonStorageProps {
         pokemons: state.entities.pokemons,
         showcase: state.globalAppState.showcase,
         pokemonResource: new PokemonResource(state.globalAppState.authentication.token),
-        currentPage: state.globalAppState.pokemonStoragePage
+        currentPage: state.globalAppState.pokemonStoragePage,
+        evolutionState: state.globalAppState.evolutionState,
     };
 }
 

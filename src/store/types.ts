@@ -16,10 +16,21 @@ export interface AuthenticationState {
 
 export type Notifications = AppNotification[];
 
-export interface EvolutionState {
-    pokemonOrigin: Pokemon;
-    pokemonEvolution: Pokemon;
-    evolutionStartTimestamp: number;
+export enum EvolutionStatus {
+    PENDING = "PENDING",
+    EVOLVING = "EVOLVING",
+    NONE = "NONE"
+}
+
+export type EvolutionState = {
+    status: EvolutionStatus.EVOLVING;
+    data: {
+        pokemonOrigin: Pokemon;
+        pokemonEvolution: Pokemon;
+        evolutionStartTimestamp: number;
+    }
+} | {
+    status: EvolutionStatus.PENDING | EvolutionStatus.NONE;
 }
 
 export interface GlobalAppState {
@@ -28,7 +39,7 @@ export interface GlobalAppState {
     openSockets: string[];
     showcase: Array<[Pokemon, number]>;
     pokemonStoragePage: number;
-    evolutionState: EvolutionState | null;
+    evolutionState: EvolutionState;
 }
 
 export type PokemonById = ById<Pokemon>;

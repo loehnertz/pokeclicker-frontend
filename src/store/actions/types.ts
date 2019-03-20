@@ -47,6 +47,7 @@ export type StoragePageAction = {
 export enum EvolutionActionType {
     INITIATE = "EVOLUTION_INITIATE",
     DONE = "EVOUTION_DONE",
+    LOCK = "EVOLUTION_LOCK",
 }
 
 export type EvolutionAction = {
@@ -54,7 +55,7 @@ export type EvolutionAction = {
     pokemonOrigin: Pokemon;
     pokemonEvolution: Pokemon;
 } | {
-    type: EvolutionActionType.DONE;
+    type: EvolutionActionType.DONE | EvolutionActionType.LOCK;
 };
 
 export enum UserActionType {
