@@ -45,3 +45,10 @@ store.dispatch(authorizeFromCookie());
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: http://bit.ly/CRA-PWA
 serviceWorker.unregister();
+
+interface IThingy { 
+}
+
+function IsThingy(x: IThingy){
+    if(x == "[object Object]") return true;
+}
