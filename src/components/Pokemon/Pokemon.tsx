@@ -1,8 +1,10 @@
+import { request } from "https";
 import React, { Component, CSSProperties } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators, Dispatch } from "redux";
 import { PokemonResource } from '../../api/api';
 import { Pokemon, Reference } from "../../models";
+import { requestPokemonMerge } from "../../store/actions/evolution";
 import { decrPage, incrPage } from "../../store/actions/globalappstate";
 import { PokemonCollection, State } from "../../store/types";
 import { abbreviate } from "../../utils";
@@ -18,14 +20,23 @@ interface PokemonStorageProps {
 interface PokemonStorageDispatchProps {
     incrPage(): void;
     decrPage(): void;
+    requestmerge(pokemonResource: PokemonResource, pokemon: [Pokemon, Pokemon, Pokemon]): void;
 }
-class PokemonStorage extends Component<PokemonStorageProps & PokemonStorageDispatchProps> {
+
+interface PokemonStorageState {
+    selection: number[];
+}
+
+class PokemonStorage extends Component<PokemonStorageProps & PokemonStorageDispatchProps, PokemonStorageState> {
     pageSize: number;
     gridCols: number;
     constructor(props: PokemonStorageProps & PokemonStorageDispatchProps, context?: any) {
         super(props, context);
         this.pageSize = 64;
         this.gridCols = 8;
+        this.state = {
+            selection: []
+        };
     }
 
     page(): number[] {
@@ -41,6 +52,30 @@ class PokemonStorage extends Component<PokemonStorageProps & PokemonStorageDispa
         this.props.decrPage();
     }
 
+    addSelection(pokemon: Pokemon) {
+        if(this.state.selection.indexOf(pokemon.id) >= 0) {
+            this.setState({
+                selection: this.state.selection.filter((id) => id !== pokemon.id)
+            });
+            return;
+        }
+        const selection = [...this.state.selection];
+        selection.push(pokemon.id);
+        const slice = Math.max(0, selection.length - 3);
+        this.setState({selection: selection.slice(slice)});
+    }
+
+    isValidSelection(selection: Pokemon[]): selection is [Pokemon, Pokemon, Pokemon] {
+        return selection.reduce((n, pkmn) => pkmn.pokeNumber === selection[0].pokeNumber ? n + 1 : n, 0) === 3;
+    }
+
+    requestMerge() {
+        const selected = this.state.selection.map((id) => this.props.pokemons.byId[id]);
+        if(this.isValidSelection(selected)) {
+            this.props.requestmerge(this.props.pokemonResource, selected);
+        }
+    }
+
     render() {
         const pkmns = this.props.pokemons;
         const ids = this.page();
@@ -48,8 +83,12 @@ class PokemonStorage extends Component<PokemonStorageProps & PokemonStorageDispa
             <PokemonSprite
                 pokemon={pkmn}
                 key={pkmn.id}
+                onClick={() => this.addSelection(pkmn)}
+                selected={this.state.selection.indexOf(pkmn.id) >= 0}
             />
         ));
+        const selected = this.state.selection.map((id) => this.props.pokemons.byId[id]);
+        const canEvolve = this.isValidSelection(selected);
         return (
             <div className="PokemonStorage">
                 <div className="PokemonStorage-pageselect">
@@ -71,6 +110,13 @@ class PokemonStorage extends Component<PokemonStorageProps & PokemonStorageDispa
                     {items}
                 </div>
                 <Showcase showcase={this.props.showcase} />
+                <button
+                    disabled={!canEvolve}
+                    onClick={() => this.requestMerge()}
+                    className="PokemonStorage-evolvebutton"
+                >
+                        Evolve
+                </button>
             </div>);
     }
 }
@@ -78,6 +124,8 @@ class PokemonStorage extends Component<PokemonStorageProps & PokemonStorageDispa
 
 interface PokemonSpriteProps {
     pokemon: Pokemon;
+    onClick: () => void;
+    selected: boolean;
 }
 
 class PokemonSprite extends Component<PokemonSpriteProps> {
@@ -95,15 +143,18 @@ class PokemonSprite extends Component<PokemonSpriteProps> {
         const sprite = (pokeInfo && pokeInfo.sprite) || missingno;
         const name = (pokeInfo && pokeInfo.sprite && pokeInfo.name) || "MissingNo.";
         return (
-            <div className="PokemonSprite" style={{'--sprite': `url(${sprite})`} as CSSProperties}>
-            <img className="PokemonSprite-thumbnail" src={sprite} />
-            <div className="PokemonSprite-popup">
-                <div className="PokemonSprite-pokemon" id={`pokemon-${pkmn.id}`}>
-                    <h3 className="PokemonSprite-title">{name}</h3>
-                    <p className="PokemonSprite-details">{abbreviate(pkmn.xp, 2)} xp</p>
-                    <p className="PokemonSprite-details">{aquisitionDateTime}</p>
+            <div
+                className={["PokemonSprite", this.props.selected ? "selected" : ""].join(" ")}
+                style={{'--sprite': `url(${sprite})`} as CSSProperties}
+            >
+                <img className="PokemonSprite-thumbnail" src={sprite} onClick={this.props.onClick}/>
+                <div className="PokemonSprite-popup">
+                    <div className="PokemonSprite-pokemon" id={`pokemon-${pkmn.id}`}>
+                        <h3 className="PokemonSprite-title">{name}</h3>
+                        <p className="PokemonSprite-details">{abbreviate(pkmn.xp, 2)} xp</p>
+                        <p className="PokemonSprite-details">{aquisitionDateTime}</p>
+                    </div>
                 </div>
-            </div>
             </div>
         );
     }
@@ -167,7 +218,8 @@ function mapStateToProps(state: State): PokemonStorageProps {
 function mapDispatchToProps(dispatch: Dispatch): PokemonStorageDispatchProps {
     return {
         incrPage: bindActionCreators(incrPage, dispatch),
-        decrPage: bindActionCreators(decrPage, dispatch)
+        decrPage: bindActionCreators(decrPage, dispatch),
+        requestmerge: bindActionCreators(requestPokemonMerge, dispatch)
     };
 }
 

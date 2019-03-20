@@ -1,0 +1,79 @@
+
+.EvolutionAnimation {
+    --pulse-time: 1s;
+    --animation-progress: 0s;
+}
+
+.EvolutionAnimation img {
+    filter: contrast(0.9) brightness(100) drop-shadow(5px 5px  20px #222);
+    transition: filter 1s;
+    background-color: transparent;
+    position: absolute;
+    width: 40vw;
+    height: 40vw;
+    left: 30vw;
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+    animation: EvolutionAnimation-slowpulse var(--pulse-time) infinite alternate;
+    animation-play-state: paused;
+    animation-delay: calc(0s - var(--animation-progress));
+    z-index: 2;
+}
+
+.EvolutionAnimation .EvolutionAnimation-evolution {
+    animation-delay: calc(0s - var(--pulse-time) - var(--animation-progress));
+    opacity: 0;
+}
+
+.EvolutionAnimation-start  .EvolutionAnimation-evolution {
+    animation: none;
+    opacity: 0;
+}
+.EvolutionAnimation-start  .EvolutionAnimation-origin {
+    animation: none;
+    opacity: 1;
+    filter: contrast(1) brightness(1) drop-shadow(5px 5px 20px #222);
+}
+
+.EvolutionAnimation-complete  .EvolutionAnimation-origin  {
+    opacity: 0;
+    animation: none;
+}
+
+.EvolutionAnimation-complete  .EvolutionAnimation-evolution  {
+    opacity: 1;
+    filter: contrast(1) brightness(1) drop-shadow(5px 5px 20px #222);
+    animation: none;
+}
+
+@keyframes EvolutionAnimation-slowpulse {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    70% {
+        opacity: 1;
+    }
+    70.1% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0);
+    }
+}
+
+@keyframes EvolutionAnimation-fastpulse {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 1;
+    }
+    50.1% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 0;
+    }
+}

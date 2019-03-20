@@ -46,6 +46,12 @@ export class UserResource extends SessionResource implements Resource<User> {
     }
 }
 
+
+export interface UserPokemonMergeRequest {
+    pokemons: [Pokemon, Pokemon, Pokemon];
+}
+
+
 export class PokemonResource extends SessionResource implements Resource<Pokemon> {
     async fetchById(id: number): Promise<Pokemon> {
         const r = await this.session.safeFetch(url`users/pokemon/${id}`);
@@ -54,6 +60,12 @@ export class PokemonResource extends SessionResource implements Resource<Pokemon
 
     async fetchAll(): Promise<Pokemon[]> {
         const r = await this.session.safeFetch(url`users/pokemon/`);
+        return r.json();
+    }
+
+    async merge(mergeRequest: UserPokemonMergeRequest): Promise<Pokemon> {
+        const data = {pokemonIds: mergeRequest.pokemons.map((pkmn) => pkmn.id)};
+        const r = await this.session.postJson(url`users/pokemon/merge`, data);
         return r.json();
     }
 }

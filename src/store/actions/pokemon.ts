@@ -9,6 +9,13 @@ export function addOrReplacePokemon(pokemon: Pokemon): PokemonAction {
     };
 }
 
+export function deletePokemons(pokemons: Pokemon[]): PokemonAction {
+    return {
+        type: PokemonActionType.DELETE,
+        pokemons
+    };
+}
+
 export function setAllPokemons(pokemons: Pokemon[]): PokemonAction {
     return {
         type: PokemonActionType.SET_ALL,

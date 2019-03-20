@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { State } from "../../store/types";
 import Clicking from "../Clicking/Clicking";
-import EvolutionAnimation from "../Evolver/EvolutionAnimation";
+import EvolutionAnimation from "../EvolutionAnimation/EvolutionAnimation";
 import Pokemon from "../Pokemon/Pokemon";
 import StoreFront from "../StoreFront/StoreFront";
 import UserLogin from "../UserLogin/UserLogin";

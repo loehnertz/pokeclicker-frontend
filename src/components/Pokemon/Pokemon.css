@@ -39,6 +39,12 @@
     display: none;
 }
 
+.PokemonStorage-evolvebutton {
+    border-width: 5px;
+    border-color: #efefef;
+    border-radius: 5px;
+}
+
 @media (max-width: 720px) {
     .PokemonStorage {
         height: unset;
@@ -69,6 +75,10 @@
     image-rendering: pixelated;
     display: block;
     margin: 0;
+}
+
+.PokemonSprite.selected {
+    outline: 3px solid rgba(255, 255, 128, 0.5);
 }
 
 @media (max-width: 720px) {

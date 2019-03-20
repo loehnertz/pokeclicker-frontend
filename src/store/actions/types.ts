@@ -44,6 +44,18 @@ export type StoragePageAction = {
     page: number
 };
 
+export enum EvolutionActionType {
+    INITIATE = "EVOLUTION_INITIATE",
+    DONE = "EVOUTION_DONE",
+}
+
+export type EvolutionAction = {
+    type: EvolutionActionType.INITIATE;
+    pokemonOrigin: Pokemon;
+    pokemonEvolution: Pokemon;
+} | {
+    type: EvolutionActionType.DONE;
+};
 
 export enum UserActionType {
     SET = 'USER_SET',
@@ -64,7 +76,8 @@ export enum PokemonActionType {
     SET_ALL = 'POKEMON_SET_ALL',
     CLEAR_ALL = 'POKEMON_CLEAR_ALL',
     SHOWCASE = "POKEMON_SHOWCASE",
-    UNSHOWCASE = "POKEMON_UNSHOWCASE"
+    UNSHOWCASE = "POKEMON_UNSHOWCASE",
+    DELETE = "POKEMON_DELETE"
 }
 
 
@@ -73,6 +86,9 @@ export type PokemonAction = {
     pokemon: Pokemon;
 } | {
     type: PokemonActionType.SET_ALL;
+    pokemons: Pokemon[];
+} | {
+    type: PokemonActionType.DELETE;
     pokemons: Pokemon[];
 } | {
     type: PokemonActionType.CLEAR_ALL;
