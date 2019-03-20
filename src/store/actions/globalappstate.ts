@@ -1,5 +1,6 @@
 import { ThunkAction } from "redux-thunk";
 import { AppNotification, NotificationType } from "../../models";
+import { sleep } from "../../util/async";
 import { State } from "../types";
 import { AppNotificationAction, NotificationActionType, StoragePageAction, StoragePageActionType } from './types';
 
@@ -18,10 +19,11 @@ export function notifyWithTimeout(
     notificationType: NotificationType,
     timeout: number
 ): ThunkAction<void, State, void, AppNotificationAction> {
-    return (dispatch) => {
+    return async (dispatch) => {
         const notification = createNotification(message, notificationType);
         dispatch(notify(notification));
-        setTimeout(() => dispatch(withdraw(notification)), timeout);
+        await sleep(timeout);
+        dispatch(withdraw(notification));
     };
 }
 

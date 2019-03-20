@@ -4,6 +4,8 @@ import {
     AppNotificationAction,
     AuthenticationAction,
     AuthenticationActionType,
+    EvolutionAction,
+    EvolutionActionType,
     NotificationActionType,
     PokemonAction,
     PokemonActionType,
@@ -12,7 +14,7 @@ import {
     WebSocketAction,
     WebSocketActionType
 } from "../actions/types";
-import { AuthenticationState, GlobalAppState, Notifications } from "../types";
+import { AuthenticationState, EvolutionState, GlobalAppState, Notifications } from "../types";
 
 const authenticationReducer: Reducer<AuthenticationState, AuthenticationAction> = (state = {token: null}, action) => {
     switch(action.type) {
@@ -70,10 +72,29 @@ const pokemonStoragePageReducer: Reducer<number, StoragePageAction> = (state = 0
     return state;
 };
 
+const evolutionReducer: Reducer<EvolutionState | null, EvolutionAction> = (state = null, action) => {
+    switch(action.type) {
+        case EvolutionActionType.INITIATE:
+            if(state == null) {
+                return {
+                    pokemonOrigin: action.pokemonOrigin,
+                    pokemonEvolution: action.pokemonEvolution,
+                    evolutionStartTimestamp: Date.now()
+                };
+            }
+            break;
+
+        case EvolutionActionType.DONE:
+            return null;
+    }
+    return state;
+};
+
 export default combineReducers({
     authentication: authenticationReducer,
     notifications: errorNotificationReducer,
     openSockets: openSocketsReducer,
     showcase: showcaseReducer,
     pokemonStoragePage: pokemonStoragePageReducer,
+    evolutionState: evolutionReducer,
 }) as Reducer<GlobalAppState>;

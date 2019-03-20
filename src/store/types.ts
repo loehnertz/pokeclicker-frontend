@@ -16,12 +16,19 @@ export interface AuthenticationState {
 
 export type Notifications = AppNotification[];
 
+export interface EvolutionState {
+    pokemonOrigin: Pokemon;
+    pokemonEvolution: Pokemon;
+    evolutionStartTimestamp: number;
+}
+
 export interface GlobalAppState {
     authentication: AuthenticationState;
     notifications: Notifications;
     openSockets: string[];
     showcase: Array<[Pokemon, number]>;
     pokemonStoragePage: number;
+    evolutionState: EvolutionState | null;
 }
 
 export type PokemonById = ById<Pokemon>;

@@ -4,6 +4,7 @@ import { bindActionCreators, Dispatch } from "redux";
 import { User } from "../../models/user";
 import { sendClick } from "../../store/actions/sockets";
 import { State } from "../../store/types";
+import { waitForAnimationFrame } from "../../util/async";
 import { abbreviate } from "../../utils";
 import './Clicking.css';
 import pokeballImage from './pokeball.png';
@@ -78,19 +79,15 @@ interface PokeDollarsProps {
     lastBalanceTimestamp: number | null;
 }
 
-interface PokeDollarsState {
-    alive: boolean;
-}
-
-class PokeDollars extends Component<PokeDollarsProps, PokeDollarsState> {
+class PokeDollars extends Component<PokeDollarsProps> {
     $dollars?: HTMLSpanElement | null;
+    mounted: boolean;
 
     constructor(props: PokeDollarsProps, ctx: any) {
         super(props, ctx);
-        this.state = {
-            alive: true
-        };
+        this.mounted = true;
     }
+
     estimatedDollars(): number | null {
         if(this.props.rate == null || this.props.lastBalanceTimestamp == null) {
             return null;
@@ -100,13 +97,12 @@ class PokeDollars extends Component<PokeDollarsProps, PokeDollarsState> {
     }
 
     async animate() {
-        while(this.state.alive) {
-            await animationFrame();
-            if(this.$dollars == null) {
-                continue;
+        while(this.mounted) {
+            if(this.$dollars != null) {
+                const est = this.estimatedDollars();
+                this.$dollars.innerText = abbreviate(est == null ? this.props.amount : est, 3);
             }
-            const est = this.estimatedDollars();
-            this.$dollars.innerText = abbreviate(est == null ? this.props.amount : est, 3);
+            await waitForAnimationFrame();
         }
     }
 
@@ -122,7 +118,7 @@ class PokeDollars extends Component<PokeDollarsProps, PokeDollarsState> {
     }
 
     componentWillUnmount() {
-        this.setState((state) => ({...state, alive: false}));
+        this.mounted = false;
     }
 }
 
@@ -139,8 +135,3 @@ function mapDispatchToProps(dispatch: Dispatch): ClickingDispatchProps {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Clicking);
-
-
-async function animationFrame(): Promise<number> {
-    return new Promise((resolve) => window.requestAnimationFrame(resolve));
-}
