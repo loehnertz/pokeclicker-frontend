@@ -28,18 +28,18 @@ export function clearBoosterpacks(): BoosterpackAction {
 export function loadAllBoosterpacks(resource: BoosterpackResource): BoosterpackThunk  {
     return async (dispatch) => {
         let loaded = false;
-        for(let i = 0; !loaded; i++){
+        for(let i = 0; !loaded; i++) {
             try {
                 const boosterpacks = await resource.fetchAll();
                 loaded = true;
                 for(const pack of boosterpacks) {
                     dispatch(addOrReplaceBoosterpack(pack));
                 }
-            } catch(e){ 
-                if(i === 0){
+            } catch(e) {
+                if(i === 0) {
                     dispatch(notifyWithTimeout(e.toString(), NotificationType.ERROR, 5000));
                 }
-            };
+            }
             await sleep(500);
         }
     };

@@ -3,7 +3,7 @@ import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { PokemonResource } from "../../api/api";
 import { NotificationType, Pokemon } from "../../models";
 import { sleep } from "../../util/async";
-import { State, EvolutionStatus } from "../types";
+import { EvolutionStatus, State } from "../types";
 import { notifyWithTimeout } from "./globalappstate";
 import { addOrReplacePokemon, deletePokemons } from "./pokemon";
 import { EvolutionAction, EvolutionActionType } from "./types";
@@ -27,7 +27,7 @@ export function finishEvolution(): EvolutionAction {
 export function waitEvolution(): EvolutionAction {
     return {
         type: EvolutionActionType.LOCK
-    }
+    };
 }
 
 export function requestPokemonMerge(resource: PokemonResource, pokemons: [Pokemon, Pokemon, Pokemon])

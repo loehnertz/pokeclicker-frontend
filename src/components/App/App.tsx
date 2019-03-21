@@ -1,9 +1,10 @@
-import React, { Component } from "react";
+import React, { Component, ReactElement } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { State } from "../../store/types";
 import Clicking from "../Clicking/Clicking";
 import EvolutionAnimation from "../EvolutionAnimation/EvolutionAnimation";
+import Leaderboard from "../Leaderboard/Leaderboard";
 import Pokemon from "../Pokemon/Pokemon";
 import StoreFront from "../StoreFront/StoreFront";
 import UserLogin from "../UserLogin/UserLogin";
@@ -49,7 +50,7 @@ class App extends Component<State | null> {
         let contents;
         switch(this.currentMode()) {
             case Mode.connecting:
-                contents = <div className="App-welcome"><p>Connecting to server...</p></div>
+                contents = <div className="App-welcome"><p>Connecting to server...</p></div>;
                 break;
             case Mode.login:
                 contents = <div className="App-welcome"><UserRegistration/><UserLogin/></div>;
@@ -67,7 +68,10 @@ class App extends Component<State | null> {
                 contents = (
                         <div className="Game">
                             <EvolutionAnimation/>
-                            <Pokemon/>
+                            <Tabs titles={["Pokémon", "Leaderboard"]}>
+                                <Pokemon/>
+                                <Leaderboard/>
+                            </Tabs>
                             <Clicking/>
                             <StoreFront/>
                         </div>);
@@ -80,6 +84,37 @@ class App extends Component<State | null> {
                 <main>
                     {contents}
                 </main>
+            </div>
+        );
+    }
+}
+
+class Tabs extends Component<{titles: string[]}, {selected: number}> {
+
+    constructor(props: {titles: string[]}, ctx: any) {
+        super(props, ctx);
+        this.state = {
+            selected: 0
+        };
+    }
+
+    render() {
+        const children = this.props.children as Array<ReactElement<any, string>>;
+        const tabs = this.props.titles.map((title, i) => (
+            <div
+                key={i}
+                className={["Tab", i === this.state.selected ? "selected" : ""].join(" ")}
+                onClick={() => this.setState({selected: i})}
+            >
+                {title}
+            </div>)
+        );
+        return (
+            <div className="Tabs">
+             <div className="Tabs-selection">
+                {tabs}
+             </div>
+             {children[this.state.selected]}
             </div>
         );
     }

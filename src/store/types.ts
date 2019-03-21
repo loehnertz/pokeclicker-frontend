@@ -31,9 +31,17 @@ export type EvolutionState = {
     }
 } | {
     status: EvolutionStatus.PENDING | EvolutionStatus.NONE;
+};
+
+export interface LeaderboardEntry {
+    name: string;
+    pokeDollars: number;
 }
 
+export type LeaderboardState = LeaderboardEntry [];
+
 export interface GlobalAppState {
+    leaderboard: LeaderboardState;
     authentication: AuthenticationState;
     notifications: Notifications;
     openSockets: string[];

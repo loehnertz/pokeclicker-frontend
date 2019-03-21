@@ -1,0 +1,21 @@
+
+
+.Leaderboard {
+    min-width: 33vw;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    padding: 10px;
+    background-color: hsla(0, 0%, 80%, 0.5);
+    height: 100%;
+}
+
+.Leaderboard-entry {
+    display: flex;
+    width: 100%;
+}
+
+.Leaderboard-entry div {
+    flex: 1 1 50%;
+    margin: 10px 0;
+}

@@ -1,9 +1,14 @@
 
-export function throttle<TCb extends (...args: any[]) => void>(callback: TCb, perSecondRate: number, burst: number = 1): TCb {
+export function throttle<TCb extends (...args: any[]) => void>(
+    callback: TCb,
+    perSecondRate: number,
+    burst: number = 1
+): TCb {
+
     let semaphore = burst;
 
-    return (function(...args: any[]){
-        if(semaphore <= 0){
+    return ((...args: any[]) => {
+        if(semaphore <= 0) {
             return;
         }
         window.setTimeout(() => { semaphore++; }, 1000 / perSecondRate);

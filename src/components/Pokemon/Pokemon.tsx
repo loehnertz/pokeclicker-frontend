@@ -6,7 +6,7 @@ import { PokemonResource } from '../../api/api';
 import { Pokemon, Reference } from "../../models";
 import { requestPokemonMerge } from "../../store/actions/evolution";
 import { decrPage, incrPage } from "../../store/actions/globalappstate";
-import { PokemonCollection, State, EvolutionState, EvolutionStatus } from "../../store/types";
+import { EvolutionState, EvolutionStatus, PokemonCollection, State } from "../../store/types";
 import { abbreviate } from "../../utils";
 import missingno from './missingno.png';
 import './Pokemon.css';

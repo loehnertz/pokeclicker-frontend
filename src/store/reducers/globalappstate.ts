@@ -14,7 +14,15 @@ import {
     WebSocketAction,
     WebSocketActionType
 } from "../actions/types";
-import { AuthenticationState, EvolutionState, GlobalAppState, Notifications, EvolutionStatus } from "../types";
+
+import {
+    AuthenticationState,
+    EvolutionState,
+    EvolutionStatus,
+    GlobalAppState,
+    LeaderboardState,
+    Notifications
+} from "../types";
 
 const authenticationReducer: Reducer<AuthenticationState, AuthenticationAction> = (state = {token: null}, action) => {
     switch(action.type) {
@@ -75,7 +83,7 @@ const pokemonStoragePageReducer: Reducer<number, StoragePageAction> = (state = 0
 const evolutionReducer: Reducer<EvolutionState, EvolutionAction> = (state = {status: EvolutionStatus.NONE}, action) => {
     switch(action.type) {
         case EvolutionActionType.INITIATE:
-            if(state.status != EvolutionStatus.EVOLVING) {
+            if(state.status !== EvolutionStatus.EVOLVING) {
                 return {
                     status: EvolutionStatus.EVOLVING,
                     data: {
@@ -85,8 +93,8 @@ const evolutionReducer: Reducer<EvolutionState, EvolutionAction> = (state = {sta
                     }
                 };
             }
-            break; 
-        
+            break;
+
         case EvolutionActionType.LOCK:
             return {status: EvolutionStatus.PENDING};
 
@@ -96,7 +104,23 @@ const evolutionReducer: Reducer<EvolutionState, EvolutionAction> = (state = {sta
     return {...state};
 };
 
+const leaderboardReducer: Reducer<LeaderboardState, WebSocketAction> = (state = [], action) => {
+    switch(action.type) {
+        case WebSocketActionType.RECEIVE:
+            const match = action.message.match(/^leaderboard:(.*)$/);
+            if(match) {
+                const leaderboard = JSON.parse(match[1]) as {[name: string]: number};
+                const leaderboardState: LeaderboardState = Object.entries(leaderboard)
+                    .map(([k, v]) => ({name: k, pokeDollars: v}));
+                return leaderboardState;
+            }
+    }
+
+    return [...state];
+};
+
 export default combineReducers({
+    leaderboard: leaderboardReducer,
     authentication: authenticationReducer,
     notifications: errorNotificationReducer,
     openSockets: openSocketsReducer,

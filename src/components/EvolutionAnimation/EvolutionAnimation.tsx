@@ -1,6 +1,6 @@
 import React, { Component, CSSProperties } from "react";
 import { connect } from "react-redux";
-import { EvolutionState, State, EvolutionStatus } from "../../store/types";
+import { EvolutionState, EvolutionStatus, State } from "../../store/types";
 
 import { waitForAnimationFrame } from "../../util/async";
 import "./EvolutionAnimation.css";
