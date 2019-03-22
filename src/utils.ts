@@ -1,20 +1,28 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-const units = ['K' /*thousand*/,
-                  'M' /*million*/,
-                  'B' /*billion*/,
-                  't' /*trillion*/,
-                  'q' /*quadrillion*/,
-                  'Q' /*Quintillion*/,
-                  's' /*sextillion*/,
-                  'S' /*Septillion*/,
-                  'o' /*octillion*/,
-                  'n' /*nonillion*/,
-                  'd' /*decillion*/,
-                  'U' /*Undecillion*/,
-                  'D' /*duodecillion*/,
-                  'T' /*Tredecillion*/];
+const units = ['K' /*thousand*/, 
+				  'M' /*million*/, 
+				  'B' /*billion*/, 
+				  't' /*trillion*/,
+				  'q' /*quadrillion*/,
+				  'Q' /*Quintillion*/,
+				  's' /*sextillion*/,
+				  'S' /*Septillion*/,
+				  'o' /*octillion*/,
+				  'n' /*nonillion*/,
+				  'd' /*decillion*/,
+				  'U' /*Undecillion*/,
+				  'D' /*duodecillion*/,
+				  'T' /*Tredecillion*/,
+			      'b' /*quattuordecillion*/,
+			      'A' /*Quinquadecillion*/,
+			      'd' /*Sexdecillion*/,
+			      'f' /*Septendecillion*/,
+			      'O' /*Octodecillion*/,
+			      'N' /*Novendecillion*/,
+			      'v' /*vigintillion*/,
+			      'c' /*unvigintillion*/];
 
 export function abbreviate(x: number | null, decPlaces: number): string {
        if(x == null) {
